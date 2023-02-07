@@ -1,0 +1,18 @@
+.footer {
+    height: 14.5vh;
+    background-color: rgb(28, 39, 39);
+    font-size: 1.5em;
+    justify-content: center;
+    display: flex;
+    width: 100vw;
+    padding-top: 1em;
+}
+
+.footer p {
+    color: #FFF;
+}
+
+.footer span {
+    color: rgb(216, 196, 20);
+    font-weight: bold;
+}
