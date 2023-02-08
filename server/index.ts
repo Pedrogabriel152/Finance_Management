@@ -2,7 +2,9 @@ import express from 'express'
 import cors from 'cors';
 
 // Importacao das rotas
-import RecordCompanyRoutes from './routes/RecordCompanyRoutes'
+import RecordCompanyRoutes from './routes/RecordCompanyRoutes';
+import CDRoutes from './routes/CDRoutes';
+import MusicRoutes from './routes/MusicRoutes';
 
 const app = express()
 
@@ -20,5 +22,7 @@ app.use(express.static('public'))
 
 // Routes
 app.use('/recordcompany', RecordCompanyRoutes)
+app.use('/cd', CDRoutes)
+app.use('/music', MusicRoutes)
 
 app.listen(5000, () => console.log('Estamos no back'))
