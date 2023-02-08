@@ -5,6 +5,7 @@ const router = express.Router()
 // Controller
 import RecordCompanyController from '../controllers/RecordCompanyController'
 
-router.get('/register', RecordCompanyController.register)
+router.post('/register', RecordCompanyController.register)
+router.post('/login', RecordCompanyController.login)
 
 export default router

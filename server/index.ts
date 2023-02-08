@@ -1,5 +1,5 @@
 import express from 'express'
-import cors from 'cors'
+import cors from 'cors';
 
 // Importacao das rotas
 import RecordCompanyRoutes from './routes/RecordCompanyRoutes'
