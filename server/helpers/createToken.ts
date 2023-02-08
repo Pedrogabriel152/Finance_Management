@@ -10,10 +10,7 @@ const createToken = async ({recordCompany, req, res}: ICreateToken)=> {
         id: recordCompany._id
     }, "aidhoiashdaoishdj");
 
-    console.log(recordCompany)
-
     res.status(200).json({
-        message: "Usuario cadastrado com sucesso",
         token
     })
 
