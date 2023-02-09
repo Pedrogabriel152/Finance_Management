@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
+import { useNavigate } from 'react-router-dom'
 
 // CSS
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
+
+    const { authenticate, logout } = useAuth()
+
     return (
         <nav className={styles.navbar}>
         <div className={styles.navbar_logo}>
@@ -15,24 +20,29 @@ const Navbar = () => {
             <li>
                 <Link to="/">Home</Link>
             </li>
-                    {/* <li>
-                        <Link to="/pet/mypets">Meus Pets</Link>
+            {authenticate ?
+                ( 
+                <>
+                    <li>
+                        <Link to="/cd/mycds">Meus CDs</Link>
                     </li>
                     <li>
-                        <Link to='/pet/myadoptions'>Minhas adoções</Link>
-                    </li>
-                    <li>
-                        <Link to="/user/profile">Perfil</Link>
+                        <Link to="/recordcompany/profile">Perfil</Link>
                     </li> 
-                    <li>Sair</li>
-                    */}
-                    <li>
-                        <Link to="/login">Entrar</Link>
-                    </li>
-                    <li>
-                        <Link to="/register">Cadastrar</Link>
-                    </li>
-                    
+                    <li onClick={logout}>Sair</li>
+                </>
+                ) 
+                : (
+                    <>
+                        <li>
+                            <Link to="/login">Entrar</Link>
+                        </li>
+                        <li>
+                            <Link to="/register">Cadastrar</Link>
+                        </li>
+                    </>
+                )
+            }
             
             
         </ul> 

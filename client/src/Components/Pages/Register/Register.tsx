@@ -10,27 +10,24 @@ import Input from "../../Layout/Input/Input";
 // API
 import api from "../../../utils/api";
 
-interface RecordCompany {
-    name: string | ''
-    email: string | ''
-    site: string | ''
-    password: string | ''
-    confirmpassword: string | ''
-}
+// Interfaces
+import IRecordCompany from "../../../interfaces/IRecordCompany";
+import useAuth from "../../../Hooks/useAuth";
 
-const Login = () => {
+const Register = () => {
 
-    const [recordCompany, setRecordCompany] = useState<RecordCompany>({name: '', email: '', confirmpassword: '', password: '', site: ''})
+    const [recordCompany, setRecordCompany] = useState<IRecordCompany>({name: '', email: '', confirmpassword: '', password: '', site: ''})
+    const { register } = useAuth()
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRecordCompany({...recordCompany, [e.target.name]: e.target.value})
-        console.log(e.target.name)
     }
 
     const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        api.post("recordcompany/register", recordCompany)
+        // Salvando Company no banco
+        register(recordCompany)
     }
 
     return (
@@ -62,6 +59,24 @@ const Login = () => {
                     value={recordCompany.site}
                 />
 
+                <Input 
+                    handleOnChange={handleOnChange}
+                    name="password"
+                    placeholder="Digite uma senha"
+                    text="Senha"
+                    type="password"
+                    value={recordCompany.password}
+                />
+
+                <Input 
+                    handleOnChange={handleOnChange}
+                    name="confirmpassword"
+                    placeholder="Confimer sua senha"
+                    text="Confirme sua senha"
+                    type="password"
+                    value={recordCompany.confirmpassword}
+                />
+
                 <input type="submit" value="Cadastrar" />
             </form>
 
@@ -70,4 +85,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default Register;

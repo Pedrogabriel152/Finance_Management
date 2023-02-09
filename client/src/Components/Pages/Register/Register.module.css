@@ -1,7 +1,7 @@
 .containner {
     padding: 2.8em 0 0;
     background-color: #CCC;
-    height: 80%;
+    height: 82%;
     width: 40vw;
     margin: 3em auto 0;
     align-items: center;
@@ -16,7 +16,7 @@
     margin-left: 1.5em;
     font-weight: bold;
     color: rgb(15, 24, 27);
-    margin-bottom: 1.2em;
+    margin-bottom: 1em;
 }
 
 .form {

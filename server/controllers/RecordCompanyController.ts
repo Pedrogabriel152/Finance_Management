@@ -15,8 +15,6 @@ export default class RecordCompanyController {
     static async register(req: Request, res: Response) {
         const { name, email, site, password, confirmpassword } = req.body
 
-        
-
         // Validations
         if(!name) {
             return res.status(422).json({
