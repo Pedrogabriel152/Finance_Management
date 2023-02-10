@@ -1,0 +1,20 @@
+.form_containner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em auto;
+    width: 30vw;
+    height: 50vh;
+    /* background-color: aqua; */
+}
+
+.form_containner h1 {
+    margin-right: auto;
+    font-weight: bold;
+}
+
+.form_containner input[type='submit'] {
+    padding: 8px 30px;
+    background-color: #28C2DE;
+}

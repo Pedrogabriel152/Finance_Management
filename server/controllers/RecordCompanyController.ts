@@ -150,7 +150,7 @@ export default class RecordCompanyController {
         const { name, email, site, password, confirmpassword } = req.body
         const token = getToken(req)
 
-        const recordCompanyByToken = await getRecordCompanyByToken(token, res)
+        const recordCompanyByToken: any = await getRecordCompanyByToken(token, res)
 
         if(!recordCompanyByToken) {
             return res.status(401).json({
@@ -231,6 +231,33 @@ export default class RecordCompanyController {
             })
 
         }        
+
+    }
+
+    static async checkRecordCompany(req: Request, res: Response) {
+
+        let correntRecordCompany: any
+
+        if(req.headers.authorization) {
+
+            const token = await getToken(req)
+            correntRecordCompany = await getRecordCompanyByToken(token, res)
+
+            if(!correntRecordCompany) {
+                return res.status(404).json({
+                    message: "Gravadora nao encontrada"
+                })
+            }
+
+            correntRecordCompany.password = null
+
+        } else {
+            correntRecordCompany = null
+        }
+
+        return res.status(200).json({
+            correntRecordCompany
+        })
 
     }
 

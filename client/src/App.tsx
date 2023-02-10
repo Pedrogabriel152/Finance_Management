@@ -10,6 +10,7 @@ import Containner from './Components/Layout/Container/Container';
 import Home from './Components/Pages/Home/Home';
 import Register from './Components/Pages/Register/Register';
 import Login from './Components/Pages/Login/Login';
+import Profile from './Components/Pages/Profile/Profile';
 
 // Provider
 import { RecordCompanyProvider } from './Context/useContext';
@@ -22,6 +23,7 @@ function App() {
           <Navbar />
           <Containner>
             <Routes>
+              <Route path='/recordcompany/profile' element={<Profile /> } />
               <Route path='/login' element={<Login /> }/>
               <Route path='/register' element={<Register /> } />
               <Route path='/' element={<Home /> } />
