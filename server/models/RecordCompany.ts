@@ -1,5 +1,6 @@
 import pool from "../db/conn";
 import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
 
 import RecordCompanyClass from '../interfaces/class/RecordComapnyClass';
 
@@ -48,7 +49,7 @@ class RecordCompany implements RecordCompanyClass
         
     }
 
-    public static async findOne(email: String) {
+    public static async findOne(email: String): Promise<any> {
         const SQL = "SELECT * FROM record_company WHERE email = ? LIMIT 1";
 
         const data = [email];
@@ -62,11 +63,78 @@ class RecordCompany implements RecordCompanyClass
                 };
                 resolve(datas);
             });
-        }).then(res => {
-            recordCompany = res;
+        }).then((res: any) => {
+            recordCompany = res[0];
         })
         .catch((err: any) => {
-            recordCompany = {};
+            recordCompany = false;
+        })
+
+        return recordCompany;
+    }
+
+    public static async update(recordCompany: any): Promise<boolean>{
+        const {id, name, email, site, password} = recordCompany;
+        let SQL: string;
+
+        SQL = 'UPDATE record_company SET name = ?, email = ?, site = ? WHERE id = ?';
+
+        if(password){
+
+            const data = [name, email,site, password, id];
+
+            SQL = 'UPDATE record_company SET name = ?, email = ?, site = ?, password = ? WHERE id = ?';
+
+            const status: boolean = await new Promise((resolve, reject) => {
+                pool.query(SQL, data, (_err: any) => {
+                    if(_err){
+                        reject(false);
+                        return false;
+                    };
+    
+                    console.log(data)
+                    resolve(true);
+                    return true;
+                });
+            })
+            return status;
+        }
+
+        const data = [name, email,site, id];
+
+        const status: boolean = await new Promise((resolve, reject) => {
+            pool.query(SQL, data, (_err: any) => {
+                if(_err){
+                    reject(false);
+                    return false;
+                };
+
+                resolve(true);
+                return true;
+            });
+        })
+        return status;                
+    }
+
+    public static async findById(id: number){
+        const SQL = "SELECT id, name, email, site FROM record_company WHERE id = ?";
+
+        const data = [id];
+        
+        let recordCompany;
+
+        await new Promise((resolve, reject) => {
+            pool.query(SQL, data, (_err: any, datas: any) => {
+                if(_err){
+                    reject('');
+                };
+                resolve(datas);
+            });
+        }).then((res: any) => {
+            recordCompany = res[0];
+        })
+        .catch((err: any) => {
+            recordCompany = false;
         })
 
         return recordCompany;

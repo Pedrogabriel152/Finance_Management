@@ -1,8 +1,8 @@
-import { verify, JwtPayload } from 'jsonwebtoken'
-import { Response } from 'express'
+import { verify, JwtPayload } from 'jsonwebtoken';
+import { Response } from 'express';
 
 // Models
-import RecordCompany from '../models/RecordCompany'
+import RecordCompany from '../models/RecordCompany';
 
 // Get user by jwt token
 const getRecordCompanyByToken = async (token: string | null, res: Response)=> {
@@ -10,21 +10,21 @@ const getRecordCompanyByToken = async (token: string | null, res: Response)=> {
     if(!token) {
         return res.status(401).json({
             message: 'Acesso negado'
-        })
-    }
+        });
+    };
 
-    const decoded = verify(token, 'aidhoiashdaoishdj')
+    const decoded = verify(token, 'aidhoiashdaoishdj');
 
     if(typeof decoded === "string") {
-        return res.status(401).json({message: "Acesso negado"})
-    }
+        return res.status(401).json({message: "Acesso negado"});
+    };
 
-    const recordCompanyId = decoded.id
+    const recordCompanyId = decoded.id;
 
-    const recordCompany = await RecordCompany.findById(recordCompanyId).select('-password')
+    const recordCompany = await RecordCompany.findById(recordCompanyId);
 
-    return recordCompany
+    return recordCompany;
     
 }
 
-export default getRecordCompanyByToken
+export default getRecordCompanyByToken;

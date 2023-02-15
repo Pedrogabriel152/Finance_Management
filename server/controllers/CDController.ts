@@ -34,7 +34,7 @@ export default class CDController {
 
         // Check record Company if exist
         const token = getToken(req)
-        const recordCompany = await getRecordCompanyByToken(token, res)
+        const recordCompany: any = await getRecordCompanyByToken(token, res)
 
         if(!recordCompany){
             res.status(404).json({
@@ -42,18 +42,16 @@ export default class CDController {
             })
         }
 
-        const cd = new CD({
+        const cd = new CD(
+            recordCompany.id,
             name,
             price,
-            number_of_tracks,
-            recordCompany
-        })
+            number_of_tracks
+        )
 
         try {
 
-            const newCd = await cd.save()
-
-            console.log(newCd)
+            const newCd = await cd.create(req, res)
 
             return res.status(200).json({
                 message: "CD cadastrado com sucesso"
@@ -69,7 +67,11 @@ export default class CDController {
     }
 
     static async getAll(req: Request, res: Response) {
+        const cds = await CD.getAll();
 
+        res.status(200).json({
+            cds
+        })
     }
 
 }
