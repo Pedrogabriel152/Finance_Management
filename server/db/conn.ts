@@ -1,11 +1,13 @@
-import mongoose from 'mongoose'
+import mysql from 'mysql'
 
-async function main(){
-    await mongoose.connect("mongodb://127.0.0.1:27017/mycdlist")
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'mycdlist'
+})
 
-    console.log("Conectamos ao mongoose")
-}
-
-main().catch(err => console.log(err))
-
-export default mongoose
+    console.log("Conectamos ao banco")
+    
+export default pool
