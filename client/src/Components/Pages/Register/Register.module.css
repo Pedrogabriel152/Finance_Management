@@ -1,6 +1,6 @@
 .containner {
     padding: 2.8em 0 0;
-    background-color: #CCC;
+    border: 2px solid #000;
     height: 82%;
     width: 40vw;
     margin: 3em auto 0;
@@ -33,13 +33,13 @@
     margin-top: 15px;
     cursor: pointer;
     border-radius: 5px;
-    background-color: rgb(129, 127, 125);
+    background-color: #28C2DE;
     box-shadow: 1px;
 }
 
 .containner input[type="submit"]:hover {
     color: #000;
-    background-color: rgb(0, 241, 12);
+    background-color: #CCC;
 }
 
 .containner p {

@@ -1,5 +1,4 @@
-import mongoose from "../db/conn";
-import { Schema } from "mongoose";
+import pool from "../db/conn";
 
 const Music = 'sd'
 

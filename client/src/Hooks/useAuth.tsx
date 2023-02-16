@@ -100,5 +100,29 @@ export default function useAuth() {
 
     }
 
-    return { authenticate, logout, register, login }
+    async function update(recordCompany: any) {
+
+        let msgText = 'Login realizado com sucesso'
+        let msgType = 'success'
+
+        try {
+            
+            const data = await api.patch('recordcompany/edit', recordCompany).then(res => {
+                return res.data
+            })
+
+            await authRecordCompany(data)
+
+        } catch (error: any) {
+            
+            msgText = error.response.data.message
+            msgType = 'error'
+
+        }
+
+        setFlashMessage(msgText, msgType)
+        
+    }
+
+    return { authenticate, logout, register, login, update }
 }

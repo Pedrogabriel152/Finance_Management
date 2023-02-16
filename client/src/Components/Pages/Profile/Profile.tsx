@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 
 // Layout
 import Input from '../../Layout/Input/Input';
@@ -11,11 +11,13 @@ import api from '../../../utils/api'
 
 // CSS
 import styles from './Profile.module.css';
+import useAuth from '../../../Hooks/useAuth';
 
 const Profile = () => {
 
     const [recordCompany, setRecordCompany] = useState<IRecordCompany>({name: '', email: '', confirmpassword: '', password: '', site: ''})
     const [token] = useState<string | null>(localStorage.getItem('token'))
+    const {update} = useAuth()
 
     useEffect(() => {
 
@@ -36,13 +38,20 @@ const Profile = () => {
         setRecordCompany({...recordCompany, [e.target.name]: e.target.value})
     }
 
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        // Salvando Company no banco
+        update(recordCompany)
+    }
+
     return (
         <div className={styles.form_containner}>
-            <h1>Perfil</h1>
+            <h1>Perfil:</h1>
             <div>
-                <form>
+                <form onSubmit={handleSubmit}>
                     
-                        <Input 
+                    <Input 
                         handleOnChange={handleOnChange}
                         name='name'
                         placeholder='Digite o nome da gravadora'

@@ -12,7 +12,7 @@ import RecordCompany from "../models/RecordCompany";
 
 export default class RecordCompanyController {
 
-    static async register(req: Request, res: Response) {
+    public static async register(req: Request, res: Response) {
         const { name, email, site, password, confirmpassword } = req.body;
 
         // Validations
@@ -87,7 +87,7 @@ export default class RecordCompanyController {
     };
     
 
-    static async login(req: Request, res: Response) {
+    public static async login(req: Request, res: Response) {
 
         const { email, password } = req.body;
 
@@ -126,7 +126,7 @@ export default class RecordCompanyController {
 
     }
 
-    static async editGet(req: Request, res: Response) {
+    public static async editGet(req: Request, res: Response) {
 
         const token = getToken(req);
 
@@ -144,7 +144,7 @@ export default class RecordCompanyController {
 
     }
 
-    static async editPatch(req: Request, res: Response) {
+    public static async editPatch(req: Request, res: Response) {
 
         const { name, email, site, password, confirmpassword } = req.body;
         const token = getToken(req);
@@ -235,7 +235,7 @@ export default class RecordCompanyController {
 
     };
 
-    static async checkRecordCompany(req: Request, res: Response) {
+    public static async checkRecordCompany(req: Request, res: Response) {
 
         let correntRecordCompany: any
 

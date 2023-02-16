@@ -13,10 +13,10 @@ interface Props {
 
 function RecordCompanyProvider({children}:Props) {
 
-  const { authenticate, register, logout, login } = useAuth()
+  const { authenticate, register, logout, login, update } = useAuth()
 
   return(
-      <Context.Provider value={{ authenticate, register, logout, login }}>
+      <Context.Provider value={{ authenticate, register, logout, login, update }}>
         {children}  
       </Context.Provider>
   );

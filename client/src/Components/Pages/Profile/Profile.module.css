@@ -5,16 +5,20 @@
     align-items: center;
     margin: 1.5em auto;
     width: 30vw;
-    height: 50vh;
+    height: 60vh;
+    border: 2px solid #000;
+    border-radius: 10px;
     /* background-color: aqua; */
 }
 
 .form_containner h1 {
     margin-right: auto;
+    margin-left: 1em;
     font-weight: bold;
 }
 
 .form_containner input[type='submit'] {
-    padding: 8px 30px;
+    padding: 8px 50px;
     background-color: #28C2DE;
+    margin: 0 26%;
 }

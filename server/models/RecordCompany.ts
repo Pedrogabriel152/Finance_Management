@@ -117,7 +117,7 @@ class RecordCompany implements RecordCompanyClass
     }
 
     public static async findById(id: number){
-        const SQL = "SELECT id, name, email, site FROM record_company WHERE id = ?";
+        const SQL = "SELECT * FROM record_company WHERE id = ?";
 
         const data = [id];
         
