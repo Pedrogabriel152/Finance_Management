@@ -12,7 +12,7 @@ interface Props {
 
 const Modal = ({setMusicsId}: Props) => {
 
-    const [musics, setMusics] = useState([] as any[])
+    const [musics, setMusics] = useState<any>([])
     const id_musics: any[] = [];
     const music_check = [];
 
@@ -20,20 +20,21 @@ const Modal = ({setMusicsId}: Props) => {
 
         api.get('music/all')
         .then((res: any) => {
-            setMusics(res)
+            setMusics(res.data.musics)
         })
-
-        console.log(musics)
-
     }, [])
 
-    // useEffect(() => {
-    //     musics.map(music => id_musics.push(music.id_music));
-    //     console.log(musics)
-    // },[musics])
+    useEffect(() => {
+        musics.map((music: any) => id_musics.push(music.id_music));
+    },[musics])
 
     return (
-        <h1>Modal</h1>
+        <div>
+            <h1>Modal</h1>
+            {musics.map((music: any) => (
+                <h1 key={music.id}>{music.name}</h1>
+            ))}
+        </div>
     )
 }
 

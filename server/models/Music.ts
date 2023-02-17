@@ -85,6 +85,7 @@ class Music
             });
         }).then((res: any) => {
             musics = res;
+            console.log(res)
         })
         .catch((err: any) => {
             musics = {};
