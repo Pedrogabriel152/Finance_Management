@@ -17,7 +17,7 @@ import RoundedImage from '../../Layout/RandleImage/RandleImage';
 
 const Profile = () => {
 
-    const [recordCompany, setRecordCompany] = useState<any>({})
+    const [recordCompany, setRecordCompany] = useState({} as any)
     const [token] = useState<string | null>(localStorage.getItem('token'))
     const [preview, setPreview] = useState<any>()
     const {update} = useAuth()
@@ -66,8 +66,6 @@ const Profile = () => {
                 msgType = 'error'
                 return err.response.data
             })
-
-            console.log(recordCompany.image)
         }
     }
 

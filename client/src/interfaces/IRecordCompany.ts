@@ -4,6 +4,7 @@ interface IRecordCompany {
     site: string | ''
     password: string | ''
     confirmpassword: string | ''
+    image?: string | ''
 }
 
 export default IRecordCompany

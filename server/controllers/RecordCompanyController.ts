@@ -72,8 +72,6 @@ export default class RecordCompanyController {
                     message: "Ja existe uma gravadora com este e-mail"
                 });
             };
-           
-            console.log(`kasnkdbasdb`);
             await recordCompany.register(req, res);
 
         } catch (error: any) {
@@ -146,10 +144,9 @@ export default class RecordCompanyController {
 
     public static async editPatch(req: Request, res: Response) {
 
-        const { name, email, site, password, confirmpassword } = req.body;
+        const { name, email, site, confirmpassword } = req.body;
+        let {password} = req.body
         const token = getToken(req);
-
-        console.log(typeof password)
 
         const recordCompanyByToken: any = await getRecordCompanyByToken(token, res);
         
@@ -195,7 +192,11 @@ export default class RecordCompanyController {
         if(req.file) {
             recordCompany.image = req.file.filename
         }
-
+        
+        if(password === 'null') {
+            password = undefined
+        }
+        
         if(password) {
             if(!confirmpassword) {
                 return res.status(422).json({

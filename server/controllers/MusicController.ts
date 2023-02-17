@@ -42,18 +42,18 @@ export default class MusicController {
             })
         }
 
-        const music = new Music({
-            name,
-            duration,
-            author,
-            recordCompany
-        })
+        // const music = new Music({
+        //     name,
+        //     duration,
+        //     author,
+        //     recordCompany
+        // })
 
         try {
 
-            const newMusic = await music.save()
+            // const newMusic = await music.save()
 
-            console.log(newMusic)
+            // console.log(newMusic)
 
             res.status(200).json({
                 message: "Musica cadastrada com sucesso"

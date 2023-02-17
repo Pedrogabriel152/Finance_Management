@@ -27,6 +27,9 @@ const Navbar = () => {
                         <Link to="/cd/mycds">Meus CDs</Link>
                     </li>
                     <li>
+                        <Link to="/cd/add">Add CD</Link>
+                    </li>
+                    <li>
                         <Link to="/recordcompany/profile">Perfil</Link>
                     </li> 
                     <li onClick={logout}>Sair</li>
