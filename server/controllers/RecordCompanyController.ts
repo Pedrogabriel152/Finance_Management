@@ -149,6 +149,8 @@ export default class RecordCompanyController {
         const { name, email, site, password, confirmpassword } = req.body;
         const token = getToken(req);
 
+        console.log(typeof password)
+
         const recordCompanyByToken: any = await getRecordCompanyByToken(token, res);
         
         if(!recordCompanyByToken) {
@@ -182,12 +184,17 @@ export default class RecordCompanyController {
             email: string,
             site: string,
             password?: string,
+            image?: string
         } = {
             id: recordCompanyByToken.id,
             name,
             email,
             site
         };
+
+        if(req.file) {
+            recordCompany.image = req.file.filename
+        }
 
         if(password) {
             if(!confirmpassword) {
@@ -213,6 +220,9 @@ export default class RecordCompanyController {
         try{
 
             // return user updated data
+
+            console.log(recordCompany)
+            console.log(req.files)
             const status = await RecordCompany.update(recordCompany);
 
             if(!status) {

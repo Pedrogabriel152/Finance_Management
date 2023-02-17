@@ -105,13 +105,25 @@ export default function useAuth() {
         let msgText = 'Login realizado com sucesso'
         let msgType = 'success'
 
+        console.log(recordCompany)
+        let data;
+
         try {
             
-            const data = await api.patch('recordcompany/edit', recordCompany).then(res => {
-                return res.data
-            })
+            const token = localStorage.getItem('token')
 
-            await authRecordCompany(data)
+            if(token) {
+                data = await api.patch('recordcompany/edit', recordCompany, {
+                    headers: {
+                        Authorization: `Bearer ${JSON.parse(token)}`,
+                        'Content-Type': 'multipart/form-data' 
+                    }
+                }).then(res => {
+                    return res.data
+                })
+            }
+
+            history('/recordcompany/profile')
 
         } catch (error: any) {
             
@@ -120,7 +132,7 @@ export default function useAuth() {
 
         }
 
-        setFlashMessage(msgText, msgType)
+        setFlashMessage(data.message, msgType)
         
     }
 

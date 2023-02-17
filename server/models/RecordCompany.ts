@@ -74,16 +74,16 @@ class RecordCompany implements RecordCompanyClass
     }
 
     public static async update(recordCompany: any): Promise<boolean>{
-        const {id, name, email, site, password} = recordCompany;
+        const {id, name, email, site, image, password} = recordCompany;
         let SQL: string;
 
-        SQL = 'UPDATE record_company SET name = ?, email = ?, site = ? WHERE id = ?';
+        SQL = 'UPDATE record_company SET name = ?, email = ?, site = ?, image = ? WHERE id = ?';
 
         if(password){
 
-            const data = [name, email,site, password, id];
+            const data = [name, email,site, image, password, id];
 
-            SQL = 'UPDATE record_company SET name = ?, email = ?, site = ?, password = ? WHERE id = ?';
+            SQL = 'UPDATE record_company SET name = ?, email = ?, site = ?, image = ?, password = ? WHERE id = ?';
 
             const status: boolean = await new Promise((resolve, reject) => {
                 pool.query(SQL, data, (_err: any) => {
@@ -100,7 +100,7 @@ class RecordCompany implements RecordCompanyClass
             return status;
         }
 
-        const data = [name, email,site, id];
+        const data = [name, email,site, image, id];
 
         const status: boolean = await new Promise((resolve, reject) => {
             pool.query(SQL, data, (_err: any) => {

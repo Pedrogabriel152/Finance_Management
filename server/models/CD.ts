@@ -7,12 +7,14 @@ class CD
     private name: string;
     private price: number;
     private number_of_tracks: number;
+    private image: string;
 
-    public constructor(record_id: number, name: string, price: number, number_of_tracks: number){
+    public constructor(record_id: number, name: string, price: number, number_of_tracks: number, image: string){
         this.name = name;
         this.record_id = record_id;
         this.price = price;
         this.number_of_tracks = number_of_tracks;
+        this.image = image;
     }
 
     public async create(req: Request, res: Response) {
@@ -29,6 +31,7 @@ class CD
                 name: this.name,
                 price: this.price,
                 number_of_tracks: this.number_of_tracks,
+                image: this.image
             };
 
             return newCD;
@@ -67,7 +70,7 @@ class CD
 
     public static async getByID(cd_id: number) {
         
-        const SQL = "SELECT cd.cd_id, cd.name, cd.price, cd.number_of_tracks, record_company.id FROM cd INNER JOIN record_company ON cd.record_company_id = record_company.id AND cd.cd_id = ?";
+        const SQL = "SELECT cd.cd_id, cd.name, cd.price, cd.number_of_tracks, cd.image, record_company.id FROM cd INNER JOIN record_company ON cd.record_company_id = record_company.id AND cd.cd_id = ?";
 
         const params = [cd_id];
 
@@ -99,9 +102,15 @@ class CD
             return false;
         }
 
-        const SQL = "UPDATE cd SET name = ?, price = ?, number_of_tracks = ? WHERE cd_id = ?";
+        let SQL = "UPDATE cd SET name = ?, price = ?, number_of_tracks = ? WHERE cd_id = ?";
 
-        const data = [this.name, this.price, this.number_of_tracks, id];
+        let data = [this.name, this.price, this.number_of_tracks, id];
+
+        if(this.image) {
+            let SQL = "UPDATE cd SET name = ?, price = ?, number_of_tracks = ?, image = ? WHERE cd_id = ?";
+
+            let data = [this.name, this.price, this.number_of_tracks, this.image, id];
+        }
 
         let status;
         console.log(data)

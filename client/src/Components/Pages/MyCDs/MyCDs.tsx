@@ -60,6 +60,8 @@ const MyCDs = () => {
             {cds.map((cd: any) => (
                 <div key={cd.cd_id}>
                     <h1>{cd.name}</h1>
+                    <h3>{cd.price}</h3>
+                    <p>{cd.number_of_tracks}</p>
                 </div>
             ))}
         </div>

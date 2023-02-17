@@ -13,6 +13,8 @@ export default class CDController {
 
         const { name, price, number_of_tracks } = req.body;
 
+        let image = '';
+
         // Validations
         if(!name) {
             return res.status(422).json({
@@ -32,6 +34,10 @@ export default class CDController {
             })
         }
 
+        if(req.file) {
+            image = req.file.filename
+        }
+
         // Check record Company if exist
         const token = getToken(req);
         const recordCompany: any = await getRecordCompanyByToken(token, res);
@@ -46,7 +52,8 @@ export default class CDController {
             recordCompany.id,
             name,
             price,
-            number_of_tracks
+            number_of_tracks,
+            image
         );
 
         try {
@@ -96,6 +103,8 @@ export default class CDController {
 
         const {cd_id} = req.params;
 
+        let image = '';
+
         const { name, price, number_of_tracks } = req.body;
 
           // Validations
@@ -125,13 +134,18 @@ export default class CDController {
             res.status(404).json({
                 message: "Gravadora nao encontrada"
             });
-        }        
+        }  
+
+        if(req.file) {
+            image = req.file.filename
+        }      
 
         const cd = new CD(
             recordCompany.id,
             name,
             price,
-            number_of_tracks
+            number_of_tracks,
+            image
         );
 
         const status = await cd.update(parseInt(cd_id));
