@@ -83,6 +83,30 @@ class Author {
 
     }
 
+    public static async getLastId() {
+
+        const SQL = 'SELECT id_author FROM author ORDER BY id_author DESC LIMIT 1';
+
+        let id_author;
+
+        await new Promise((resolve, reject) => {
+            pool.query(SQL, (_err: any, datas: any) => {
+                if(_err){
+                    reject('');
+                };
+                resolve(datas);
+            });
+        }).then((res: any) => {
+            id_author = res[0];
+        })
+        .catch((err: any) => {
+            id_author = false;
+        })
+
+        return id_author;
+
+    }
+
 }
 
 export default Author;

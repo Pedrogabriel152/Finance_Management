@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 // Model
 import Music from "../models/Music";
+import Author from "../models/Author";
 
 // Helpers
 import getRecordCompanyByToken from "../helpers/checkToken";
@@ -11,7 +12,7 @@ export default class MusicController {
 
     static async createMusic(req: Request, res: Response) {
 
-        const { name, duration, author } = req.body
+        const { name, duration } = req.body;
 
         // Check record Company if exist
         const token = getToken(req)
@@ -36,24 +37,15 @@ export default class MusicController {
             })
         }
 
-        if(!author){
-            return res.status(422).json({
-                message: "O autor e obrigatorio"
-            })
-        }
-
-        // const music = new Music({
-        //     name,
-        //     duration,
-        //     author,
-        //     recordCompany
-        // })
+        const music = new Music(name, duration)
 
         try {
 
-            // const newMusic = await music.save()
+            const authorLast: any = await Author.getLastId();
 
-            // console.log(newMusic)
+            const id_author = authorLast.id_author? authorLast.id_author : 1;
+
+            const newMusic = await music.create(id_author)
 
             res.status(200).json({
                 message: "Musica cadastrada com sucesso"
@@ -65,6 +57,16 @@ export default class MusicController {
             })
         }
 
+
+    }
+
+    public static async getAll(req: Request, res: Response) {
+
+        const musics = await Music.getAll();
+
+        return res.status(200).json({
+            musics
+        })
 
     }
 

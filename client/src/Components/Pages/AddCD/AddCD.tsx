@@ -9,6 +9,7 @@ import api from "../../../utils/api";
 // FORM Input
 import Input from "../../Layout/Input/Input";
 import RoundedImage from "../../Layout/RandleImage/RandleImage";
+import Modal from "../../Layout/Modal/Modal";
 
 const AddCD = () => {
 
@@ -16,7 +17,8 @@ const AddCD = () => {
     const [token] = useState<string | null>(localStorage.getItem('token'))
     const [preview, setPreview] = useState<any>()
     const [cd, setCd] = useState({} as any)
-    const musics = []
+    const [musics, setMusics] = useState([] as number[])
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
 
     useEffect(() => {
 
@@ -78,6 +80,8 @@ const AddCD = () => {
         }
     }
 
+    const selectMusics = () => isModalVisible? setIsModalVisible(false) : setIsModalVisible(true);
+    
     // useEffect(() => {
     //     for(let numberTrack of cd.number_of_tracks) {
     //         musics.push(
@@ -156,9 +160,8 @@ const AddCD = () => {
                         value={cd.number_of_tracks}
                     />
 
-                    <select>
-                        <option>Selecione as músicas</option>
-                    </select>
+                    <p onClick={selectMusics}>Selecionar músicas</p>
+                    {isModalVisible && <Modal setMusicsId={selectMusics} />}
                     
                     <input type="submit" value="Salvar" />
                 </form>
