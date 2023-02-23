@@ -14,7 +14,7 @@ const Modal = ({setMusicsId}: Props) => {
 
     const [musics, setMusics] = useState<any>([])
     const id_musics: any[] = [];
-    let music_check: number[];
+    const [music_check, setMusic_Check] = useState<any>([])
 
     useEffect(() => {
 
@@ -31,21 +31,17 @@ const Modal = ({setMusicsId}: Props) => {
     const marca = (e: React.ChangeEvent<HTMLInputElement>) => {
         const id = parseInt(e.target.id)
     
-        console.log(id)
+        console.log(typeof music_check)
 
         if(!e.target.checked) {
-            const music_check2 = music_check.filter(idF => (idF !== id))
+            const music_check2 = music_check.filter((idF: any) => (idF !== id))
 
-            music_check = music_check2
+            setMusic_Check(music_check2)
 
-            console.log(music_check)
+            console.log(music_check2 + 'jhfas')
         }
 
-        music_check.push(id)
-
-
-
-        console.log(music_check)
+        setMusic_Check(music_check + parseInt(e.target.id))
 
     }
 
