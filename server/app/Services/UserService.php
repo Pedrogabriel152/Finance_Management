@@ -18,7 +18,7 @@ class UserService{
                 ];
             }
 
-            $futureDate = strtotime("2 hours");
+            $futureDate = strtotime("8 hours");
             $expirationDate = new DateTime(date('Y-m-d H:i',$futureDate));
 
             $token = $newUser->createToken('Token',["*"], $expirationDate);
@@ -36,5 +36,9 @@ class UserService{
                 "message" => "Falha ao cadastrar usuário",
             ];
         }
+    }
+
+    public static function getUserById(int $id){
+        
     }
 }

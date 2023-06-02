@@ -2,9 +2,7 @@
 
 namespace App\GraphQL\Mutations;
 
-use DateTime;
 use App\Services\UserService;
-use App\Repositories\UserRepository;
 
 final class UserMutation
 {
