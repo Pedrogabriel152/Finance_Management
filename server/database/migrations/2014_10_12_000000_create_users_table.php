@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('cpf')->unique();
+            $table->string('cpf');
             $table->string('email')->unique();
             $table->string('address');
             $table->string('phone', 11);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('job_id')->constrained('jobs')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -34,3 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+

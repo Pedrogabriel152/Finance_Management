@@ -1,0 +1,12 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Job{
+    id: ID!
+    description: String
+    wage: String
+    establishment: String!
+    user_id: Int!
+    created_at: DateTime
+    updated_at: DateTime
+}

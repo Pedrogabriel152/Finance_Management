@@ -20,6 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'cpf',
+        'address',
+        'phone',
         'password',
     ];
 
@@ -42,4 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function jobs(){
+       return $this->hasMany(Job::class, 'user_id', 'id');
+    }
 }

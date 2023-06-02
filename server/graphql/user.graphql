@@ -1,0 +1,45 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type User {
+    id: ID!
+    name: String!
+    cpf: String!
+    email: String!
+    address: String!
+    phone: String!
+    password: String!
+    jobs: [Job]
+    email_verified_at: DateTime
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input UserInput {
+    name: String
+    cpf: String
+    email: String
+    address: String
+    phone: String
+    password: String
+}
+
+extend type Query{
+    user(id: ID!): User @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@createUser")
+}
+
+extend type Mutation{
+    createUser(user: UserInput!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@createUser")
+}
+
+interface Message{
+    code: Int!
+    message: String!
+}
+
+type AuthenticationStatus implements Message{
+    token: String
+    user_id: Int
+    code: Int!
+    message: String!
+}
