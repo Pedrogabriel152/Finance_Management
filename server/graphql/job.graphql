@@ -32,3 +32,7 @@ type CretatedJob implements MessageJob{
 extend type Mutation @guard{
     createJob(job: JobInput): CretatedJob! @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@createJob")
 }
+
+extend type Query @guard{
+    jobs(user_id: ID!): [Job]! @field(resolver: "App\\GraphQL\\Queries\\JobQuery@getJobs")
+}

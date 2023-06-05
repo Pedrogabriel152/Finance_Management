@@ -31,4 +31,9 @@ class JobService
         }
         
     }
+
+    public static function getJobs(int $id){
+        $jobs = JobRepository::getJobs($id);
+        return $jobs? $jobs : [];
+    }
 }

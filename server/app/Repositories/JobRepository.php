@@ -19,4 +19,9 @@ class JobRepository
             return $newJob;
         });
     }
+
+    public static function getJobs(int $id){
+        $jobs = Job::where('user_id', $id)->get();
+        return $jobs;
+    }
 }
