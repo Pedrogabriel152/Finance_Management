@@ -24,4 +24,8 @@ final class JobQuery
         $response = JobService::getJob($args);
         return $response;
     }
+
+    public function updateJob($_, array $args){
+        
+    }
 }
