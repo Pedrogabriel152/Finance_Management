@@ -25,7 +25,7 @@ input UserInput {
 }
 
 extend type Query{
-    user: User @auth(guards: ["sanctum"])
+    user: User @auth
     login(email: String!, password: String!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@login")
 }
 

@@ -12,7 +12,15 @@ final class UserQuery
      */
     public function __invoke($_, array $args)
     {
-        // TODO implement the resolver
+        // $user = User::where('email', $request->email)->first();
+ 
+        // if (! $user || ! Hash::check($request->password, $user->password)) {
+        //     throw ValidationException::withMessages([
+        //         'email' => ['The provided credentials are incorrect.'],
+        //     ]);
+        // }
+    
+        // return $user->createToken($request->device_name)->plainTextToken;
     }
 
     // public function getUser($_, array $args){

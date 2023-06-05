@@ -10,3 +10,24 @@ type Job{
     created_at: DateTime
     updated_at: DateTime
 }
+
+input JobInput{
+    description: String
+    wage: String
+    establishment: String
+    user_id: Int
+}
+
+interface MessageJob{
+    code: Int!
+    message: String!
+}
+
+type CretatedJob implements MessageJob{
+    code: Int!
+    message: String!
+}
+
+extend type Mutation{
+    createJob(job: JobInput): CretatedJob! @guard @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@createJob")
+}
