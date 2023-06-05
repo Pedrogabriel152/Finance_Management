@@ -4,7 +4,7 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 type Job{
     id: ID!
     description: String
-    wage: String
+    wage: String!
     establishment: String!
     user_id: Int!
     created_at: DateTime
@@ -13,9 +13,9 @@ type Job{
 
 input JobInput{
     description: String
-    wage: String
-    establishment: String
-    user_id: Int
+    wage: Float!
+    establishment: String!
+    user_id: Int!
 }
 
 interface MessageJob{
@@ -26,6 +26,7 @@ interface MessageJob{
 type CretatedJob implements MessageJob{
     code: Int!
     message: String!
+    job: Job
 }
 
 extend type Mutation @guard{
