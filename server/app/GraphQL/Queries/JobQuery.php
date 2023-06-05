@@ -19,4 +19,9 @@ final class JobQuery
         $response = JobService::getJobs($args['user_id']);
         return $response;
     }
+
+    public function getJob($_, array $args){
+        $response = JobService::getJob($args);
+        return $response;
+    }
 }

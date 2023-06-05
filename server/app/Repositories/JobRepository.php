@@ -24,4 +24,12 @@ class JobRepository
         $jobs = Job::where('user_id', $id)->get();
         return $jobs;
     }
+
+    public static function getJob(int $id, int $user_id){
+        $job = Job::where([
+            ['user_id','=', $user_id],
+            ['id', '=', $id]
+        ])->first();
+        return $job;
+    }
 }

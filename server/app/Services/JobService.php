@@ -36,4 +36,9 @@ class JobService
         $jobs = JobRepository::getJobs($id);
         return $jobs? $jobs : [];
     }
+
+    public static function getJob(array $args){
+        $job = JobRepository::getJob($args['id'], $args['user_id']);
+        return $job;
+    }
 }

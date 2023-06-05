@@ -35,4 +35,5 @@ extend type Mutation @guard{
 
 extend type Query @guard{
     jobs(user_id: ID!): [Job]! @field(resolver: "App\\GraphQL\\Queries\\JobQuery@getJobs")
+    job(id: ID!, user_id: ID!): Job! @field(resolver: "App\\GraphQL\\Queries\\JobQuery@getJob")
 }
