@@ -26,6 +26,7 @@ input UserInput {
 
 extend type Query{
     user: User @auth(guards: ["sanctum"])
+    login(email: String!, password: String!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@login")
 }
 
 extend type Mutation{

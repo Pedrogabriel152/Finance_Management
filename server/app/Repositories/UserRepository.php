@@ -9,7 +9,6 @@ class UserRepository {
     public static function create(array $args){
         return DB::transaction(function () use ($args){
             $hash = password_hash($args['user']['password'], PASSWORD_BCRYPT);
-            // dd($args['user']);
             $newUser = User::create([
                 "name" => $args['user']['name'],
                 "email" => $args['user']['email'],
@@ -19,9 +18,12 @@ class UserRepository {
                 "phone" => $args['user']['phone'],
             ]);
 
-            // dd($newUser);
-
             return $newUser;
         });
+    }
+
+    public static function getUser(string $email){
+        $user = User::whereEmail($email)->first();
+        return $user;
     }
 }

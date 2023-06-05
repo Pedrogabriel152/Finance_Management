@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Queries;
 
-use App\Repositories\UserRepository;
 use App\Services\UserService;
 
 final class UserQuery
@@ -16,8 +15,13 @@ final class UserQuery
         // TODO implement the resolver
     }
 
-    public function getUser($_, array $args){
-        $response = UserService::getUserById($args['id']);
+    // public function getUser($_, array $args){
+    //     $response = UserService::getUserById($args['id']);
+    //     return $response;
+    // }
+
+    public function login($_, array $args){
+        $response = UserService::login($args);
         return $response;
     }
 }

@@ -38,7 +38,30 @@ class UserService{
         }
     }
 
-    public static function getUserById(int $id){
+    public static function login(array $args){
+        $userExist = UserRepository::getUser($args['email']);
         
+        if(!$userExist){
+            return [
+                "code" => 404,
+                "message" => "E-mail ou senha incorreto",
+            ];
+        }
+
+        if(!password_verify($args['password'], $userExist->password)){
+            return [
+                "code" => 404,
+                "message" => "E-mail ou senha incorreto",
+            ];
+        }
+        
+        $token = TokenService::createToken($userExist);
+
+        return [
+            "code" => 200,
+            "message" => "Usuário logado com sucesso",
+            "token" => $token,
+            'user_id' => $userExist->id
+        ];
     }
 }
