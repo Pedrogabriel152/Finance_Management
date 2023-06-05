@@ -8,6 +8,21 @@ use App\Repositories\UserRepository;
 class UserService{
     public static function createUser(array $args){
         try {
+
+            if(strlen($args['user']['phone']) !== 11){
+                return [
+                    "code" => 402,
+                    "message" => "O campo celular tem que tem 11 digitos",
+                ];
+            }
+
+            if(strlen($args['user']['cpf']) !== 11){
+                return [
+                    "code" => 402,
+                    "message" => "O campo CPF tem que tem 11 digitos",
+                ];
+            }
+
             $newUser = UserRepository::create($args);
             // dd($newUser);
 

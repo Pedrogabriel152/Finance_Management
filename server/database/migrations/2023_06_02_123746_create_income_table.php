@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('establishment')->nullable(false);
             $table->integer('installments')->nullable(false);
-            $table->double('value_installment')->nullable(false);
+            $table->float('value_installment',10,2)->nullable(false);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

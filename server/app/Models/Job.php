@@ -10,4 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 class Job extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $fillable = [
+        'description',
+        'wage',
+        'establishment',
+        'user_id',
+    ];
 }

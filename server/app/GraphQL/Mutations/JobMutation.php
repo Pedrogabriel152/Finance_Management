@@ -2,6 +2,8 @@
 
 namespace App\GraphQL\Mutations;
 
+use App\Services\JobService;
+
 final class JobMutation
 {
     /**
@@ -15,6 +17,7 @@ final class JobMutation
 
     public static function createJob($_, array $args)
     {
-        dd($args);
+        $response = JobService::createJob($args);
+        return $response;
     }
 }

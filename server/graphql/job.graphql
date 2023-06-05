@@ -20,7 +20,7 @@ input JobInput{
 
 interface MessageJob{
     code: Int!
-    message: String!
+    message: String! 
 }
 
 type CretatedJob implements MessageJob{
@@ -28,6 +28,6 @@ type CretatedJob implements MessageJob{
     message: String!
 }
 
-extend type Mutation{
-    createJob(job: JobInput): CretatedJob! @guard @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@createJob")
+extend type Mutation @guard{
+    createJob(job: JobInput): CretatedJob! @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@createJob")
 }
