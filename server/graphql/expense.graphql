@@ -8,6 +8,7 @@ type Expense {
     establishment: String!
     installments: Int!
     value_installment: Float!
+    expires: DateTime!
     user_id: Int!
     created_at: DateTime
     updated_at: DateTime
@@ -19,6 +20,7 @@ input ExpenseInput{
     establishment: String!
     installments: Int!
     value_installment: Float!
+    expires: DateTime!
     user_id: Int!
 }
 

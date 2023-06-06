@@ -15,6 +15,7 @@ class Expense extends Model
         'establishment',
         'installments',
         'value_installment',
+        'expires',
         'user_id',
     ];
 }

@@ -21,4 +21,8 @@ class ExpenseRepository
             return $newExpense;
         });
     }
+
+    public static function getExpenses(array $args){
+        
+    }
 }
