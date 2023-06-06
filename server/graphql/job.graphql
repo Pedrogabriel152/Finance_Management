@@ -23,14 +23,15 @@ interface MessageJob{
     message: String! 
 }
 
-type CretatedJob implements MessageJob{
+type MessageResponseJob implements MessageJob{
     code: Int!
     message: String!
     job: Job
 }
 
 extend type Mutation @guard{
-    createJob(job: JobInput): CretatedJob! @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@createJob")
+    createJob(job: JobInput): MessageResponseJob! @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@createJob")
+    updateJob(id: ID!, user_id: ID!, job: JobInput!): MessageResponseJob! @field(resolver: "App\\GraphQL\\Mutations\\JobMutation@updateJob")
 }
 
 extend type Query @guard{

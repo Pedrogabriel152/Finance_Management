@@ -41,4 +41,31 @@ class JobService
         $job = JobRepository::getJob($args['id'], $args['user_id']);
         return $job;
     }
+
+    public static function updateJob(array $args){
+        try {
+            $jobExist = JobRepository::getJob($args['id'], $args['user_id']);
+            
+            if(!$jobExist){
+                return [
+                    'code' => 404,
+                    'message' => 'Trabalho não encontrado!'
+                ];
+            }
+
+            $jobUpdate = JobRepository::updateJob($args['job'], $jobExist);
+
+            return [
+                'code' => 200,
+                'message' => "Trabalho editado com sucesso!",
+                'job' => $jobUpdate 
+             ];
+
+        } catch (\Throwable $th) {
+            return [
+                'code' => 500,
+                'message' => "Erro ao atualizar o trabalho!" 
+             ];
+        }
+    }
 }

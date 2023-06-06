@@ -32,4 +32,15 @@ class JobRepository
         ])->first();
         return $job;
     }
+
+    public static function updateJob(array $args, object $jobExist){
+        return DB::transaction(function () use($args, $jobExist){
+            $jobExist->description = $args['description']? $args['description'] : '';
+            $jobExist->wage = $args['wage'];
+            $jobExist->user_id = $args['user_id'];
+            $jobExist->establishment = $args['establishment'];
+            $jobExist->save();
+            return $jobExist;
+        });
+    }
 }

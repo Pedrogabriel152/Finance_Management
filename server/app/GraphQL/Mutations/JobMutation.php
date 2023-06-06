@@ -20,4 +20,10 @@ final class JobMutation
         $response = JobService::createJob($args);
         return $response;
     }
+
+    public static function updateJob($_, array $args)
+    {
+        $response = JobService::updateJob($args);
+        return $response;
+    }
 }
