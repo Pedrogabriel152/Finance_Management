@@ -26,4 +26,10 @@ final class JobMutation
         $response = JobService::updateJob($args);
         return $response;
     }
+
+    public function deleteJob($_, array $args)
+    {
+        $response = JobService::deleteJob($args['id'], $args['user_id']);
+        return $response;
+    }
 }

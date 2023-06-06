@@ -68,4 +68,28 @@ class JobService
              ];
         }
     }
+
+    public static function deleteJob(int $id, int $user_id){
+        try {
+            $jobExist = JobRepository::getJob($id, $user_id);
+
+            if(!$jobExist){
+                return [
+                    'code' => 404,
+                    'message' => "Trabalho não encontrado!" 
+                ];
+            }
+
+            $jobExist->delete();
+            return [
+                'code' => 200,
+                'message' => "Trabalho deletado com!" 
+            ];
+        } catch (\Throwable $th) {
+            return [
+                'code' => 500,
+                'message' => "Erro ao deletar o trabalho!" 
+             ];
+        }
+    }
 }

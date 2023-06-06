@@ -1,0 +1,38 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Expense {
+    id: ID!
+    description: String
+    merchandise_purchased: String!
+    establishment: String!
+    installments: Int!
+    value_installment: Float!
+    user_id: Int!
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+input ExpenseInput{
+    description: String
+    merchandise_purchased: String!
+    establishment: String!
+    installments: Int!
+    value_installment: Float!
+    user_id: Int!
+}
+
+interface MessageExpense{
+    code: Int!
+    message: String! 
+}
+
+type MessageResponseExpense implements MessageExpense{
+    code: Int!
+    message: String!
+    expense: Expense
+}
+
+extend type Mutation @guard{
+    createExpense(expense: ExpenseInput!): MessageResponseExpense! @field(resolver:                 "App\\GraphQL\\Mutations\\ExpenseMutation@createExpense")
+}

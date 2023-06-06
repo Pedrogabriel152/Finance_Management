@@ -21,7 +21,7 @@ class JobRepository
     }
 
     public static function getJobs(int $id){
-        $jobs = Job::where('user_id', $id)->get();
+        $jobs = Job::where('user_id', $id)->orderBy('created_at','desc')->get();
         return $jobs;
     }
 
