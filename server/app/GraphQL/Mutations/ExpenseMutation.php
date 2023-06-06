@@ -2,6 +2,8 @@
 
 namespace App\GraphQL\Mutations;
 
+use App\Services\ExpenseService;
+
 final class ExpenseMutation
 {
     /**
@@ -15,6 +17,7 @@ final class ExpenseMutation
 
     public function createExpense($_, array $args)
     {
-        dd($args);
+        $response = ExpenseService::createExpense($args);
+        return $response;
     }
 }
