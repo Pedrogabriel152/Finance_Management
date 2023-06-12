@@ -39,7 +39,8 @@ class ExpenseRepository
     public static function getExpenses(array $args){
         return DB::transaction(function () use($args){
             $expenses = Expense::where([
-                ['user_id', '=', $args['user_id']]
+                ['user_id', '=', $args['user_id']],
+                ['installments_paid', '=', false]
             ])->orderBy('created_at', 'desc')->paginate(15);
             
             return $expenses;
@@ -82,8 +83,14 @@ class ExpenseRepository
     public static function getTotalExpenses(int $user_id){
         return DB::transaction(function () use($user_id){
             $totalExpenses = [];
-            $totalExpense = Expense::where('user_id', $user_id)->count();
-            $totalValue = Expense::where('user_id', $user_id)->sum('value_installment');
+            $totalExpense = Expense::where([
+                ['user_id', '=', $user_id],
+                ['installments_paid', '=', false]
+            ])->count();
+            $totalValue = Expense::where([
+                ['user_id', '=', $user_id],
+                ['installments_paid', '=', false]
+            ])->sum('value_installment');
             $totalExpenses['totalExpenses'] = $totalExpense;
             $totalExpenses['total'] = $totalValue;
       
