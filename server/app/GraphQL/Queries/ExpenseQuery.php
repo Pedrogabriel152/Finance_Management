@@ -20,4 +20,10 @@ final class ExpenseQuery
         $response = ExpenseService::getExpense($args);
         return $response;
     }
+
+    public function getExpenses($_, array $args)
+    {
+        $response = ExpenseService::getExpenses($args);
+        return $response;
+    }
 }

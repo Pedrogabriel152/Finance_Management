@@ -37,7 +37,13 @@ class ExpenseRepository
     }
 
     public static function getExpenses(array $args){
-
+        return DB::transaction(function () use($args){
+            $expenses = Expense::where([
+                ['user_id', '=', $args['user_id']]
+            ])->orderBy('created_at', 'desc')->paginate(15);
+            
+            return $expenses;
+        });
     }
 
     public static function updatePayInstallment(object $expense){

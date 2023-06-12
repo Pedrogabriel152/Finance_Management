@@ -60,6 +60,21 @@ class ExpenseService
         }
     }
 
+    public static function getExpenses(array $args){
+        try {
+            $expenses = ExpenseRepository::getExpenses($args);
+
+            if(!$expenses){
+                return [];
+            }
+
+            return $expenses;
+
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+
     public static function payInstallment(array $args){
         try {
             $expense = ExpenseRepository::getExpense($args);
