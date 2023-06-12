@@ -2,7 +2,9 @@
 
 namespace App\GraphQL\Queries;
 
-final class ExpensesQuery
+use App\Services\ExpenseService;
+
+final class ExpenseQuery
 {
     /**
      * @param  null  $_
@@ -11,5 +13,11 @@ final class ExpensesQuery
     public function __invoke($_, array $args)
     {
         // TODO implement the resolver
+    }
+
+    public function getExpense($_, array $args)
+    {
+        $response = ExpenseService::getExpense($args);
+        return $response;
     }
 }

@@ -25,7 +25,33 @@ class ExpenseRepository
         });
     }
 
+    public static function getExpense(array $args){
+        return DB::transaction(function () use($args){
+            $expense = Expense::where([
+                ['id', '=', $args['id']],
+                ['user_id', '=', $args['user_id']]
+            ])->first();
+            
+            return $expense;
+        });
+    }
+
     public static function getExpenses(array $args){
 
+    }
+
+    public static function updatePayInstallment(object $expense){
+        return DB::transaction(function () use($expense){
+            $updateExpense = $expense;
+            $updateExpense->installments_paid = $expense->installments_paid + 1;
+
+            if($updateExpense->installments_paid === $updateExpense->installments){
+                $updateExpense->paid_expense = true;
+            }
+
+            $updateExpense->save();
+    
+            return $updateExpense;
+        });
     }
 }

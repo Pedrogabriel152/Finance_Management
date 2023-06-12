@@ -9,6 +9,8 @@ type Expense {
     installments: Int!
     value_installment: Float!
     expires: String!
+    installments_paid: Int!
+    paid_expense: Boolean!
     user_id: Int!
     created_at: DateTime
     updated_at: DateTime
@@ -21,6 +23,7 @@ input ExpenseInput{
     installments: Int!
     value_installment: Float!
     expires: String!
+    installments_paid: Int!
     user_id: Int!
 }
 
@@ -35,6 +38,11 @@ type MessageResponseExpense implements MessageExpense{
     expense: Expense
 }
 
+extend type Query @guard{
+    expense(id: ID!, user_id: ID!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpense")
+}
+
 extend type Mutation @guard{
-    createExpense(expense: ExpenseInput!): MessageResponseExpense! @field(resolver:                 "App\\GraphQL\\Mutations\\ExpenseMutation@createExpense")
+    createExpense(expense: ExpenseInput!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Mutations\\ExpenseMutation@createExpense")
+    payInstallment(id: ID!, user_id: ID!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Mutations\\ExpenseMutation@payInstallment")
 }
