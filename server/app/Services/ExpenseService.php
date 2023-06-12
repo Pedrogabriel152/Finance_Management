@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Repositories\ExpenseRepository;
+use DateTime;
+
+date_default_timezone_set('America/Sao_Paulo');
 
 class ExpenseService
 {
@@ -16,6 +19,8 @@ class ExpenseService
                     'message' => 'Falha ao cadastrar a despesa!'
                 ];
             }
+            $dateExpires = $newExpense->expires->format("d/m/Y H:i:s");
+            $newExpense->expires = $dateExpires;
 
             return [
                 'code' => 200,
@@ -26,7 +31,7 @@ class ExpenseService
         } catch (\Throwable $th) {
             return [
                 'code' => 500,
-                'message' => 'Falha ao cadastrar a despesa!'
+                'message' => $th->getMessage()
             ];
         }
     }
