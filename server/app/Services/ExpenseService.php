@@ -109,4 +109,37 @@ class ExpenseService
             ];
         }
     }
+
+    public static function editExpense(array $args){
+        $expense = ExpenseRepository::getExpense($args);
+
+        if(!$expense) {
+            return [
+                'code' => 404,
+                'message' => 'Despesa não encontrada!'
+            ];
+        }
+
+        $editExpense = ExpenseRepository::editExpense($args['expense'], $expense);
+        $dateExpires = $editExpense->expires->format("d/m/Y H:i:s");
+        $editExpense->expires = $dateExpires;
+
+        if(!$editExpense) {
+            return [
+                'code' => 500,
+                'message' => 'Erro ao atualizar a despesa!'
+            ];
+        }
+
+        return [
+            'code' => 200,
+            'message' => 'Despesa atualizada com sucesso!',
+            'expense' => $editExpense
+        ];
+    }
+
+    public static function getTotalExpenses(int $user_id){
+        $expenses = ExpenseRepository::getTotalExpenses($user_id);
+        return $expenses;
+    }
 }

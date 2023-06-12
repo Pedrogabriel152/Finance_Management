@@ -60,4 +60,34 @@ class ExpenseRepository
             return $updateExpense;
         });
     }
+
+    public static function editExpense(array $args, object $expense){
+        return DB::transaction(function () use($args, $expense){
+            $dateExpires = new DateTime($args['expires']);
+            $editExpense = $expense;
+            $editExpense->description = $args['description']? $args['description'] : '';
+            $editExpense->merchandise_purchased = $args['merchandise_purchased'];
+            $editExpense->establishment = $args['establishment'];
+            $editExpense->installments = $args['installments'];
+            $editExpense->value_installment = $args['value_installment'];
+            $editExpense->installments_paid = $args['installments_paid'] > $args['installments']? $args['installments'] : $args['installments_paid'];
+            $editExpense->expires = $dateExpires;
+            $editExpense->paid_expense = $args['installments_paid'] >= $args['installments']? true: false;
+            $editExpense->save();
+
+            return $editExpense;
+        });
+    }
+
+    public static function getTotalExpenses(int $user_id){
+        return DB::transaction(function () use($user_id){
+            $totalExpenses = [];
+            $totalExpense = Expense::where('user_id', $user_id)->count();
+            $totalValue = Expense::where('user_id', $user_id)->sum('value_installment');
+            $totalExpenses['totalExpenses'] = $totalExpense;
+            $totalExpenses['total'] = $totalValue;
+      
+            return $totalExpenses;
+        });
+    }
 }

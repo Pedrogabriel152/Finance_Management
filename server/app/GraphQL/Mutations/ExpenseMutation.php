@@ -26,4 +26,10 @@ final class ExpenseMutation
         $response = ExpenseService::payInstallment($args);
         return $response;
     }
+
+    public function editExpense($_, array $args)
+    {
+        $response = ExpenseService::editExpense($args);
+        return $response;
+    }
 }

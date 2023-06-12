@@ -26,4 +26,10 @@ final class ExpenseQuery
         $response = ExpenseService::getExpenses($args);
         return $response;
     }
+
+    public function getTotalExpenses($_, array $args)
+    {
+        $response = ExpenseService::getTotalExpenses($args['user_id']);
+        return $response;
+    }
 }
