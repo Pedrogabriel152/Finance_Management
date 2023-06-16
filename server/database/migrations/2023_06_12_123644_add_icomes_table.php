@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('incomes', function (Blueprint $table) {
-            $table->integer('installments_paid')->nullable(false)->default(0);
-            $table->boolean('paid_expense')->nullable(false)->default(false);
+            $table->integer('installments_received')->nullable(false)->default(0);
+            $table->boolean('received_income')->nullable(false)->default(false);
             $table->date('expires')->default('01-01-2023');
         });
     }
@@ -24,8 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('incomes', function (Blueprint $table) {
-            $table->dropColumn('installments_paid');
-            $table->dropColumn('paid_expense');
+            $table->dropColumn('installments_received');
+            $table->dropColumn('received_income');
             $table->dropColumn('expires');
         });
     }

@@ -11,13 +11,12 @@ class Income extends Model
 
     protected $fillable = [
         'description',
-        'merchandise_purchased',
         'establishment',
         'installments',
         'value_installment',
         'expires',
-        'installments_paid',
-        'paid_expense',
+        'installments_received',
+        'received_income',
         'user_id',
     ];
 }

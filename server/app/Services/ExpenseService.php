@@ -11,7 +11,7 @@ class ExpenseService
     public static function createExpense(array $args){
         try {
             $newExpense = ExpenseRepository::createExpense($args);
-
+           
             if(!$newExpense){
                 return [
                     'code' => 500,
@@ -30,7 +30,7 @@ class ExpenseService
         } catch (\Throwable $th) {
             return [
                 'code' => 500,
-                'message' => 'Falha ao cadastrar a despesa!'
+                'message' => $th->getMessage()
             ];
         }
     }
@@ -141,5 +141,25 @@ class ExpenseService
     public static function getTotalExpenses(int $user_id){
         $expenses = ExpenseRepository::getTotalExpenses($user_id);
         return $expenses;
+    }
+
+    public static function updateDateExpire(object $updateExpense){
+        $dateExpires = explode("-", $updateExpense->expires);
+            $month = intval($dateExpires[1]) + 1;
+
+        if($month >= 12) {
+            $month = 1;
+            $dateExpires[0] = intval($dateExpires[0] + 1);
+        }
+
+        if($month == 2 && intval($dateExpires[2]) > 28){
+            $dateExpires[2] = 28;
+        }
+
+        $newDateExpires = $dateExpires[0].'-0'.$month.'-'. $dateExpires[2];
+        if($month >= 10){
+            $newDateExpires = $dateExpires[0].'-'.$month.'-'. $dateExpires[2];
+        }
+        return $newDateExpires;
     }
 }

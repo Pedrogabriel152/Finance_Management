@@ -1,3 +1,4 @@
 #import job.graphql
 #import user.graphql
 #import expense.graphql
+#import income.graphql
