@@ -19,8 +19,6 @@ class IncomeRepository
                 'user_id' => $args['user_id']
             ]);
 
-            dd($newIncome);
-
             return $newIncome;
         });
     }

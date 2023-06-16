@@ -30,7 +30,7 @@ class ExpenseService
         } catch (\Throwable $th) {
             return [
                 'code' => 500,
-                'message' => $th->getMessage()
+                'message' => 'Falha ao cadastrar a despesa!'
             ];
         }
     }
