@@ -52,9 +52,11 @@ class ExpenseRepository
         return DB::transaction(function () use($expense){
             $updateExpense = $expense;
             $updateExpense->installments_paid = $expense->installments_paid + 1;
-            
-            $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
-            $updateExpense->expires = $newDateExpires;
+
+            if(!$updateExpense->paid_expense){
+                $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
+                $updateExpense->expires = $newDateExpires;
+            }
 
             if($updateExpense->installments_paid === $updateExpense->installments){
                 $updateExpense->paid_expense = true;
