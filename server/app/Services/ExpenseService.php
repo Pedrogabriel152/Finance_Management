@@ -79,8 +79,8 @@ class ExpenseService
     }
 
     // Search service an incomes open
-    public static function getIncomesOpen(array $args){
-        $incomes = IncomeRepository::getIncomesOpen($args);
+    public static function getExpensesOpen(array $args){
+        $incomes = ExpenseRepository::getExpensesOpen($args);
         
         if(!$incomes){
             return [];
@@ -90,8 +90,8 @@ class ExpenseService
     }
 
     // Search service an incomes close
-    public static function getIncomesClose(array $args){
-        $incomes = IncomeRepository::getIncomesClose($args);
+    public static function getExpensesClose(array $args){
+        $incomes = ExpenseRepository::getExpensesClose($args);
         
         if(!$incomes){
             return [];
