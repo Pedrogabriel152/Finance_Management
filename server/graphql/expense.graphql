@@ -14,7 +14,7 @@ type Expense {
     user_id: Int!
     created_at: DateTime
     updated_at: DateTime
-}
+} 
 
 input ExpenseInput{
     description: String
