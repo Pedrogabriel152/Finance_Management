@@ -47,6 +47,8 @@ type TotalExpenses{
 extend type Query @guard{
     expense(id: ID!, user_id: ID!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpense")
     expenses(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpenses")
+    expensesClose(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesClose")
+    expensesOpen(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesOpen")
     totalExpenses(user_id: ID!): TotalExpenses! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getTotalExpenses")
 }
 

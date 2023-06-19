@@ -21,4 +21,25 @@ final class IncomeQuery
         $response = IncomeService::getIncome($args);
         return $response;
     }
+
+    // Search for an Incomes
+    public function getIncomes($_, array $args)
+    {
+        $response = IncomeService::getIncomes($args);
+        return $response;
+    }
+
+    // Search for an Incomes open
+    public function getIncomesOpen($_, array $args)
+    {
+        $response = IncomeService::getIncomesOpen($args);
+        return $response;
+    }
+
+    // Search for an Incomes close
+    public function getIncomesClose($_, array $args)
+    {
+        $response = IncomeService::getIncomesClose($args);
+        return $response;
+    }
 }

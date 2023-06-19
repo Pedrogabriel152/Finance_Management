@@ -38,6 +38,41 @@ class IncomeRepository
         });
     }
 
+    // Search the database for an incomes
+    public static function getIncomes(array $args){
+        return DB::transaction(function () use($args) {
+            $incomes = Income::where([
+                ['user_id', '=', $args['user_id']]
+            ])->orderBy('created_at', 'desc')->paginate(15);
+
+            return $incomes;
+        });
+    }
+
+    // Search the database for an incomes open
+    public static function getIncomesOpen(array $args){
+        return DB::transaction(function () use($args) {
+            $incomes = Income::where([
+                ['user_id', '=', $args['user_id']],
+                ['received_income', '=', false]
+            ])->orderBy('created_at', 'desc')->paginate(15);
+
+            return $incomes;
+        });
+    }
+
+    // Search the database for an incomes close
+    public static function getIncomesClose(array $args){
+        return DB::transaction(function () use($args) {
+            $incomes = Income::where([
+                ['user_id', '=', $args['user_id']],
+                ['received_income', '=', true]
+            ])->orderBy('created_at', 'desc')->paginate(15);
+
+            return $incomes;
+        });
+    }
+
     // Save an updated Income to the database
     public static function updateIncome(object $income, array $args){
         return DB::transaction(function () use($income, $args){

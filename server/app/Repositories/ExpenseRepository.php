@@ -43,11 +43,34 @@ class ExpenseRepository
     public static function getExpenses(array $args){
         return DB::transaction(function () use($args){
             $expenses = Expense::where([
-                ['user_id', '=', $args['user_id']],
-                ['installments_paid', '=', false]
+                ['user_id', '=', $args['user_id']]
             ])->orderBy('created_at', 'desc')->paginate(15);
             
             return $expenses;
+        });
+    }
+
+    // Search the database for an expenses open
+    public static function getExpensesOpen(array $args){
+        return DB::transaction(function () use($args) {
+            $incomes = Expense::where([
+                ['user_id', '=', $args['user_id']],
+                ['paid_expense', '=', false]
+            ])->orderBy('created_at', 'desc')->paginate(15);
+
+            return $incomes;
+        });
+    }
+
+    // Search the database for an expenses close
+    public static function getExpensesClose(array $args){
+        return DB::transaction(function () use($args) {
+            $incomes = Expense::where([
+                ['user_id', '=', $args['user_id']],
+                ['paid_expense', '=', true]
+            ])->orderBy('created_at', 'desc')->paginate(15);
+
+            return $incomes;
         });
     }
 

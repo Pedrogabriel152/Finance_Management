@@ -78,6 +78,28 @@ class ExpenseService
         }
     }
 
+    // Search service an incomes open
+    public static function getIncomesOpen(array $args){
+        $incomes = IncomeRepository::getIncomesOpen($args);
+        
+        if(!$incomes){
+            return [];
+        }
+
+        return $incomes;
+    }
+
+    // Search service an incomes close
+    public static function getIncomesClose(array $args){
+        $incomes = IncomeRepository::getIncomesClose($args);
+        
+        if(!$incomes){
+            return [];
+        }
+
+        return $incomes;
+    }
+
     // Paid installment upgrade service
     public static function payInstallment(array $args){
         try {

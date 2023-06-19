@@ -29,6 +29,20 @@ final class ExpenseQuery
         return $response;
     }
 
+    // Search for an Incomes open
+    public function getExpensesOpen($_, array $args)
+    {
+        $response = ExpenseService::getExpensesOpen($args);
+        return $response;
+    }
+
+    // Search for an Incomes close
+    public function getExpensesClose($_, array $args)
+    {
+        $response = ExpenseService::getExpensesClose($args);
+        return $response;
+    }
+
     // Search for total Expense amounts
     public function getTotalExpenses($_, array $args)
     {
