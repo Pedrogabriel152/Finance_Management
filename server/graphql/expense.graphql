@@ -15,7 +15,7 @@ type Expense {
     created_at: DateTime
     updated_at: DateTime
 } 
-
+ 
 input ExpenseInput{
     description: String
     merchandise_purchased: String!
