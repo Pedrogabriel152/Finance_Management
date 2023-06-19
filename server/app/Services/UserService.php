@@ -6,6 +6,7 @@ use DateTime;
 use App\Repositories\UserRepository;
 
 class UserService{
+    // User creation service
     public static function createUser(array $args){
         try {
 
@@ -53,6 +54,7 @@ class UserService{
         }
     }
 
+    // Login service
     public static function login(array $args){
         $userExist = UserRepository::getUser($args['email']);
         

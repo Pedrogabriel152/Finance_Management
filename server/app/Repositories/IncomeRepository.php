@@ -4,9 +4,12 @@ namespace App\Repositories;
 
 use DateTime;
 use App\Models\Income;
+use App\Services\IncomeService;
 use Illuminate\Support\Facades\DB;
+
 class IncomeRepository
 {
+    // Save a new Income in the database
     public static function create(array $args){
         return DB::transaction(function () use($args) {
             $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
@@ -23,6 +26,7 @@ class IncomeRepository
         });
     }
 
+    // Search the database for an income
     public static function getIncome(array $args){
         return DB::transaction(function () use($args) {
             $income = Income::where([
@@ -34,6 +38,7 @@ class IncomeRepository
         });
     }
 
+    // Save an updated Income to the database
     public static function updateIncome(object $income, array $args){
         return DB::transaction(function () use($income, $args){
             $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
@@ -47,6 +52,27 @@ class IncomeRepository
             $updateIncome->received_income = $args['received_income'] ? $args['received_income'] : $income->received_income;
             $updateIncome->user_id = $income->user_id;
             $updateIncome->save();
+            return $updateIncome;
+        });
+    }
+
+    // Save an updated Income to the database
+    public static function updatePayInstallment(object $income){
+        return DB::transaction(function () use($income){
+            $updateIncome = $income;
+            $updateIncome->installments_received = $income->installments_received + 1;
+
+            if(!$updateIncome->received_income){
+                $newDateExpires = IncomeService::updateDateExpire($updateIncome);
+                $updateIncome->expires = $newDateExpires;
+            }
+
+            if($updateIncome->installments_received === $updateIncome->installments){
+                $updateIncome->received_income = true;
+            }
+
+            $updateIncome->save();
+    
             return $updateIncome;
         });
     }

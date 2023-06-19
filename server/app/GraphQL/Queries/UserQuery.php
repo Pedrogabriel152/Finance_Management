@@ -23,6 +23,7 @@ final class UserQuery
         // return $user->createToken($request->device_name)->plainTextToken;
     }
 
+    // Login for an User
     public function login($_, array $args){
         $response = UserService::login($args);
         return $response;

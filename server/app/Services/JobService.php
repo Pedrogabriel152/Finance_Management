@@ -6,6 +6,7 @@ use App\Repositories\JobRepository;
 
 class JobService
 {
+    // Job creation service
     public static function createJob(array $args){
         try {
             $newJob = JobRepository::create($args);
@@ -32,16 +33,19 @@ class JobService
         
     }
 
+    // Search service an jobs
     public static function getJobs(int $id){
         $jobs = JobRepository::getJobs($id);
         return $jobs? $jobs : [];
     }
 
+    // Search service an job
     public static function getJob(array $args){
         $job = JobRepository::getJob($args['id'], $args['user_id']);
         return $job;
     }
 
+    // Job update service
     public static function updateJob(array $args){
         try {
             $jobExist = JobRepository::getJob($args['id'], $args['user_id']);
@@ -69,6 +73,7 @@ class JobService
         }
     }
 
+    // Job deletion service
     public static function deleteJob(int $id, int $user_id){
         try {
             $jobExist = JobRepository::getJob($id, $user_id);

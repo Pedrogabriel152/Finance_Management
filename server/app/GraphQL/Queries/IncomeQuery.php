@@ -15,6 +15,7 @@ final class IncomeQuery
         // TODO implement the resolver
     }
 
+    // Search for an Income
     public function getIncome($_, array $args)
     {
         $response = IncomeService::getIncome($args);

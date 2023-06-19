@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class ExpenseRepository
 {
+    // Save a new Expense in the database
     public static function createExpense(array $args){
         return DB::transaction(function () use($args){
             $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
@@ -26,6 +27,7 @@ class ExpenseRepository
         });
     }
 
+    // Search the database for an expense
     public static function getExpense(array $args){
         return DB::transaction(function () use($args){
             $expense = Expense::where([
@@ -37,6 +39,7 @@ class ExpenseRepository
         });
     }
 
+    // Search the database for an expenses
     public static function getExpenses(array $args){
         return DB::transaction(function () use($args){
             $expenses = Expense::where([
@@ -48,6 +51,7 @@ class ExpenseRepository
         });
     }
 
+    // Save an updated Expense to the database
     public static function updatePayInstallment(object $expense){
         return DB::transaction(function () use($expense){
             $updateExpense = $expense;
@@ -68,6 +72,7 @@ class ExpenseRepository
         });
     }
 
+    // Save an updated Expense to the database
     public static function editExpense(array $args, object $expense){
         return DB::transaction(function () use($args, $expense){
             $dateExpires = new DateTime($args['expires']);
@@ -86,6 +91,7 @@ class ExpenseRepository
         });
     }
 
+    // Search for total Expense amounts
     public static function getTotalExpenses(int $user_id){
         return DB::transaction(function () use($user_id){
             $totalExpenses = [];

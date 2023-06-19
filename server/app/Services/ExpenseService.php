@@ -8,6 +8,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class ExpenseService
 {
+    // Expense creation service
     public static function createExpense(array $args){
         try {
             $newExpense = ExpenseRepository::createExpense($args);
@@ -35,6 +36,7 @@ class ExpenseService
         }
     }
 
+    // Search service an expense
     public static function getExpense(array $args){
         try {
             $expense = ExpenseRepository::getExpense($args);
@@ -60,6 +62,7 @@ class ExpenseService
         }
     }
 
+    // Search service an expenses
     public static function getExpenses(array $args){
         try {
             $expenses = ExpenseRepository::getExpenses($args);
@@ -75,6 +78,7 @@ class ExpenseService
         }
     }
 
+    // Paid installment upgrade service
     public static function payInstallment(array $args){
         try {
             $expense = ExpenseRepository::getExpense($args);
@@ -110,6 +114,7 @@ class ExpenseService
         }
     }
 
+    // Expense update service
     public static function editExpense(array $args){
         $expense = ExpenseRepository::getExpense($args);
 
@@ -138,16 +143,18 @@ class ExpenseService
         ];
     }
 
+    // Total expense search service
     public static function getTotalExpenses(int $user_id){
         $expenses = ExpenseRepository::getTotalExpenses($user_id);
         return $expenses;
     }
 
+    // Expiration date update service
     public static function updateDateExpire(object $updateExpense){
         $dateExpires = explode("-", $updateExpense->expires);
             $month = intval($dateExpires[1]) + 1;
 
-        if($month >= 12) {
+        if($month > 12) {
             $month = 1;
             $dateExpires[0] = intval($dateExpires[0] + 1);
         }

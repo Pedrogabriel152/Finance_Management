@@ -15,15 +15,25 @@ final class IncomeMutation
         // TODO implement the resolver
     }
 
+    // Create Income
     public function createIncome($_, array $args)
     {
         $response = IncomeService::createIncome($args);
         return $response;
     }
 
+    // Update Income
     public function editIncome($_, array $args)
     {
         $response = IncomeService::editIncome($args);
         return $response;
     }
+
+    // Update Installment paid
+    public function payInstallment($_, array $args)
+    {
+        $response = IncomeService::payInstallment($args);
+        return $response;
+    }
+    
 }

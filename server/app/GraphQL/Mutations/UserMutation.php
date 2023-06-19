@@ -15,6 +15,7 @@ final class UserMutation
         // TODO implement the resolver
     }
 
+    // Create new User
     public function createUser($_, array $args){
         $response = UserService::createUser($args);
         return $response;        

@@ -15,16 +15,19 @@ final class JobQuery
         // TODO implement the resolver
     }
 
+    // Search for an Jobs
     public function getJobs($_, array $args){
         $response = JobService::getJobs($args['user_id']);
         return $response;
     }
 
+    // Search for an Job
     public function getJob($_, array $args){
         $response = JobService::getJob($args);
         return $response;
     }
 
+    // Update Job
     public function updateJob($_, array $args){
         
     }

@@ -52,6 +52,6 @@ extend type Query @guard{
 
 extend type Mutation @guard{
     createExpense(expense: ExpenseInput!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Mutations\\ExpenseMutation@createExpense")
-    payInstallment(id: ID!, user_id: ID!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Mutations\\ExpenseMutation@payInstallment")
+    payInstallmentExpense(id: ID!, user_id: ID!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Mutations\\ExpenseMutation@payInstallment")
     editExpense(id:ID!, user_id: ID!, expense: ExpenseInput!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Mutations\\ExpenseMutation@editExpense")
 }
