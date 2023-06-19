@@ -20,4 +20,10 @@ final class IncomeMutation
         $response = IncomeService::createIncome($args);
         return $response;
     }
+
+    public function editIncome($_, array $args)
+    {
+        $response = IncomeService::editIncome($args);
+        return $response;
+    }
 }

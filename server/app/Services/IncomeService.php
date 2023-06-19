@@ -21,9 +21,56 @@ class IncomeService
 
         return [
             'code' => 200,
-            'message' => 'Despesa cadastrada com sucesso',
+            'message' => 'Renda cadastrada com sucesso',
             'income' => $newIncome
         ];
 
+    }
+
+    public static function getIncome(array $args){
+        $income = IncomeRepository::getIncome($args);
+        
+        if(!$income){
+            return [
+                'code' => 404,
+                'message' => 'Renda não encontrada'
+            ];
+        }
+
+        return [
+            'code' => 200,
+            'message' => 'Renda encontrada',
+            'income' => $income
+        ];
+    }
+
+    public static function editIncome(array $args){
+        $income = IncomeRepository::getIncome($args);
+        
+        if(!$income){
+            return [
+                'code' => 404,
+                'message' => 'Renda não encontrada'
+            ];
+        }
+
+        try {
+            $updateIncome = IncomeRepository::updateIncome($income, $args['income']);
+            $dateExpires = $updateIncome->expires->format("d/m/Y H:i:s");
+            $updateIncome->expires = $dateExpires;
+
+            return [
+                'code' => 200,
+                'message' => 'Renda atualizada com sucesso',
+                'income' => $updateIncome
+            ];
+
+        } catch (\Throwable $th) {
+            return [
+                'code' => 500,
+                'message' => 'Falha ao atualizar a renda, tente novamente'
+            ];
+        }
+        
     }
 }
