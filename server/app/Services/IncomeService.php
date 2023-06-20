@@ -170,4 +170,10 @@ class IncomeService
         }
         return $newDateExpires;
     }
+
+     // Total expense search service
+     public static function getTotalIncomes(int $user_id){
+        $incomes = IncomeRepository::getTotalIncomes($user_id);
+        return $incomes;
+    }
 }

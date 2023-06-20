@@ -47,7 +47,7 @@ extend type Query @guard{
     incomes(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomes")
     incomesOpen(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesOpen")
     incomesClose(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesclose")
-    # totalIncomes(user_id: ID!): TotalIncome! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getTotalEIncomes")
+    totalIncomes(user_id: ID!): TotalIncome! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getTotalEIncomes")
 }
 
 extend type Mutation @guard{

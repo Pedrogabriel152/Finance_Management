@@ -42,4 +42,9 @@ final class IncomeQuery
         $response = IncomeService::getIncomesClose($args);
         return $response;
     }
+
+    public function getTotalEIncomes($_, array $args){
+        $response = IncomeService::getTotalIncomes($args['user_id']);
+        return $response;
+    }
 }

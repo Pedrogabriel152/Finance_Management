@@ -111,4 +111,23 @@ class IncomeRepository
             return $updateIncome;
         });
     }
+
+    // Search for total Expense amounts
+    public static function getTotalIncomes(int $user_id){
+        return DB::transaction(function () use($user_id){
+            $totalIncomes = [];
+            $totalIncome = Income::where([
+                ['user_id', '=', $user_id],
+                ['received_income', '=', false]
+            ])->count();
+            $totalValue = Income::where([
+                ['user_id', '=', $user_id],
+                ['received_income', '=', false]
+            ])->sum('value_installment');
+            $totalIncomes['totalIncome'] = $totalIncome;
+            $totalIncomes['total'] = $totalValue;
+      
+            return $totalIncomes;
+        });
+    }
 }
