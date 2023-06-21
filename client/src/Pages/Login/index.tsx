@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import Logo from "../../Components/Logo";
-import { Container } from "./style";
+import { ContainerInterno, Container } from "./style";
 import Form from "../../Components/Form";
 import { IForm } from "../../Interfaces/IForm";
 import { IInput } from "../../Interfaces/IInput";
@@ -41,8 +41,11 @@ const Login = () => {
 
     return(
         <Container>
-            <Logo/>
-            <Form inputs={form.inputs} link={form.link} text={form.text}/>
+            <ContainerInterno>
+                <Logo/>
+                <Form inputs={form.inputs} link={form.link} text={form.text}/>
+                
+            </ContainerInterno>
             <IconesRodape />
         </Container>
     );

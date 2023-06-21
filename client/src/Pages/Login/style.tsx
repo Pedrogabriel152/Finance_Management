@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.section`
+export const ContainerInterno = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,3 +23,5 @@ export const Container = styled.section`
         border-radius: 15%;
     }
 `;
+
+export const Container = styled.section``;
