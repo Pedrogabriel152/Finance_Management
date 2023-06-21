@@ -1,9 +1,14 @@
 import React from "react";
 import Logo from "../../Components/Logo";
+import { Container } from "./style";
+import Form from "../../Components/Form";
 
 const Login = () => {
     return(
-        <h1><Logo/></h1>
+        <Container>
+            <Logo/>
+            <Form />
+        </Container>
     );
 }
 
