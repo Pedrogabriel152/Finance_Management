@@ -7,8 +7,7 @@ import { FormStyle, InputStyle, LinkStyle, MediaSocialStyle } from "./style";
 // Icons
 import { HiUserCircle } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { SiGmail } from "react-icons/si";
-import { BsLinkedin } from "react-icons/bs";
+import LogoLinkedin from "../../Assets/Icons/linkedin/icons8-linkedin-48.svg";
 import LogoGmail from "../../Assets/Icons/icons8-gmail.svg";
 
 // Interfaces
@@ -46,6 +45,7 @@ const Form = ({text, inputs, link}: IForm) => {
             <Button onclick={() => {}} text="Login"/>
 
             <MediaSocialStyle>
+                <img src={LogoLinkedin} alt="" />
                 <img src={LogoGmail} alt="Gmail" />
             </MediaSocialStyle>
 
