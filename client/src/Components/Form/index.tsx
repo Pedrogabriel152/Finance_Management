@@ -9,13 +9,14 @@ import { HiUserCircle } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { SiGmail } from "react-icons/si";
 import { BsLinkedin } from "react-icons/bs";
+import LogoGmail from "../../Assets/Icons/icons8-gmail.svg";
 
 // Interfaces
 import { IForm } from "../../Interfaces/IForm";
 import Button from "../Button";
 
 const Form = ({text, inputs, link}: IForm) => {
-    console.log(inputs);
+    console.log(LogoGmail);
 
     const handleSwitch = (svg: string) => {
         switch (svg) {
@@ -45,8 +46,7 @@ const Form = ({text, inputs, link}: IForm) => {
             <Button onclick={() => {}} text="Login"/>
 
             <MediaSocialStyle>
-                <SiGmail size={45}/>
-                <BsLinkedin size={45} color="blue"/>
+                <img src={LogoGmail} alt="Gmail" />
             </MediaSocialStyle>
 
        </FormStyle>
