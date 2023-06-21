@@ -50,7 +50,3 @@ export const LinkStyle = styled.div`
         font-size: 200px;
     }
 `;
-
-export const MediaSocialStyle = styled.div`
-    
-`;

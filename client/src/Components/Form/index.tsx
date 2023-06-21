@@ -2,20 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // Styled Componnets
-import { FormStyle, InputStyle, LinkStyle, MediaSocialStyle } from "./style";
+import { FormStyle, InputStyle, LinkStyle } from "./style";
 
 // Icons
 import { HiUserCircle } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import LogoLinkedin from "../../Assets/Icons/linkedin/icons8-linkedin-48.svg";
-import LogoGmail from "../../Assets/Icons/icons8-gmail.svg";
+
 
 // Interfaces
 import { IForm } from "../../Interfaces/IForm";
 import Button from "../Button";
 
 const Form = ({text, inputs, link}: IForm) => {
-    console.log(LogoGmail);
 
     const handleSwitch = (svg: string) => {
         switch (svg) {
@@ -43,12 +41,6 @@ const Form = ({text, inputs, link}: IForm) => {
             </LinkStyle>
 
             <Button onclick={() => {}} text="Login"/>
-
-            <MediaSocialStyle>
-                <img src={LogoLinkedin} alt="" />
-                <img src={LogoGmail} alt="Gmail" />
-            </MediaSocialStyle>
-
        </FormStyle>
     );
 }

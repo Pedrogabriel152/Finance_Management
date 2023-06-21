@@ -4,6 +4,7 @@ import { Container } from "./style";
 import Form from "../../Components/Form";
 import { IForm } from "../../Interfaces/IForm";
 import { IInput } from "../../Interfaces/IInput";
+import IconesRodape from "../../Components/Icones";
 
 const Login = () => {
     const [email, setEmail] = useState<string>('');
@@ -42,6 +43,7 @@ const Login = () => {
         <Container>
             <Logo/>
             <Form inputs={form.inputs} link={form.link} text={form.text}/>
+            <IconesRodape />
         </Container>
     );
 }
