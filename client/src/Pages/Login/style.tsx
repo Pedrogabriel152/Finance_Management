@@ -24,4 +24,7 @@ export const ContainerInterno = styled.div`
     }
 `;
 
-export const Container = styled.section``;
+export const Container = styled.section`
+    margin: 0 auto;
+    width: 100vw;
+`;
