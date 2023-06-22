@@ -12,6 +12,10 @@ export const ContainerInterno = styled.div`
         margin-top: 35%;
         height: 60vh;
         border-radius: 15%;
+
+        h1{
+            display: none;
+        }
     }
 
     @media (min-width: 390px) {
@@ -21,21 +25,47 @@ export const ContainerInterno = styled.div`
         margin-top: 35%;
         height: 50vh;
         border-radius: 15%;
+
+        h1{
+            display: none;
+        }
     }
 
     @media (min-width: 501px) {
         border: none;
         width: 70vw;
-        height: 100vh;
+        height: 70vh;
+        margin-top: 0;
+
+        h1 {
+            display: inline;
+            position: absolute;
+            font-size: 2.2em;
+            top: 26%;
+        }
+
+        @media (min-width: 800px){
+            h1 {
+                top: 23%;
+            }
+        }
+
+        @media (min-width: 900px){
+            h1 {
+                top: 20%;
+            }
+        }
     }
+
+    
 `;
 
 export const Container = styled.section`
-    margin: 0 auto;
     width: 100vw;
-`;
+    height: 100vh;
 
-
-export const AbaLateral = styled.div`
-    
+    @media (min-width: 501px){
+        display: flex;
+        margin: 0;
+    }
 `;

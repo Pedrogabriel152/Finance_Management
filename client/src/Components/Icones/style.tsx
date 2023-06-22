@@ -16,6 +16,8 @@ export const MediaSocialStyle = styled.div`
     }
 
     @media (min-width: 501px){
+        background-color: #FFF;
+        height: 10vh;
         a#singin{
             display: none;
         }
