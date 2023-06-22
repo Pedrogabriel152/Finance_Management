@@ -27,7 +27,7 @@ const Form = ({text, inputs, link}: IForm) => {
     }
 
     return(
-       <FormStyle>
+        <FormStyle>
             {inputs.map((input: any, index: number) => (
                 <InputStyle key={index}>
                     <input type={input.type} name={input.name} placeholder={input.placeholder}/>
@@ -40,8 +40,8 @@ const Form = ({text, inputs, link}: IForm) => {
                 <Link to={'/singin'} id="singin">SING IN</Link>
             </LinkStyle>
 
-            <Button onclick={() => {}} text="Login"/>
-       </FormStyle>
+            <Button onclick={() => {}} text={text}/>
+        </FormStyle>
     );
 }
 

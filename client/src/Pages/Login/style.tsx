@@ -22,9 +22,20 @@ export const ContainerInterno = styled.div`
         height: 50vh;
         border-radius: 15%;
     }
+
+    @media (min-width: 501px) {
+        border: none;
+        width: 70vw;
+        height: 100vh;
+    }
 `;
 
 export const Container = styled.section`
     margin: 0 auto;
     width: 100vw;
+`;
+
+
+export const AbaLateral = styled.div`
+    
 `;

@@ -1,10 +1,11 @@
 import React, { ChangeEvent, useState } from "react";
 import Logo from "../../Components/Logo";
-import { ContainerInterno, Container } from "./style";
+import { ContainerInterno, Container, AbaLateral } from "./style";
 import Form from "../../Components/Form";
 import { IForm } from "../../Interfaces/IForm";
 import { IInput } from "../../Interfaces/IInput";
 import IconesRodape from "../../Components/Icones";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState<string>('');
@@ -41,12 +42,17 @@ const Login = () => {
 
     return(
         <Container>
-            <ContainerInterno>
-                <Logo/>
-                <Form inputs={form.inputs} link={form.link} text={form.text}/>
-                
-            </ContainerInterno>
-            <IconesRodape />
+            {/* <AbaLateral>
+                <Link to={"/"} id='activi'>LOGIN</Link>
+                <Link to={"/signin"}>SIGIN IN</Link>
+            </AbaLateral> */}
+            <div>
+                <ContainerInterno>
+                    <Logo/>
+                    <Form inputs={form.inputs} link={form.link} text={form.text}/>
+                </ContainerInterno>
+                <IconesRodape />
+            </div>
         </Container>
     );
 }

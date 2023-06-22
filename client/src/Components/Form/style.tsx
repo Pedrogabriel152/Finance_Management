@@ -47,6 +47,5 @@ export const LinkStyle = styled.div`
         a#singin{
             display: none;
         }
-        font-size: 200px;
     }
 `;
