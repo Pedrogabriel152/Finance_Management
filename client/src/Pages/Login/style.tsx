@@ -10,7 +10,7 @@ export const ContainerInterno = styled.div`
         margin: auto;
         width: 90vw;
         margin-top: 35%;
-        height: 60vh;
+        height: 400px;
         border-radius: 15%;
 
         h1{
@@ -23,7 +23,7 @@ export const ContainerInterno = styled.div`
         margin: auto;
         width: 90vw;
         margin-top: 35%;
-        height: 50vh;
+        height: 400px;
         border-radius: 15%;
 
         h1{
@@ -34,30 +34,28 @@ export const ContainerInterno = styled.div`
     @media (min-width: 501px) {
         border: none;
         width: 70vw;
-        height: 70vh;
+        height: 500px;
         margin-top: 0;
 
         h1 {
             display: inline;
             position: absolute;
             font-size: 2.2em;
-            top: 26%;
+            top: 300px;
         }
 
         @media (min-width: 800px){
             h1 {
-                top: 23%;
+                top: 300px;
             }
         }
 
         @media (min-width: 900px){
             h1 {
-                top: 20%;
+                top: 300px;
             }
         }
     }
-
-    
 `;
 
 export const Container = styled.section`

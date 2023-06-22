@@ -9,10 +9,15 @@ import { Link } from "react-router-dom";
 import AbaLateral from "../../Components/AbaLateral";
 
 const Login = () => {
-    const [email, setEmail] = useState<string>('');
+    const [user, setUser] = useState<any>({});
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        });
+        
     }
 
     const inputs: IInput[] = [
@@ -21,7 +26,7 @@ const Login = () => {
             placeholder: 'E-mail',
             name: "email",
             type: "email",
-            value: email,
+            value: user.email,
             onChange: handleOnChange
         },
         {
@@ -29,11 +34,10 @@ const Login = () => {
             placeholder: 'Senha',
             name: "password",
             type: "password",
-            value: email,
+            value: user.password,
             onChange: handleOnChange
         }
     ];
-    // RiLockPasswordFill
 
     const form: IForm = {
         inputs: inputs,

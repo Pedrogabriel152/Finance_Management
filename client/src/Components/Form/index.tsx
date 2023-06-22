@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Styled Componnets
@@ -14,13 +14,27 @@ import { IForm } from "../../Interfaces/IForm";
 import Button from "../Button";
 
 const Form = ({text, inputs, link}: IForm) => {
+    const [size, setSize] = useState<number>(500);
+
+    useEffect(() => {
+        const width = window.screen.width;
+
+        if(width < 501) {
+            setSize(25);
+        }
+
+        if(width > 500 && width < 1000) {
+            setSize(40)
+        }
+
+    }, [size]);
 
     const handleSwitch = (svg: string) => {
         switch (svg) {
             case "HiUserCircle":
-                return <HiUserCircle size={25}/>
+                return <HiUserCircle size={size}/>
             case "RiLockPasswordFill":
-                return <RiLockPasswordFill size={23}/>
+                return <RiLockPasswordFill size={size}/>
             default:
                 break;
         }
@@ -30,7 +44,14 @@ const Form = ({text, inputs, link}: IForm) => {
         <FormStyle>
             {inputs.map((input: any, index: number) => (
                 <InputStyle key={index}>
-                    <input type={input.type} name={input.name} placeholder={input.placeholder}/>
+                    <input 
+                        type={input.type} 
+                        name={input.name} 
+                        placeholder={input.placeholder} 
+                        value={input.value? input.value : ''}
+                        onChange={input.onChange}
+                        id={input.name}
+                    />
                     {handleSwitch(input?.svg)}
                 </InputStyle>
             ))}

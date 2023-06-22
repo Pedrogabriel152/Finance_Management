@@ -20,6 +20,7 @@ export const AbaLateralStyle = styled.div`
         }
 
         a{
+            border: none;
             color: #FFF;
             text-decoration: none;
             font-size: 1.3em;
