@@ -33,5 +33,9 @@ export const AbaLateralStyle = styled.div`
             color: #000;
         }
 
+        @media (min-width: 1000px) {
+            width: 20vw;
+        }
+
     }
 `;

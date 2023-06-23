@@ -8,4 +8,8 @@ export const LogoComponent = styled.img`
     @media (min-width: 501px) {
         width: 380px;
     }
+
+    @media (min-width: 1000px){
+        width: 150px;
+    }
 `;

@@ -55,6 +55,23 @@ export const ContainerInterno = styled.div`
                 top: 300px;
             }
         }
+
+        @media (min-width: 1000px){
+            h1 {
+                top: 200px;
+            }
+        }
+    }
+
+    @media (min-width: 1000px) {
+        border: 3px solid #000;
+        margin: 0 auto;
+        width: 60vw;
+        max-width: 1280px;
+        height: 70vh;
+        margin-left: calc(100% - 85%);
+        margin-top: 12%;
+        border-radius: 15%;
     }
 `;
 

@@ -23,10 +23,10 @@ const Form = ({text, inputs, link}: IForm) => {
             setSize(25);
         }
 
-        if(width > 500 && width < 1000) {
+        if(width > 500) {
             setSize(40)
         }
-
+        
     }, [size]);
 
     const handleSwitch = (svg: string) => {

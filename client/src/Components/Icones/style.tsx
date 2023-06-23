@@ -39,5 +39,9 @@ export const MediaSocialStyle = styled.div`
         a#singin{
             display: none;
         }
+
+        @media (min-width: 1000px) {
+            width: 80vw;
+        }
     }
 `;
