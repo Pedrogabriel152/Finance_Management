@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FormStyle = styled.form`
+export const FormLoginStyle = styled.form`
     color: #000;
 
     button {
@@ -66,6 +66,23 @@ export const InputStyle = styled.div`
         }
 
         margin-bottom: 35px;   
+    }
+
+    @media (min-width: 1000px) {
+        input#email {
+            margin-top: 15%;
+        }
+
+        input{
+            padding: 12px 85px;
+            font-size: 18px;
+        }
+
+        input::placeholder {
+            font-size: 20px;
+        }
+
+        margin-bottom: 35px; 
     }
 `;
 

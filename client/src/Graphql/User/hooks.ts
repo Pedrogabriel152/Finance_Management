@@ -1,20 +1,22 @@
 import { useMutation, useQuery } from "@apollo/client";
-// import { CREATE_TASK, DELETE_TASK, EDIT_TASK, OBTER_TASKS } from "./queries";
+import { LOGIN } from "./queries";
+import { IAuthentication } from "../../Interfaces/IAuthentication";
+import { auteicacaoVar } from "./state";
 // import { createTasksVar, deleteTasksVar, tasksVar, updateTasksVar } from "./state";
 // import { ITasks } from "../../Interface/ITasks";
 // import { ICreateTask } from "../../Interface/ICreateTask";
 // import { IDeleteTask } from "../../Interface/IDeleteTask";
 
-// export const useTasks = () => {
-//     return useQuery<{dados: ITasks}>(OBTER_TASKS,{
-//         onCompleted(data) {
-//             if(data?.dados){
-//                 console.log(data.dados)
-//                 tasksVar(data?.dados)
-//             }
-//         },
-//     });
-// };
+export const useLogin = () => {
+    return useMutation<{login: IAuthentication}>(LOGIN,{
+        onCompleted(data) {
+            if(data){
+                auteicacaoVar(data.login)
+            }
+        },
+        
+    });
+};
 
 // export const useCreateTask = () => {
 //     return useMutation<{createTask: ICreateTask}>(CREATE_TASK,{

@@ -68,9 +68,9 @@ export const ContainerInterno = styled.div`
         margin: 0 auto;
         width: 60vw;
         max-width: 1280px;
-        height: 70vh;
+        height: 60vh;
         margin-left: calc(100% - 85%);
-        margin-top: 12%;
+        margin-top: 125px;
         border-radius: 15%;
     }
 `;

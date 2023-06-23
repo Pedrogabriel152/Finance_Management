@@ -1,7 +1,7 @@
 import React from "react";
 import { IButton } from "../../Interfaces/IButton";
 
-const Button = ({onclick, text}: IButton) => {
+const Button = ({text}: IButton) => {
     return (
         <button>{text}</button>
     );

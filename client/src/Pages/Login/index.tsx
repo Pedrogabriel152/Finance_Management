@@ -1,23 +1,35 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import Logo from "../../Components/Logo";
 import { ContainerInterno, Container } from "./style";
-import Form from "../../Components/Form";
+
+// Interfaces
 import { IForm } from "../../Interfaces/IForm";
 import { IInput } from "../../Interfaces/IInput";
+
+// Components
+import Form from "../../Components/Form";
 import IconesRodape from "../../Components/Icones";
-import { Link } from "react-router-dom";
 import AbaLateral from "../../Components/AbaLateral";
+import { useUserContext } from "../../Context/UserContext";
+import { useReactiveVar } from "@apollo/client";
+import { auteicacaoVar } from "../../Graphql/User/state";
 
 const Login = () => {
+    const { loading, login, SaveLocalStorage } = useUserContext();
     const [user, setUser] = useState<any>({});
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
         setUser({
             ...user,
             [e.target.name]: e.target.value
         });
         
+    }
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        login(user.email, user.password);
+        SaveLocalStorage();
     }
 
     const inputs: IInput[] = [
@@ -42,7 +54,8 @@ const Login = () => {
     const form: IForm = {
         inputs: inputs,
         link: 'Esqueceu a senha?',
-        text: 'Login'
+        text: 'Login',
+        submit: handleSubmit
     }
 
     return(
@@ -52,7 +65,7 @@ const Login = () => {
                 <ContainerInterno>
                     <Logo/>
                     <h1>LOGIN</h1>
-                    <Form inputs={form.inputs} link={form.link} text={form.text}/>
+                    <Form inputs={form.inputs} link={form.link} text={form.text} submit={handleSubmit}/>
                 </ContainerInterno>
                 <IconesRodape />
             </div>

@@ -6,13 +6,17 @@ import Rotas from './Routes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import UserProvider from './Context/UserContext';
+
 function App() {
   return (
     <ABApolloClient>
-        <BrowserRouter>
-          <ToastContainer autoClose={3000} />
-          <Rotas />
-        </BrowserRouter>
+        <UserProvider>
+          <BrowserRouter>
+            <ToastContainer autoClose={3000} />
+            <Rotas />
+          </BrowserRouter>
+        </UserProvider>
     </ABApolloClient>
   );
 }
