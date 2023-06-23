@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const AbaLateralStyle = styled.div`
-    @media screen {
+    @media (max-width: 500px) {
         visibility: hidden;
     }
 
@@ -9,7 +9,7 @@ export const AbaLateralStyle = styled.div`
         visibility: unset;
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        height: 100%;
         background-color: #114262;
         width: 30vw;
         align-items: self-end;

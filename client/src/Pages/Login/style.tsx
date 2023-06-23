@@ -65,5 +65,6 @@ export const Container = styled.section`
     @media (min-width: 501px){
         display: flex;
         margin: 0;
+        
     }
 `;
