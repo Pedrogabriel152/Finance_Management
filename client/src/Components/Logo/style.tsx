@@ -6,7 +6,7 @@ export const LogoComponentLogin = styled.img`
     }
 
     @media (min-width: 501px) {
-        width: 380px;
+        width: 200px;
     }
 
     @media (min-width: 1000px){

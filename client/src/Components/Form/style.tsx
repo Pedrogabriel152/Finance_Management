@@ -22,7 +22,7 @@ export const FormLoginStyle = styled.form`
     @media (min-width: 501px) {
         button {
             font-size: 1.5em;
-            margin-top: 45px;
+            margin-top: 35px;
             padding: 18px 90px;
             margin-left: calc(100% - 85%);
         }
@@ -116,7 +116,7 @@ export const InputStyleLogin = styled.div`
 
     @media (min-width: 1000px) {
         input#email {
-            margin-top: 15%;
+            margin-top: 8%;
         }
 
         input{

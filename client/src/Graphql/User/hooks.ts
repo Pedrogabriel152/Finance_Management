@@ -1,13 +1,25 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { LOGIN } from "./queries";
+import { LOGIN, REGISTER } from "./queries";
 import { IAuthentication } from "../../Interfaces/IAuthentication";
-import { auteicacaoVar } from "./state";
+import { authenticationVar } from "./state";
 
 export const useLogin = () => {
     return useMutation<{login: IAuthentication}>(LOGIN,{
         onCompleted(data) {
             if(data){
-                auteicacaoVar(data.login)
+                authenticationVar(data.login)
+            }
+        },
+        
+    });
+};
+
+export const useRegister = () => {
+    return useMutation<{register: IAuthentication}>(REGISTER,{
+        onCompleted(data) {
+            if(data){
+                console.log(data)
+                authenticationVar(data.register)
             }
         },
         

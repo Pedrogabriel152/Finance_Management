@@ -41,18 +41,18 @@ export const ContainerInternoLogin = styled.div`
             display: inline;
             position: absolute;
             font-size: 2.2em;
-            top: 300px;
+            top: 150px;
         }
 
         @media (min-width: 800px){
             h1 {
-                top: 300px;
+                top: 138px;
             }
         }
 
         @media (min-width: 900px){
             h1 {
-                top: 300px;
+                top: 138px;
             }
         }
 
@@ -70,6 +70,7 @@ export const ContainerInternoLogin = styled.div`
         max-width: 1280px;
         height: 60vh;
         margin-left: calc(100% - 85%);
+        margin-right: calc(100% - 85%);
         margin-top: 125px;
         border-radius: 15%;
     }

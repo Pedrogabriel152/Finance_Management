@@ -11,6 +11,17 @@ export const LOGIN = gql`
     }
 `;
 
+export const REGISTER = gql`
+    mutation Register($user: UserInput!){
+        createUser(user: $user){
+            code
+            token
+            message
+            user_id
+        }
+    }
+`;
+
 // export const CREATE_TASK= gql`
 //     mutation CreateTask($descricao: String!){
 //         createTask(descricao: $descricao){

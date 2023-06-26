@@ -8,13 +8,39 @@ import IconesRodape from "../../../Components/Icones";
 import AbaLateral from "../../../Components/AbaLateral";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../Context/UserContext";
+import { IUserInput } from "../../../Interfaces/IUserInput";
+import { toast } from "react-toastify";
 
 const Singin = () => {
-    const { login } = useUserContext();
+    const { register } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if(e.target.name === 'phone'){
+            const regex = /^([0-9]{2})([0-9]{4,5})([0-9]{4})$/;
+            var str = e.target.value.replace(/[^0-9]/g, "").slice(0, 11);
+            const result = str.replace(regex, "($1)$2-$3");
+            setUser({
+                ...user,
+                [e.target.name]: result
+            });
+            return;
+        }
+
+        if(e.target.name == 'cpf'){
+            const result = e.target.value
+            .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
+            .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+            .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+            setUser({
+                ...user,
+                [e.target.name]: result
+            })
+            return;
+        }
         setUser({
             ...user,
             [e.target.name]: e.target.value
@@ -24,8 +50,44 @@ const Singin = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        login(user.email, user.password);
-        navigate('/');
+
+        // Validations
+        if(!user.name){
+            toast.error("O nome é obrigatório");
+            return;
+        }
+        if(!user.email){
+            toast.error("O email é obrigatório");
+            return;
+        }
+        if(!user.cpf){
+            toast.error("O cpf é obrigatório");
+            return;
+        }
+        if(!user.phone){
+            toast.error("O telefone é obrigatório");
+            return;
+        }
+        if(!user.address){
+            toast.error("O endereço é obrigatório");
+            return;
+        }
+        if(!user.password){
+            toast.error("A senha é obrigatória");
+            return;
+        }
+        if(user.password !== user.confirmPassword){
+            toast.error("As senhas precisam ser iguais");
+            return;
+        }
+        register({
+            address: user.address,
+            cpf: user.cpf,
+            email: user.email,
+            name: user.name,
+            password: user.password,
+            phone: user.phone
+        });
     }
 
     const inputs: IInput[] = [
@@ -65,7 +127,7 @@ const Singin = () => {
             svg: 'MdOutlinePhoneIphone',
             placeholder: 'Telefone',
             name: "phone",
-            type: "email",
+            type: "tel",
             value: user.phone,
             onChange: handleOnChange
         },

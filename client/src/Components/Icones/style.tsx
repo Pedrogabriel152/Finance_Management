@@ -41,7 +41,7 @@ export const MediaSocialStyle = styled.div`
         }
     }
 
-     @media (min-width: 1280px){
+    @media (min-width: 1280px){
         width: 80vw;
-     }
+    }
 `;

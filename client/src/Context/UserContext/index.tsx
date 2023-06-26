@@ -1,10 +1,14 @@
-import React, { ReactElement, createContext, useContext, useEffect, useState } from "react";
+import { ReactElement, createContext, useContext, useEffect, useState } from "react";
+
+// Interfaces
 import { IUser } from "../../Interfaces/IUser";
 import { IUserInput } from "../../Interfaces/IUserInput";
-import { useLogin } from "../../Graphql/User/hooks";
 import { IAuthentication } from "../../Interfaces/IAuthentication";
+
+// Graphql
 import { useReactiveVar } from "@apollo/client";
-import { auteicacaoVar } from "../../Graphql/User/state";
+import { authenticationVar } from "../../Graphql/User/state";
+import { useLogin, useRegister } from "../../Graphql/User/hooks";
 
 interface UserProviderProps {
     children: ReactElement
@@ -15,6 +19,7 @@ export interface IUserContext{
     user?: IUser
     SaveLocalStorage: () => void
     login: (email: string, password: string) => void
+    register: (user: IUserInput) => void
     createUserDatabase: (user: IUserInput) => void
     loading: boolean
 }
@@ -22,6 +27,7 @@ export interface IUserContext{
 export const UserContext = createContext<IUserContext>({
     loading: false,
     login: () => null,
+    register: () => null,
     createUserDatabase: () => null,
     SaveLocalStorage: () => null
 });
@@ -29,12 +35,13 @@ export const UserContext = createContext<IUserContext>({
 const UserProvider = ({children}:UserProviderProps) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [Login, {loading: loadLogin}] = useLogin();
-    const authentication = useReactiveVar(auteicacaoVar);
+    const [Register, {loading: loadRegister}] = useRegister();
+    const authentication = useReactiveVar(authenticationVar);
     const [auth, setAuth] = useState<any>(null);
 
     useEffect(() => {
         SaveLocalStorage();
-    }, [loading, authentication]);
+    }, [authentication]);
 
     useEffect(() => {
         const auth = localStorage.getItem('@auth');
@@ -53,6 +60,29 @@ const UserProvider = ({children}:UserProviderProps) => {
                 password
             }
         })
+    }
+
+    const register = (user: IUserInput) => {
+        console.log(user)
+        const phoneInc = user.phone.replace(/\D/g, '').split("");
+        let phoneFinal = "";
+        for(let i=0; i<phoneInc.length; i++){
+            phoneFinal += phoneInc[i];
+        }
+
+        const cpfInc = user.cpf.replace(/\D/g, '').split("");
+        let cpfFinal = "";
+        for(let i = 0; i<cpfInc.length; i++){
+            cpfFinal += cpfInc[i]
+        }
+        
+        user.phone = phoneFinal;
+        user.cpf = cpfFinal;
+        Register({
+            variables: {
+                user
+            }
+        });
     }
 
     const SaveLocalStorage = () => {
@@ -87,15 +117,10 @@ const UserProvider = ({children}:UserProviderProps) => {
             value={{
                 authentication: authentication? authentication : auth? auth : null,
                 createUserDatabase: () => null,
-                loading: loadLogin,
+                loading: loadLogin? loadLogin : loadRegister,
                 login: login,
-                SaveLocalStorage
-                
-                // tasks: data? data : tasks,
-                // createTaskBanco: createTask, 
-                // deleteTaskBanco: deleteTask, 
-                // editTask: editTask,
-                // carregando: loadTasks 
+                SaveLocalStorage,
+                register: register
             }} 
         >
             {children}
