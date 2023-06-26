@@ -26,7 +26,7 @@ const Form = ({text, inputs, link, submit}: IForm) => {
         }
 
         if(width > 500) {
-            setSize(40)
+            setSize(35)
         }
 
         if(width >= 1000){

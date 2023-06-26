@@ -10,7 +10,7 @@ const AbaLateral = ({text}: Props) => {
     return (
         <AbaLateralStyle>
             <Link to={"/"} id={text == 'Login'? 'activi' : ''}>LOGIN</Link>
-            <Link to={"/signin"} id={text == 'Register'? 'activi' : ''}>SIGIN IN</Link>
+            <Link to={"/singin"} id={text == 'Register'? 'activi' : ''}>SIGIN IN</Link>
         </AbaLateralStyle>
     );
 }

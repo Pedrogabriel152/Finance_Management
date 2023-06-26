@@ -56,6 +56,19 @@ export const FormSinginStyle = styled.form`
             margin-left: calc(100% - 80%);
         }
     }
+
+    @media (min-width: 1280px) {
+        display: flex;
+        flex-wrap: wrap;
+
+        button {
+            position: absolute;
+            font-size: 1em;
+            padding: 18px 70px;
+            top: 60%;
+            left: 35%;
+        }
+    }
 `;
 
 export const InputStyleLogin = styled.div`
@@ -148,7 +161,7 @@ export const InputStyleSingin = styled.div`
         }
 
         input{
-            padding: 12px 65px;
+            padding: 8px 65px;
             font-size: 18px;
         }
 
@@ -159,21 +172,25 @@ export const InputStyleSingin = styled.div`
         margin-bottom: 10px;   
     }
 
-    @media (min-width: 1000px) {
-        input#email {
-            margin-top: 15%;
+    @media (min-width: 1280px) {
+        svg{
+            position: relative;
+            right: 82%;
+            top: 12px;
+            z-index: 99;
         }
 
         input{
-            padding: 12px 85px;
+            padding: 10px 65px;
             font-size: 18px;
+            margin-left: 45px;
         }
 
         input::placeholder {
             font-size: 20px;
         }
 
-        margin-bottom: 35px; 
+        margin-bottom: 8px; 
     }
 `;
 
@@ -212,5 +229,12 @@ export const LinkStyleSingIn = styled.div`
 
     @media (min-width: 501px){
         font-size: 1.2em;
+    }
+
+    @media (min-width: 1283px){
+        position: absolute;
+        font-size: 1em;
+        top: 60%;
+        left: 31%;
     }
 `;

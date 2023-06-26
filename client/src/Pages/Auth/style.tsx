@@ -84,7 +84,7 @@ export const ContainerInternoSingin = styled.div`
         border: 2px solid #000;
         margin: auto;
         width: 90vw;
-        height: 600px;
+        height: 550px;
         border-radius: 15%;
 
         h1{
@@ -96,7 +96,7 @@ export const ContainerInternoSingin = styled.div`
         border: 2px solid #000;
         margin: auto;
         width: 90vw;
-        height: 600px;
+        height: 550px;
         border-radius: 15%;
 
         h1{
@@ -119,30 +119,30 @@ export const ContainerInternoSingin = styled.div`
 
         @media (min-width: 800px){
             h1 {
-                top: 300px;
+                top: 138px;
             }
         }
 
         @media (min-width: 900px){
             h1 {
-                top: 300px;
+                top: 138px;
             }
         }
 
-        @media (min-width: 1000px){
+        @media (min-width: 1283px){
             h1 {
-                top: 200px;
+                top: 180px;
             }
         }
     }
 
-    @media (min-width: 1000px) {
+    @media (min-width: 1283px) {
         border: 3px solid #000;
         margin: 0 auto;
-        width: 60vw;
+        width: 70vw;
         max-width: 1280px;
         height: 60vh;
-        margin-left: calc(100% - 85%);
+        margin-left: calc(100% - 90%);
         margin-top: 125px;
         border-radius: 15%;
     }
@@ -154,7 +154,6 @@ export const Container = styled.section`
 
     @media (min-width: 501px){
         display: flex;
-        margin: 0;
-        
+        margin: 0; 
     }
 `;

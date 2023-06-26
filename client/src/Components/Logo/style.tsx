@@ -20,10 +20,10 @@ export const LogoComponentRegister = styled.img`
     }
 
     @media (min-width: 501px) {
-        width: 220px;
+        width: 200px;
     }
 
-    @media (min-width: 1000px){
-        width: 150px;
+    @media (min-width: 1283px){
+        width: 120px;
     }
 `;
