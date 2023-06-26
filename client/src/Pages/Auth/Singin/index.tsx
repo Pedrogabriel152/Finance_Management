@@ -12,7 +12,7 @@ import { IUserInput } from "../../../Interfaces/IUserInput";
 import { toast } from "react-toastify";
 
 const Singin = () => {
-    const { register } = useUserContext();
+    const { register, authentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
@@ -88,6 +88,12 @@ const Singin = () => {
             password: user.password,
             phone: user.phone
         });
+
+        if(authentication?.code == 200){
+            navigate('/');
+            return;
+        }
+        toast.error(authentication?.message);
     }
 
     const inputs: IInput[] = [

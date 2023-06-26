@@ -15,11 +15,11 @@ export const useLogin = () => {
 };
 
 export const useRegister = () => {
-    return useMutation<{register: IAuthentication}>(REGISTER,{
+    return useMutation<{createUser: IAuthentication}>(REGISTER,{
         onCompleted(data) {
             if(data){
-                console.log(data)
-                authenticationVar(data.register)
+                console.log(data.createUser)
+                authenticationVar(data.createUser)
             }
         },
         

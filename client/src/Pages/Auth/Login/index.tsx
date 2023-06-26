@@ -14,9 +14,10 @@ import Form from "../../../Components/Form";
 import IconesRodape from "../../../Components/Icones";
 import AbaLateral from "../../../Components/AbaLateral";
 import { useUserContext } from "../../../Context/UserContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
-    const { login } = useUserContext();
+    const { login, authentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
@@ -31,7 +32,11 @@ const Login = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         login(user.email, user.password);
-        navigate('/');
+        if(authentication?.code == 200){
+            navigate('/');
+            return;
+        }
+        toast.error(authentication?.message);
     }
 
     const inputs: IInput[] = [
