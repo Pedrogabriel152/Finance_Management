@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Styled Componnets
-import { FormLoginStyle, InputStyle, LinkStyle } from "./style";
+import { FormLoginStyle, FormSinginStyle, InputStyle, LinkStyle } from "./style";
 
 // Icons
 import { HiUserCircle } from "react-icons/hi";
@@ -71,7 +71,7 @@ const Form = ({text, inputs, link, submit}: IForm) => {
                     <Button text={text}/>
                 </FormLoginStyle>
             ):(
-                <FormLoginStyle onSubmit={submit}>
+                <FormSinginStyle onSubmit={submit}>
                     {inputs.map((input: any, index: number) => (
                         <InputStyle key={index}>
                             <input 
@@ -92,7 +92,7 @@ const Form = ({text, inputs, link, submit}: IForm) => {
                     </LinkStyle>
 
                     <Button text={text} />
-                </FormLoginStyle>
+                </FormSinginStyle>
             )
         }
         </>

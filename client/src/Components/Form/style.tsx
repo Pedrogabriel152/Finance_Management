@@ -29,6 +29,35 @@ export const FormLoginStyle = styled.form`
     }
 `;
 
+export const FormSinginStyle = styled.form`
+    color: #000;
+
+    button {
+        background: #050038;
+        color: #FFF;
+        border: none;
+        border-radius: 5px;
+    }
+
+    @media (max-width: 500px) {
+        button{
+            padding: 12px 40px;
+            margin-top: calc(100% - 230px);
+            margin-left: calc(100% - 73%);
+            font-size: 16px;
+        }   
+    }
+
+    @media (min-width: 501px) {
+        button {
+            font-size: 1.5em;
+            margin-top: 45px;
+            padding: 18px 90px;
+            margin-left: calc(100% - 85%);
+        }
+    }
+`;
+
 export const InputStyle = styled.div`
     @media (max-width: 500px) {
         svg{

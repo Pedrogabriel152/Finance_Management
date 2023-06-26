@@ -1,4 +1,4 @@
-import React, { ReactElement, createContext, useContext, useState } from "react";
+import React, { ReactElement, createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "../../Interfaces/IUser";
 import { IUserInput } from "../../Interfaces/IUserInput";
 import { useLogin } from "../../Graphql/User/hooks";
@@ -28,8 +28,22 @@ export const UserContext = createContext<IUserContext>({
 
 const UserProvider = ({children}:UserProviderProps) => {
     const [loading, setLoading] = useState<boolean>(false);
+    const [Login, {loading: loadLogin}] = useLogin();
     const authentication = useReactiveVar(auteicacaoVar);
-    const [Login] = useLogin();
+    const [auth, setAuth] = useState<any>(null);
+
+    useEffect(() => {
+        SaveLocalStorage();
+    }, [loading, authentication]);
+
+    useEffect(() => {
+        const auth = localStorage.getItem('@auth');
+
+        if(auth){
+            setAuth(JSON.parse(auth));
+        }
+
+    }, [authentication]);
 
 
     const login = (email: string, password: string) => {
@@ -42,21 +56,13 @@ const UserProvider = ({children}:UserProviderProps) => {
     }
 
     const SaveLocalStorage = () => {
+        console.log("Aquiii", authentication)
         if(authentication?.code == 200) {
+            console.log("Aquiiii",authentication)
             const authJSON = JSON.stringify(authentication);
-            console.log("AQuiiasudiasiudiuasduiaisduasiduas")
             localStorage.setItem('@auth', authJSON);
         }
     }
-
-    // const createTask = (descricao: string) => {
-
-    //     adicionaTask({
-    //         variables: {
-    //             descricao: descricao
-    //         }
-    //     })
-    // }
 
     // const deleteTask = (item: ITask) => {
     //     removeTask({
@@ -81,9 +87,9 @@ const UserProvider = ({children}:UserProviderProps) => {
     return (
         <UserContext.Provider 
             value={{
-                authentication: authentication? authentication : null,
+                authentication: authentication? authentication : auth? auth : null,
                 createUserDatabase: () => null,
-                loading: false,
+                loading: loadLogin,
                 login: login,
                 SaveLocalStorage
                 

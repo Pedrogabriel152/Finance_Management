@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../Components/Logo";
+
+// Styles
 import { ContainerInterno, Container } from "./style";
 
 // Interfaces
@@ -15,7 +18,8 @@ import { useReactiveVar } from "@apollo/client";
 import { auteicacaoVar } from "../../Graphql/User/state";
 
 const Login = () => {
-    const { loading, login, SaveLocalStorage } = useUserContext();
+    const { loading, login, SaveLocalStorage, authentication } = useUserContext();
+    const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +30,10 @@ const Login = () => {
         
     }
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         login(user.email, user.password);
-        SaveLocalStorage();
+        navigate('/home');
     }
 
     const inputs: IInput[] = [

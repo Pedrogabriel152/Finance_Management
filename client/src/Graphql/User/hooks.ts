@@ -11,6 +11,7 @@ export const useLogin = () => {
     return useMutation<{login: IAuthentication}>(LOGIN,{
         onCompleted(data) {
             if(data){
+                console.log("UseLogin",data.login)
                 auteicacaoVar(data.login)
             }
         },

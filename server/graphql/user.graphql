@@ -26,11 +26,11 @@ input UserInput {
 
 extend type Query{
     user: User @guard @auth
-    login(email: String!, password: String!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@login")
 }
 
 extend type Mutation{
     createUser(user: UserInput!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@createUser")
+    login(email: String!, password: String!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@login")
 }
 
 interface Message{
