@@ -50,15 +50,15 @@ export const FormSinginStyle = styled.form`
 
     @media (min-width: 501px) {
         button {
-            font-size: 1.5em;
-            margin-top: 45px;
-            padding: 18px 90px;
-            margin-left: calc(100% - 85%);
+            font-size: 1.2em;
+            margin-top: 25px;
+            padding: 18px 70px;
+            margin-left: calc(100% - 80%);
         }
     }
 `;
 
-export const InputStyle = styled.div`
+export const InputStyleLogin = styled.div`
     @media (max-width: 500px) {
         svg{
             position: relative;
@@ -70,7 +70,11 @@ export const InputStyle = styled.div`
         input{
             padding: 12px 25px;
         }
-        margin-bottom: 25px;   
+
+        input::placeholder {
+            padding-left: 10px;
+        }
+        margin-bottom: 12px;   
     }
 
     @media (min-width: 501px){
@@ -115,7 +119,65 @@ export const InputStyle = styled.div`
     }
 `;
 
-export const LinkStyle = styled.div`
+export const InputStyleSingin = styled.div`
+    @media (max-width: 500px) {
+        svg{
+            position: relative;
+            right: 89%;
+            top: 7px;
+            z-index: 99;
+        }
+
+        input{
+            padding: 12px 25px;
+        }
+
+        input::placeholder {
+            padding-left: 10px;
+        }
+
+        margin-bottom: 5px;   
+    }
+
+    @media (min-width: 501px){
+        svg{
+            position: relative;
+            right: 89%;
+            top: 12px;
+            z-index: 99;
+        }
+
+        input{
+            padding: 12px 65px;
+            font-size: 18px;
+        }
+
+        input::placeholder {
+            font-size: 20px;
+        }
+
+        margin-bottom: 10px;   
+    }
+
+    @media (min-width: 1000px) {
+        input#email {
+            margin-top: 15%;
+        }
+
+        input{
+            padding: 12px 85px;
+            font-size: 18px;
+        }
+
+        input::placeholder {
+            font-size: 20px;
+        }
+
+        margin-bottom: 35px; 
+    }
+`;
+
+export const LinkStyleLogin = styled.div`
     
     a{
         color: #000;
@@ -135,5 +197,20 @@ export const LinkStyle = styled.div`
         a#singin{
             display: none;
         }
+    }
+`;
+
+export const LinkStyleSingIn = styled.div`
+    
+    a{
+        color: #000;
+    }
+
+    @media (max-width: 500px) {
+        font-size: .9em;
+    }
+
+    @media (min-width: 501px){
+        font-size: 1.2em;
     }
 `;

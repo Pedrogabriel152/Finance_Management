@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Styled Componnets
-import { FormLoginStyle, FormSinginStyle, InputStyle, LinkStyle } from "./style";
+import { FormLoginStyle, FormSinginStyle, InputStyleLogin, InputStyleSingin, LinkStyleLogin, LinkStyleSingIn } from "./style";
 
 // Icons
-import { HiUserCircle } from "react-icons/hi";
+import { HiUserCircle, HiIdentification } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { MdEmail, MdOutlinePhoneIphone } from "react-icons/md";
+import { FaMapMarkedAlt } from "react-icons/fa";
 
 
 // Interfaces
@@ -39,6 +41,14 @@ const Form = ({text, inputs, link, submit}: IForm) => {
                 return <HiUserCircle size={size}/>
             case "RiLockPasswordFill":
                 return <RiLockPasswordFill size={size}/>
+            case "MdEmail":
+                return <MdEmail size={size}/>
+            case "HiIdentification":
+                return <HiIdentification size={size}/>
+            case "FaMapMarkedAlt":
+                return <FaMapMarkedAlt size={size}/>
+            case "MdOutlinePhoneIphone":
+                return <MdOutlinePhoneIphone size={size}/>
             default:
                 break;
         }
@@ -50,7 +60,7 @@ const Form = ({text, inputs, link, submit}: IForm) => {
             ? (
                 <FormLoginStyle onSubmit={submit}>
                     {inputs.map((input: any, index: number) => (
-                        <InputStyle key={index}>
+                        <InputStyleLogin key={index}>
                             <input 
                                 type={input.type} 
                                 name={input.name} 
@@ -60,20 +70,20 @@ const Form = ({text, inputs, link, submit}: IForm) => {
                                 id={input.name}
                             />
                             {handleSwitch(input?.svg)}
-                        </InputStyle>
+                        </InputStyleLogin>
                     ))}
 
-                    <LinkStyle>
+                    <LinkStyleLogin>
                         <Link to={'/resetpssword'}>{link}</Link>
                         <Link to={'/singin'} id="singin">SING IN</Link>
-                    </LinkStyle>
+                    </LinkStyleLogin>
 
                     <Button text={text}/>
                 </FormLoginStyle>
             ):(
                 <FormSinginStyle onSubmit={submit}>
                     {inputs.map((input: any, index: number) => (
-                        <InputStyle key={index}>
+                        <InputStyleSingin key={index}>
                             <input 
                                 type={input.type} 
                                 name={input.name} 
@@ -83,13 +93,12 @@ const Form = ({text, inputs, link, submit}: IForm) => {
                                 id={input.name}
                             />
                             {handleSwitch(input?.svg)}
-                        </InputStyle>
+                        </InputStyleSingin>
                     ))}
 
-                    <LinkStyle>
-                        <Link to={'/resetpssword'}>{link}</Link>
-                        <Link to={'/singin'} id="singin">SING IN</Link>
-                    </LinkStyle>
+                    <LinkStyleSingIn>
+                        <Link to={'/login'} id="login">{link}</Link>
+                    </LinkStyleSingIn>
 
                     <Button text={text} />
                 </FormSinginStyle>

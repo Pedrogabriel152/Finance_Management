@@ -1,24 +1,22 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../Components/Logo";
+import Logo from "../../../Components/Logo";
 
 // Styles
-import { ContainerInterno, Container } from "./style";
+import { ContainerInternoLogin, Container } from "../style";
 
 // Interfaces
-import { IForm } from "../../Interfaces/IForm";
-import { IInput } from "../../Interfaces/IInput";
+import { IForm } from "../../../Interfaces/IForm";
+import { IInput } from "../../../Interfaces/IInput";
 
 // Components
-import Form from "../../Components/Form";
-import IconesRodape from "../../Components/Icones";
-import AbaLateral from "../../Components/AbaLateral";
-import { useUserContext } from "../../Context/UserContext";
-import { useReactiveVar } from "@apollo/client";
-import { auteicacaoVar } from "../../Graphql/User/state";
+import Form from "../../../Components/Form";
+import IconesRodape from "../../../Components/Icones";
+import AbaLateral from "../../../Components/AbaLateral";
+import { useUserContext } from "../../../Context/UserContext";
 
 const Login = () => {
-    const { loading, login, SaveLocalStorage, authentication } = useUserContext();
+    const { login } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
@@ -33,7 +31,7 @@ const Login = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         login(user.email, user.password);
-        navigate('/home');
+        navigate('/');
     }
 
     const inputs: IInput[] = [
@@ -66,11 +64,11 @@ const Login = () => {
         <Container>
             <AbaLateral text="Login"/>
             <div>
-                <ContainerInterno>
-                    <Logo/>
+                <ContainerInternoLogin>
+                    <Logo tipo="login"/>
                     <h1>LOGIN</h1>
                     <Form inputs={form.inputs} link={form.link} text={form.text} submit={handleSubmit}/>
-                </ContainerInterno>
+                </ContainerInternoLogin>
                 <IconesRodape />
             </div>
         </Container>

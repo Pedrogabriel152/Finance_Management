@@ -2,16 +2,11 @@ import { useMutation, useQuery } from "@apollo/client";
 import { LOGIN } from "./queries";
 import { IAuthentication } from "../../Interfaces/IAuthentication";
 import { auteicacaoVar } from "./state";
-// import { createTasksVar, deleteTasksVar, tasksVar, updateTasksVar } from "./state";
-// import { ITasks } from "../../Interface/ITasks";
-// import { ICreateTask } from "../../Interface/ICreateTask";
-// import { IDeleteTask } from "../../Interface/IDeleteTask";
 
 export const useLogin = () => {
     return useMutation<{login: IAuthentication}>(LOGIN,{
         onCompleted(data) {
             if(data){
-                console.log("UseLogin",data.login)
                 auteicacaoVar(data.login)
             }
         },

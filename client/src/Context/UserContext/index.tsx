@@ -56,9 +56,7 @@ const UserProvider = ({children}:UserProviderProps) => {
     }
 
     const SaveLocalStorage = () => {
-        console.log("Aquiii", authentication)
         if(authentication?.code == 200) {
-            console.log("Aquiiii",authentication)
             const authJSON = JSON.stringify(authentication);
             localStorage.setItem('@auth', authJSON);
         }

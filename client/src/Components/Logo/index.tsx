@@ -1,10 +1,19 @@
 import React from "react";
 import LogoImg from "../../Assets/Images/image.png";
-import { LogoComponent } from "./style";
+import { LogoComponentLogin, LogoComponentRegister } from "./style";
 
-const Logo = () => {
+interface ImgProps{
+    tipo: string
+}
+
+const Logo = ({tipo}: ImgProps) => {
     return (
-        <LogoComponent src={LogoImg} alt="logo"/>
+        <>
+        {tipo == 'login' 
+            ? <LogoComponentLogin src={LogoImg} alt="logo"/>
+            : <LogoComponentRegister src={LogoImg} alt="logo"/>
+        }
+        </>
     );
 }
 
