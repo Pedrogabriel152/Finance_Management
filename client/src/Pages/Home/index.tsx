@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const {authentication} = useUserContext();
+    const {getAuthentication} = useUserContext();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!authentication){
+        const auth = getAuthentication();
+
+        if(!auth || auth.code !== 200){
             navigate('/login');
-        }
-    }, [authentication]);
+        } 
+    }, []);
 
     return (
         <h1>Home</h1>

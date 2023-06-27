@@ -22,6 +22,7 @@ export interface IUserContext{
     register: (user: IUserInput) => void
     createUserDatabase: (user: IUserInput) => void
     loading: boolean
+    getAuthentication: () => any
 }
 
 export const UserContext = createContext<IUserContext>({
@@ -29,7 +30,8 @@ export const UserContext = createContext<IUserContext>({
     login: () => null,
     register: () => null,
     createUserDatabase: () => null,
-    SaveLocalStorage: () => null
+    SaveLocalStorage: () => null,
+    getAuthentication: () => null
 });
 
 const UserProvider = ({children}:UserProviderProps) => {
@@ -37,10 +39,12 @@ const UserProvider = ({children}:UserProviderProps) => {
     const [Login, {loading: loadLogin}] = useLogin();
     const [Register, {loading: loadRegister}] = useRegister();
     const authentication = useReactiveVar(authenticationVar);
-    const [auth, setAuth] = useState<any>(null);
+    const [auth, setAuth] = useState<any>();
 
     useEffect(() => {
+        setLoading(true);
         SaveLocalStorage();
+        setLoading(false);
     }, [authentication]);
 
     useEffect(() => {
@@ -50,8 +54,9 @@ const UserProvider = ({children}:UserProviderProps) => {
             setAuth(JSON.parse(auth));
         }
 
-    }, [authentication]);
+        console.log(auth);
 
+    }, []);
 
     const login = (email: string, password: string) => {
         Login({
@@ -86,10 +91,19 @@ const UserProvider = ({children}:UserProviderProps) => {
     }
 
     const SaveLocalStorage = () => {
-        if(authentication?.code == 200) {
+        if(authentication) {
             const authJSON = JSON.stringify(authentication);
             localStorage.setItem('@auth', authJSON);
         }
+    }
+
+    const getAuthentication = () => {
+        const auth = localStorage.getItem('@auth')
+        if(auth){
+            return JSON.parse(auth);
+        }
+
+        return null;
     }
 
     // const deleteTask = (item: ITask) => {
@@ -115,12 +129,13 @@ const UserProvider = ({children}:UserProviderProps) => {
     return (
         <UserContext.Provider 
             value={{
-                authentication: authentication? authentication : auth? auth : null,
+                authentication: auth || authentication,
                 createUserDatabase: () => null,
-                loading: loadLogin? loadLogin : loadRegister,
+                loading: loading || loadLogin || loadRegister,
                 login: login,
                 SaveLocalStorage,
-                register: register
+                register: register,
+                getAuthentication: getAuthentication
             }} 
         >
             {children}
