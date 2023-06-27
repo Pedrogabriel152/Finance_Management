@@ -49,4 +49,11 @@ final class ExpenseQuery
         $response = ExpenseService::getTotalExpenses($args['user_id']);
         return $response;
     }
+
+    // Get Five Expense
+    public function getFiveExpenses($_, array $args) 
+    {
+        $response = ExpenseService::getFiveExpenses($args['user_id']);
+        return $response;
+    }
 }

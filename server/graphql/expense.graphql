@@ -50,6 +50,7 @@ extend type Query @guard{
     expensesClose(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesClose")
     expensesOpen(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesOpen")
     totalExpenses(user_id: ID!): TotalExpenses! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getTotalExpenses")
+    getFiveExpense(user_id: ID!): [Expense]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getFiveExpenses")
 }
 
 extend type Mutation @guard{

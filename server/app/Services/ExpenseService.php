@@ -78,26 +78,42 @@ class ExpenseService
         }
     }
 
-    // Search service an incomes open
-    public static function getExpensesOpen(array $args){
-        $incomes = ExpenseRepository::getExpensesOpen($args);
-        
-        if(!$incomes){
+    // Search service an last five expense
+    public static function getFiveExpenses(int $user_id){
+        try {
+            $expenses = ExpenseRepository::getFiveExpenses($user_id);
+
+            if(!$expenses){
+                return [];
+            }
+
+            return $expenses;
+
+        } catch (\Throwable $th) {
             return [];
         }
-
-        return $incomes;
     }
 
-    // Search service an incomes close
-    public static function getExpensesClose(array $args){
-        $incomes = ExpenseRepository::getExpensesClose($args);
+    // Search service an expense open
+    public static function getExpensesOpen(array $args){
+        $expense = ExpenseRepository::getExpensesOpen($args);
         
-        if(!$incomes){
+        if(!$expense){
             return [];
         }
 
-        return $incomes;
+        return $expense;
+    }
+
+    // Search service an expense close
+    public static function getExpensesClose(array $args){
+        $expense = ExpenseRepository::getExpensesClose($args);
+        
+        if(!$expense){
+            return [];
+        }
+
+        return $expense;
     }
 
     // Paid installment upgrade service

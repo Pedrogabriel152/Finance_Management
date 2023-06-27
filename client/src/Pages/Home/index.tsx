@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../../Components/NavBar";
+import { HomeStyle } from "./style";
 
 const Home = () => {
     const {getAuthentication} = useUserContext();
@@ -15,7 +17,9 @@ const Home = () => {
     }, []);
 
     return (
-        <h1>Home</h1>
+        <HomeStyle>
+            <NavBar />
+        </HomeStyle>
     );
 }
 

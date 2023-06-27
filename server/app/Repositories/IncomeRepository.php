@@ -130,4 +130,11 @@ class IncomeRepository
             return $totalIncomes;
         });
     }
+
+    public static function getFiveIncomes(int $user_id){
+        return DB::transaction(function () use($user_id) {
+            $incomes = Income::where('user_id', $user_id)->orderBy('value_installment', 'desc')->limit(5)->get();
+            return $incomes;
+        });
+    }
 }

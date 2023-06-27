@@ -1,9 +1,8 @@
 import { ReactElement, createContext, useContext, useEffect, useState } from "react";
 
 // Interfaces
-import { IUser } from "../../Interfaces/IUser";
 import { IUserInput } from "../../Interfaces/IUserInput";
-import { IAuthentication } from "../../Interfaces/IAuthentication";
+import { IUserContext } from "../../Interfaces/IUserContext";
 
 // Graphql
 import { useReactiveVar } from "@apollo/client";
@@ -12,17 +11,6 @@ import { useLogin, useRegister } from "../../Graphql/User/hooks";
 
 interface UserProviderProps {
     children: ReactElement
-}
-
-export interface IUserContext{
-    authentication?: IAuthentication | null
-    user?: IUser
-    SaveLocalStorage: () => void
-    login: (email: string, password: string) => void
-    register: (user: IUserInput) => void
-    createUserDatabase: (user: IUserInput) => void
-    loading: boolean
-    getAuthentication: () => any
 }
 
 export const UserContext = createContext<IUserContext>({

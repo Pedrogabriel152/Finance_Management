@@ -132,4 +132,11 @@ class ExpenseRepository
             return $totalExpenses;
         });
     }
+
+    public static function getFiveExpenses(int $user_id){
+        return DB::transaction(function () use($user_id) {
+            $expenses = Expense::where('user_id', $user_id)->orderBy('value_installment', 'desc')->limit(5)->get();
+            return $expenses;
+        });
+    }
 }

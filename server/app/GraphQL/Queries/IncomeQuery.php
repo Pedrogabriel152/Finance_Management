@@ -47,4 +47,11 @@ final class IncomeQuery
         $response = IncomeService::getTotalIncomes($args['user_id']);
         return $response;
     }
+
+    // Get Five Expense
+    public function getFiveIncomes($_, array $args) 
+    {
+        $response = IncomeService::getFiveIncomes($args['user_id']);
+        return $response;
+    }
 }

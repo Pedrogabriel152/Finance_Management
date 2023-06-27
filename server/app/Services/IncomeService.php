@@ -46,6 +46,22 @@ class IncomeService
         ];
     }
 
+    // Search service an last five incomes
+    public static function getFiveIncomes(int $user_id){
+        try {
+            $incomes = IncomeRepository::getFiveIncomes($user_id);
+
+            if(!$incomes){
+                return [];
+            }
+
+            return $incomes;
+
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+
     // Search service an incomes open
     public static function getIncomesOpen(array $args){
         $incomes = IncomeRepository::getIncomesOpen($args);
