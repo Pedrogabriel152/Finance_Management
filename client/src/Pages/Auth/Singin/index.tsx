@@ -1,14 +1,21 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// Interfaces
 import { IForm } from "../../../Interfaces/IForm";
 import { IInput } from "../../../Interfaces/IInput";
+
+// Components
 import Logo from "../../../Components/Logo";
 import Form from "../../../Components/Form";
-import { Container, ContainerInternoSingin } from "../style";
 import IconesRodape from "../../../Components/Icones";
 import AbaLateral from "../../../Components/AbaLateral";
-import { useNavigate } from "react-router-dom";
+
+// Styles
+import { Container, ContainerInternoSingin } from "../style";
+
+// Context
 import { useUserContext } from "../../../Context/UserContext";
-import { IUserInput } from "../../../Interfaces/IUserInput";
 import { toast } from "react-toastify";
 
 const Singin = () => {
@@ -91,8 +98,10 @@ const Singin = () => {
 
         if(authentication?.code == 200){
             navigate('/');
+            toast.success('Bem vindo ao sistema!');
             return;
         }
+
         toast.error(authentication?.message);
     }
 
