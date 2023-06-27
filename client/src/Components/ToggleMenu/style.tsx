@@ -32,5 +32,9 @@ export const ToggleMenuStyle = styled.div`
                 background-color: #FFF;
             }
         }
+
+        li:last-child{
+            border-bottom: 0;
+        }
     }
 `;
