@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../Components/NavBar";
-import { HomeStyle } from "./style";
+import { BodyStyle, HomeStyle, GraphqStyle } from "./style";
+import Footer from "../../Components/Footer";
+import Content from "../../Components/Content";
+import { IOptions } from "../../Interfaces/IOptions";
+
 
 const Home = () => {
     const {getAuthentication} = useUserContext();
     const navigate = useNavigate();
+   
 
     useEffect(() => {
         const auth = getAuthentication();
@@ -16,9 +21,51 @@ const Home = () => {
         } 
     }, []);
 
+
+    const option: IOptions = {
+        xAxis: {
+            data: [ 'Rendas', 'Despesas']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+            type: 'bar',
+            data: [{
+                value: 45,
+                // Specify the style for single bar
+                itemStyle: {
+                  color: '#91cc75',
+                  shadowColor: '#91cc75',
+                  borderType: 'dashed',
+                  opacity: 1
+                }
+              }, {
+                value: 20,
+                // Specify the style for single bar
+                itemStyle: {
+                  color: 'red',
+                  shadowColor: '#red',
+                  borderType: 'dashed',
+                  opacity: 1
+                }
+              }],
+            label: {
+                show: true,
+                position: 'top',
+            },
+            }
+        ]
+    };
+
     return (
         <HomeStyle>
             <NavBar />
+            <BodyStyle>
+                <Content title="Resumo mês de Julho" type="graph" options={option}/>
+            </BodyStyle>
+            <Footer />
         </HomeStyle>
     );
 }

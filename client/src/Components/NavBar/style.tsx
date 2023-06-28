@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export const NavBarStyle = styled.div`
+export const NavBarStyle = styled.header`
     width: 100vw;
+    position: fixed;
+    top: 0;
     background: #FFF;
     margin-top: 0;
     padding: 0;
