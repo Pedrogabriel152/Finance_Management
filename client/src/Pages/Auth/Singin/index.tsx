@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Interfaces
@@ -22,6 +22,13 @@ const Singin = () => {
     const { register, authentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
+
+    useEffect(() => {
+        if(authentication?.code == 200){
+            navigate('/');
+            toast.success('Bem vindo ao Accounting');
+        }
+    }, [authentication])
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.name === 'phone'){

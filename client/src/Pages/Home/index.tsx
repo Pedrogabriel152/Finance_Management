@@ -6,10 +6,11 @@ import { BodyStyle, HomeStyle, GraphqStyle } from "./style";
 import Footer from "../../Components/Footer";
 import Content from "../../Components/Content";
 import { IOptions } from "../../Interfaces/IOptions";
+import { toast } from "react-toastify";
 
 
 const Home = () => {
-    const {getAuthentication} = useUserContext();
+    const { getAuthentication, authentication } = useUserContext();
     const navigate = useNavigate();
    
 
@@ -18,6 +19,7 @@ const Home = () => {
 
         if(!auth || auth.code !== 200){
             navigate('/login');
+            toast.error('Faça o login primeiro');
         } 
     }, []);
 

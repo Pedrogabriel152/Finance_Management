@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../Components/Logo";
 
@@ -21,6 +21,13 @@ const Login = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
+    useEffect(() => {
+        if(authentication?.code == 200){
+            navigate('/');
+            toast.success('Bem vindo de volta');
+        }
+    }, [authentication])
+
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({
             ...user,
@@ -37,7 +44,7 @@ const Login = () => {
             navigate('/');
             return;
         }
-        toast.error(authentication?.message);
+        
     }
 
     const inputs: IInput[] = [

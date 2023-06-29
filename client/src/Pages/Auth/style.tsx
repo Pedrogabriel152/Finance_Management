@@ -41,7 +41,7 @@ export const ContainerInternoLogin = styled.div`
             display: inline;
             position: absolute;
             font-size: 2.2em;
-            top: 150px;
+            top: 138px;
         }
 
         @media (min-width: 800px){
@@ -56,14 +56,14 @@ export const ContainerInternoLogin = styled.div`
             }
         }
 
-        @media (min-width: 1000px){
+        @media (min-width: 1280px){
             h1 {
-                top: 200px;
+                top: 240px;
             }
         }
     }
 
-    @media (min-width: 1000px) {
+    @media (min-width: 1280px) {
         border: 3px solid #000;
         margin: 0 auto;
         width: 60vw;
@@ -114,30 +114,30 @@ export const ContainerInternoSingin = styled.div`
         h1 {
             display: inline;
             position: absolute;
-            font-size: 2em;
-            top: 138px;
+            font-size: 1.5em;
+            top: 150px;
         }
 
         @media (min-width: 800px){
             h1 {
-                top: 138px;
+                top: 150px;
             }
         }
 
         @media (min-width: 900px){
             h1 {
-                top: 138px;
+                top: 150px;
             }
         }
 
         @media (min-width: 1283px){
             h1 {
-                top: 180px;
+                top: 220px;
             }
         }
     }
 
-    @media (min-width: 1283px) {
+    @media (min-width: 1280px) {
         border: 3px solid #000;
         margin: 0 auto;
         width: 70vw;
