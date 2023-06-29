@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { IContent } from "../../Interfaces/IContent";
 import * as echarts from 'echarts';
-import { ContentGraphStyle, ContentTableStyle, ContentContainer } from "./style";
+import { ContentGraphStyle, ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
+import { ITableBody } from "../../Interfaces/ITableBody";
 
-const Content = ({title, type, options}: IContent) => {
+const Content = ({title, type, options, table}: IContent) => {
     const chartRef: any = useRef<HTMLDivElement>(null);
     // Create the echarts instance
 
@@ -19,7 +20,6 @@ const Content = ({title, type, options}: IContent) => {
                 series: options?.series
             };
 
-        
             chartInstance.setOption(option);
 
             return () => {
@@ -34,11 +34,29 @@ const Content = ({title, type, options}: IContent) => {
         <>
         {type === 'table' 
         ?(
-            <ContentTableStyle>Ola</ContentTableStyle>
+            <ContentTableStyle>
+                <Title>{title}</Title>
+                <TableTitleStyle>
+                    <div>Nome</div>
+                    <div>Parcelas</div>
+                    <div>Valor</div>
+                </TableTitleStyle>
+                {table?.tableBody.map((table: ITableBody) => (
+                    <TableBodyStyle>
+                        <div>{table.name}</div>
+                        <div>{table.installments}</div>
+                        <div>{table.value_installment}</div>
+                    </TableBodyStyle>
+                ))}
+                <TableFooterStyle>
+                    <div>Total</div>
+                    <div>{table?.tableFooter.total}</div>
+                </TableFooterStyle>
+            </ContentTableStyle>
         )
         : (
             <ContentContainer>
-                <h1>{title}</h1>
+                <Title>{title}</Title>
                 <ContentGraphStyle ref={chartRef}/>
             </ContentContainer>
         )

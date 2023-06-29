@@ -7,10 +7,11 @@ import Footer from "../../Components/Footer";
 import Content from "../../Components/Content";
 import { IOptions } from "../../Interfaces/IOptions";
 import { toast } from "react-toastify";
+import { ITable } from "../../Interfaces/ITable";
 
 
 const Home = () => {
-    const { getAuthentication, authentication } = useUserContext();
+    const { getAuthentication } = useUserContext();
     const navigate = useNavigate();
    
 
@@ -61,11 +62,45 @@ const Home = () => {
         ]
     };
 
+    const table: ITable = {
+        tableBody: [
+            {
+                installments: '4/5',
+                name: 'KSI',
+                value_installment: 50.80
+            },
+            {
+                installments: '4/5',
+                name: 'KSI',
+                value_installment: 50.80
+            },
+            {
+                installments: '4/5',
+                name: 'KSI',
+                value_installment: 50.80
+            },
+            {
+                installments: '4/5',
+                name: 'KSI',
+                value_installment: 50.80
+            },
+            {
+                installments: '4/5',
+                name: 'KSI',
+                value_installment: 50.80
+            },
+        ],
+        tableFooter: {
+            total: 250.00
+        }
+    }
+
     return (
         <HomeStyle>
             <NavBar />
             <BodyStyle>
                 <Content title="Resumo mês de Julho" type="graph" options={option}/>
+                <Content title="Despensa" type="table" table={table}/>
             </BodyStyle>
             <Footer />
         </HomeStyle>

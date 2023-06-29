@@ -22,19 +22,16 @@ export const REGISTER = gql`
     }
 `;
 
-// export const CREATE_TASK= gql`
-//     mutation CreateTask($descricao: String!){
-//         createTask(descricao: $descricao){
-//             code
-//             message
-//             task{
-//                 id
-//                 descricao
-//                 status
-//             }
-//         }
-//     }
-// `;
+export const GetFiveExpenses= gql`
+   query GetFiveExpenses($user_id: ID!){
+        getFiveExpense(user_id: $user_id){
+            installments
+            installments_paid
+            merchandise_purchased
+            value_installment
+        }
+    }
+`;
 
 // export const DELETE_TASK = gql`
 //     mutation deleteTask($id: ID!){
