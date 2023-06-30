@@ -39,7 +39,6 @@ const Login = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         login(user.email, user.password);
-        console.log(authentication)
         if(authentication?.code == 200){
             navigate('/');
             return;

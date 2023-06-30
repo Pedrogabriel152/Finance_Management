@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const ContentContainer = styled.div`
     background-color: #FFF;
-    margin-top: 80px;
+    margin-top: 90px;
     width: 90vw;
     margin-left: 5%;
     text-align: center;
-    height: 250px;
+    height: 300px;
 `;
 
 export const ContentGraphStyle = styled.div`
@@ -20,7 +20,7 @@ export const ContentTableStyle = styled.div`
     width: 90vw;
     height: 250px;
     background-color: #FFF;
-    margin-top: 60px;
+    margin-top: 40px;
     color: #000;
     margin-left: 5%;
 `;

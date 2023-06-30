@@ -10,6 +10,7 @@ export const NavBarStyle = styled.header`
     height: 60px;
     display: flex;
     justify-content: space-between;
+    z-index: 99 !important;
 
     img{
         height: 100%;

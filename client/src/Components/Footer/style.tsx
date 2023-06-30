@@ -6,6 +6,7 @@ export const FooteStyle = styled.footer`
     background-color: #0D074F;
     color: #FFF;
     margin-bottom: 0;
+    margin-top: 40px;
 
     p {
         padding-top: 5px;

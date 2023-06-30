@@ -7,7 +7,7 @@ export const ToggleMenuStyle = styled.div`
     background-color: #FFF;
     width: 130px;
     border: 1px solid #000;
-    z-index: 99;
+    z-index: 99 !important;
 
     ul{
         list-style: none;

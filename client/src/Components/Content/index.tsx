@@ -44,7 +44,7 @@ const Content = ({title, type, options, table}: IContent) => {
                 {table?.tableBody.map((table: ITableBody) => (
                     <TableBodyStyle>
                         <div>{table.name}</div>
-                        <div>{table.installments}</div>
+                        <div>{table.plot_completed}/{table.installments}</div>
                         <div>{table.value_installment}</div>
                     </TableBodyStyle>
                 ))}

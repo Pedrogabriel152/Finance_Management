@@ -8,12 +8,24 @@ import Content from "../../Components/Content";
 import { IOptions } from "../../Interfaces/IOptions";
 import { toast } from "react-toastify";
 import { ITable } from "../../Interfaces/ITable";
+import { useGetFinance } from "../../Graphql/User/hooks";
+import { ITableBody } from "../../Interfaces/ITableBody";
+import { concat, useReactiveVar } from "@apollo/client";
+import { getFinanceVar } from "../../Graphql/User/state";
+import { ITableFooter } from "../../Interfaces/ITableFooter";
 
 
 const Home = () => {
-    const { getAuthentication } = useUserContext();
+    const [tableBodyExpense, setTableBodyExpense] = useState<ITableBody[]>([]);
+    const tableFooterExpense: ITableFooter = {
+        total: 0
+    };
+    const [tableExpense, setTableExpense] = useState<ITable>();
+    const [tableIncomes, setTableIncomes] = useState<ITable>();
+    const { getAuthentication, authentication } = useUserContext();
     const navigate = useNavigate();
-   
+    const finace = useGetFinance();   
+    const content = useReactiveVar(getFinanceVar);
 
     useEffect(() => {
         const auth = getAuthentication();
@@ -21,9 +33,60 @@ const Home = () => {
         if(!auth || auth.code !== 200){
             navigate('/login');
             toast.error('Faça o login primeiro');
-        } 
+        }
     }, []);
 
+    useEffect(() => {
+        setTableBodyExpense([]);
+        tableFooterExpense.total = 0;
+        if(finace.error){
+            localStorage.removeItem('@auth');
+            navigate('/login');
+            toast.error('Faça o login primeiro');
+            return;
+        }
+
+        if(content){
+            content.expenses.map((expense: any) => {
+                const table: ITableBody = {
+                    installments: expense.installments,
+                    name: expense.merchandise_purchased,
+                    plot_completed: expense.installments_paid,
+                    value_installment: expense.value_installment
+                }
+                tableBodyExpense.push(table);
+                tableFooterExpense.total += table.value_installment;
+            });
+
+            setTableExpense({
+                tableBody: tableBodyExpense,
+                tableFooter: tableFooterExpense
+            })
+
+            // console.log(tableBodyExpense)
+            content.incomes.map((income: any) => {
+                setTableIncomes({
+                    tableBody: tableIncomes?.tableBody ? tableIncomes?.tableBody.concat([
+                        {
+                            installments: income.installments,
+                            name: income.merchandise_purchased,
+                            plot_completed: income.installments_paid,
+                            value_installment: income.value_installment
+                        }
+                    ]) : [{
+                        installments: income.installments,
+                        name: income.merchandise_purchased,
+                        plot_completed: income.installments_paid,
+                        value_installment: income.value_installment
+                    }],
+                    tableFooter: {
+                        total: tableIncomes?.tableFooter.total? tableIncomes?.tableFooter.total + income.value_installment : income.value_installment
+                    }
+                });
+            });
+        }
+
+    }, [finace]);
 
     const option: IOptions = {
         xAxis: {
@@ -62,45 +125,13 @@ const Home = () => {
         ]
     };
 
-    const table: ITable = {
-        tableBody: [
-            {
-                installments: '4/5',
-                name: 'KSI',
-                value_installment: 50.80
-            },
-            {
-                installments: '4/5',
-                name: 'KSI',
-                value_installment: 50.80
-            },
-            {
-                installments: '4/5',
-                name: 'KSI',
-                value_installment: 50.80
-            },
-            {
-                installments: '4/5',
-                name: 'KSI',
-                value_installment: 50.80
-            },
-            {
-                installments: '4/5',
-                name: 'KSI',
-                value_installment: 50.80
-            },
-        ],
-        tableFooter: {
-            total: 250.00
-        }
-    }
-
     return (
         <HomeStyle>
             <NavBar />
             <BodyStyle>
                 <Content title="Resumo mês de Julho" type="graph" options={option}/>
-                <Content title="Despensa" type="table" table={table}/>
+                <Content title="Despensas" type="table" table={tableExpense}/>
+                <Content title="Rendas" type="table" table={tableExpense}/>
             </BodyStyle>
             <Footer />
         </HomeStyle>

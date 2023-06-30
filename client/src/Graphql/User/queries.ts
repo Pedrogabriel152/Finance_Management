@@ -22,11 +22,18 @@ export const REGISTER = gql`
     }
 `;
 
-export const GetFiveExpenses= gql`
-   query GetFiveExpenses($user_id: ID!){
+export const GETFINANCE= gql`
+   query GetFinance($user_id: ID!){
         getFiveExpense(user_id: $user_id){
             installments
             installments_paid
+            merchandise_purchased
+            value_installment
+        }
+
+        getFiveIncomes(user_id: $user_id){
+            installments
+            installments_received
             merchandise_purchased
             value_installment
         }
