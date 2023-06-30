@@ -7,7 +7,7 @@ import { ITableBody } from "../../Interfaces/ITableBody";
 const Content = ({title, type, options, table}: IContent) => {
     const chartRef: any = useRef<HTMLDivElement>(null);
     // Create the echarts instance
-
+    
     
     useEffect(() => {
         if(type === 'graph'){
@@ -19,6 +19,8 @@ const Content = ({title, type, options, table}: IContent) => {
                 yAxis: options?.yAxis,
                 series: options?.series
             };
+
+            console.log("Aquiiiiii",option)
 
             chartInstance.setOption(option);
 

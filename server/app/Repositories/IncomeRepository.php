@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use DateTime;
 use App\Models\Income;
+use App\Models\Job;
 use App\Services\IncomeService;
 use Illuminate\Support\Facades\DB;
 
@@ -115,17 +116,28 @@ class IncomeRepository
     // Search for total Expense amounts
     public static function getTotalIncomes(int $user_id){
         return DB::transaction(function () use($user_id){
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+            $minValue = "$currentYear-$currentMonth-01";
+            $maxValue = date('Y-m-d');
             $totalIncomes = [];
+
+            $incomesValueTotal = Income::where([
+                ['user_id', '=', $user_id],
+                ['received_income', '=', false]
+            ])->whereBetween('expires', [$minValue, $maxValue])->sum('value_installment');
+
+            $jobsValueTotal = Job::where('user_id', $user_id)->sum('wage');
+
             $totalIncome = Income::where([
                 ['user_id', '=', $user_id],
                 ['received_income', '=', false]
             ])->count();
-            $totalValue = Income::where([
-                ['user_id', '=', $user_id],
-                ['received_income', '=', false]
-            ])->sum('value_installment');
-            $totalIncomes['totalIncome'] = $totalIncome;
-            $totalIncomes['total'] = $totalValue;
+
+            $totalJobs = Job::where('user_id', $user_id)->count();
+
+            $totalIncomes['totalIncomes'] = $totalIncome + $totalJobs;
+            $totalIncomes['total'] = $incomesValueTotal + $jobsValueTotal;
       
             return $totalIncomes;
         });

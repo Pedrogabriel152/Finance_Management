@@ -40,6 +40,20 @@ export const GETFINANCE= gql`
     }
 `;
 
+export const GETFINANCIALSUMMARY = gql`
+    query GetFinancialSummary($user_id: ID!) {
+        totalIncomes(user_id: $user_id){
+            total
+            totalIncomes
+        }
+
+        totalExpenses(user_id: $user_id){
+            total
+            totalExpenses
+        }
+    }
+`;
+
 // export const DELETE_TASK = gql`
 //     mutation deleteTask($id: ID!){
 //         deleteTask(id: $id){

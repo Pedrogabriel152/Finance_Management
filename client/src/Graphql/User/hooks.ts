@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { GETFINANCE, LOGIN, REGISTER } from "./queries";
+import { GETFINANCE, GETFINANCIALSUMMARY, LOGIN, REGISTER } from "./queries";
 import { IAuthentication } from "../../Interfaces/IAuthentication";
-import { authenticationVar, getFinanceVar } from "./state";
-import { IFinace } from "../../Interfaces/IFinace";
+import { authenticationVar, getFinanceVar, getFinancialSummaryVar } from "./state";
 import { useUserContext } from "../../Context/UserContext";
 
 export const useLogin = () => {
@@ -41,6 +40,25 @@ export const useGetFinance = () => {
                     expenses: data.getFiveExpense,
                     incomes: data.getFiveIncomes
                 });
+            }
+        }
+    })
+}
+
+export const useGetFinancialSummary = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+
+    return useQuery<{totalIncomes: any, totalExpenses: any}>(GETFINANCIALSUMMARY, {
+        variables: {
+            user_id: auth.user_id? auth.user_id : 0
+        },
+        onCompleted(data){
+            if(data){
+                getFinancialSummaryVar({
+                    totalExpenses: data.totalExpenses,
+                    totalIncomes: data.totalIncomes
+                })
             }
         }
     })

@@ -40,7 +40,7 @@ type MessageResponseIncome implements MessageIncome{
 }
 
 type TotalIncome{
-    totalIncome: Int!
+    totalIncomes: Int!
     total: Float!
 }
 

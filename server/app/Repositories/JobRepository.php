@@ -36,6 +36,12 @@ class JobRepository
         return $job;
     }
 
+    // Search the database for an five jobs
+    public static function getFiveJobs(int $user_id) {
+        $jobs = Job::where('user_id', $user_id)->orderBy('wage', 'desc')->limit(5)->get();
+        return $jobs;
+    }
+
     // Save an updated Job to the database
     public static function updateJob(array $args, object $jobExist){
         return DB::transaction(function () use($args, $jobExist){

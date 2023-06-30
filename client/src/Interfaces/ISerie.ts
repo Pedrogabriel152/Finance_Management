@@ -1,6 +1,6 @@
 export interface ISerie {
     type: 'line'| 'bar'
-    data:any
+    data: any[]
     label: {
         show: true,
         position: 'top',

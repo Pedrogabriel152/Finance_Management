@@ -8,24 +8,29 @@ import Content from "../../Components/Content";
 import { IOptions } from "../../Interfaces/IOptions";
 import { toast } from "react-toastify";
 import { ITable } from "../../Interfaces/ITable";
-import { useGetFinance } from "../../Graphql/User/hooks";
+import { useGetFinance, useGetFinancialSummary } from "../../Graphql/User/hooks";
 import { ITableBody } from "../../Interfaces/ITableBody";
 import { concat, useReactiveVar } from "@apollo/client";
-import { getFinanceVar } from "../../Graphql/User/state";
+import { getFinanceVar, getFinancialSummaryVar } from "../../Graphql/User/state";
 import { ITableFooter } from "../../Interfaces/ITableFooter";
 
 
 const Home = () => {
     const [tableBodyExpense, setTableBodyExpense] = useState<ITableBody[]>([]);
-    const tableFooterExpense: ITableFooter = {
-        total: 0
-    };
+    const tableFooterExpense: ITableFooter = {total: 0};
+    const [tableBodyIncome, setTableBodyIncome] = useState<ITableBody[]>([]);
+    const tableFooterIncome: ITableFooter = {total: 0};
     const [tableExpense, setTableExpense] = useState<ITable>();
     const [tableIncomes, setTableIncomes] = useState<ITable>();
     const { getAuthentication, authentication } = useUserContext();
     const navigate = useNavigate();
     const finace = useGetFinance();   
     const content = useReactiveVar(getFinanceVar);
+    const date = new Date();
+    const [month, setMonth] = useState<string>('Janeiro');
+    const [optionsBar, setOptionsBar] = useState<IOptions | null>(null);
+    useGetFinancialSummary();
+    const financialSummary = useReactiveVar(getFinancialSummaryVar);
 
     useEffect(() => {
         const auth = getAuthentication();
@@ -35,6 +40,12 @@ const Home = () => {
             toast.error('Faça o login primeiro');
         }
     }, []);
+
+    useEffect(() => {
+        const months = ['Janeiro', 'Fevereiro', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro'];
+        const month = date.getMonth();
+        setMonth(months[month - 1]);
+    }, [date])
 
     useEffect(() => {
         setTableBodyExpense([]);
@@ -65,28 +76,67 @@ const Home = () => {
 
             // console.log(tableBodyExpense)
             content.incomes.map((income: any) => {
-                setTableIncomes({
-                    tableBody: tableIncomes?.tableBody ? tableIncomes?.tableBody.concat([
-                        {
-                            installments: income.installments,
-                            name: income.merchandise_purchased,
-                            plot_completed: income.installments_paid,
-                            value_installment: income.value_installment
-                        }
-                    ]) : [{
-                        installments: income.installments,
-                        name: income.merchandise_purchased,
-                        plot_completed: income.installments_paid,
-                        value_installment: income.value_installment
-                    }],
-                    tableFooter: {
-                        total: tableIncomes?.tableFooter.total? tableIncomes?.tableFooter.total + income.value_installment : income.value_installment
-                    }
-                });
+                const table: ITableBody = {
+                    installments: income.installments,
+                    name: income.merchandise_purchased,
+                    plot_completed: income.installments_received,
+                    value_installment: income.value_installment
+                }
+                tableBodyIncome.push(table);
+                tableFooterIncome.total += table.value_installment;
             });
+
+            setTableIncomes({
+                tableBody: tableBodyIncome,
+                tableFooter: tableFooterIncome
+            })
         }
 
     }, [finace]);
+
+    useEffect(() => {
+        console.log(financialSummary)
+        setOptionsBar({
+        xAxis: {
+            data: [ 'Rendas', 'Despesas']
+        },
+        yAxis: {
+            type: "value"
+        },
+        series: [
+            {
+                type: "bar",
+                data: [
+                    {
+                       value:  2800,//financialSummary?.totalIncomes.total,
+                // Specify the style for single bar
+                itemStyle: {
+                  color: '#91cc75',
+                  shadowColor: '#91cc75',
+                  borderType: 'dashed',
+                  opacity: 1
+                } 
+                    }, {
+                value: 20,
+                // Specify the style for single bar
+                itemStyle: {
+                  color: 'red',
+                  shadowColor: '#red',
+                  borderType: 'dashed',
+                  opacity: 1
+                }
+              }
+                ],
+                label: {
+                show: true,
+                position: 'top',
+            },
+            },
+        ]
+    })
+    }, []);
+
+    console.log(optionsBar)
 
     const option: IOptions = {
         xAxis: {
@@ -125,13 +175,17 @@ const Home = () => {
         ]
     };
 
+    if(!optionsBar){
+        return <div></div>
+    }
+
     return (
         <HomeStyle>
             <NavBar />
             <BodyStyle>
-                <Content title="Resumo mês de Julho" type="graph" options={option}/>
+                <Content title={`Resumo mês de ${month}`} type="graph" options={optionsBar}/>
                 <Content title="Despensas" type="table" table={tableExpense}/>
-                <Content title="Rendas" type="table" table={tableExpense}/>
+                <Content title="Rendas" type="table" table={tableIncomes}/>
             </BodyStyle>
             <Footer />
         </HomeStyle>

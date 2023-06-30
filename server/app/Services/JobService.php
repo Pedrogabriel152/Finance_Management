@@ -45,6 +45,17 @@ class JobService
         return $job;
     }
 
+    // Search service an five Jobs
+    public static function getFiveJobs(int $user_id) {
+        $jobs = JobRepository::getFiveJobs($user_id);
+        
+        if(!$jobs) {
+            return [];
+        }
+
+        return $jobs;
+    }
+
     // Job update service
     public static function updateJob(array $args){
         try {
