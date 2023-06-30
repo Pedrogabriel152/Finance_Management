@@ -1,19 +1,28 @@
-import { useEffect, useRef, useState } from "react";
-import { useUserContext } from "../../Context/UserContext";
+import { useEffect,  useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+// Context
+import { useUserContext } from "../../Context/UserContext";
+
+// Components
 import NavBar from "../../Components/NavBar";
-import { BodyStyle, HomeStyle, GraphqStyle } from "./style";
 import Footer from "../../Components/Footer";
 import Content from "../../Components/Content";
+
+// Style
+import { BodyStyle, HomeStyle, GraphqStyle } from "./style";
+
+// Interfaces
 import { IOptions } from "../../Interfaces/IOptions";
-import { toast } from "react-toastify";
 import { ITable } from "../../Interfaces/ITable";
-import { useGetFinance, useGetFinancialSummary } from "../../Graphql/User/hooks";
 import { ITableBody } from "../../Interfaces/ITableBody";
-import { concat, useReactiveVar } from "@apollo/client";
-import { getFinanceVar, getFinancialSummaryVar } from "../../Graphql/User/state";
 import { ITableFooter } from "../../Interfaces/ITableFooter";
 
+// GraphQL
+import { useGetFinance, useGetFinancialSummary } from "../../Graphql/User/hooks";
+import { useReactiveVar } from "@apollo/client";
+import { getFinanceVar, getFinancialSummaryVar } from "../../Graphql/User/state";
 
 const Home = () => {
     const [tableBodyExpense, setTableBodyExpense] = useState<ITableBody[]>([]);
@@ -95,48 +104,47 @@ const Home = () => {
     }, [finace]);
 
     useEffect(() => {
-        console.log(financialSummary)
-        setOptionsBar({
-        xAxis: {
-            data: [ 'Rendas', 'Despesas']
-        },
-        yAxis: {
-            type: "value"
-        },
-        series: [
-            {
-                type: "bar",
-                data: [
+        const total = financialSummary?.totalIncomes.total;
+        if(financialSummary){
+            setOptionsBar({
+                xAxis: {
+                    data: [ 'Rendas', 'Despesas']
+                },
+                yAxis: {
+                    type: "value"
+                },
+                series: [
                     {
-                       value:  2800,//financialSummary?.totalIncomes.total,
-                // Specify the style for single bar
-                itemStyle: {
-                  color: '#91cc75',
-                  shadowColor: '#91cc75',
-                  borderType: 'dashed',
-                  opacity: 1
-                } 
-                    }, {
-                value: 20,
-                // Specify the style for single bar
-                itemStyle: {
-                  color: 'red',
-                  shadowColor: '#red',
-                  borderType: 'dashed',
-                  opacity: 1
-                }
-              }
-                ],
-                label: {
-                show: true,
-                position: 'top',
-            },
-            },
-        ]
-    })
-    }, []);
-
-    console.log(optionsBar)
+                        type: "bar",
+                        data: [
+                            {
+                                value: total,
+                                // Specify the style for single bar
+                                itemStyle: {
+                                    color: '#91cc75',
+                                    shadowColor: '#91cc75',
+                                    borderType: 'dashed',
+                                    opacity: 1
+                                } 
+                            }, {
+                            value: 20,
+                            // Specify the style for single bar
+                            itemStyle: {
+                                color: 'red',
+                                shadowColor: '#red',
+                                borderType: 'dashed',
+                                opacity: 1
+                            }
+                        }],
+                        label: {
+                            show: true,
+                            position: 'top',
+                        },
+                    },
+                ]
+            })
+        }
+    }, [financialSummary]);
 
     const option: IOptions = {
         xAxis: {

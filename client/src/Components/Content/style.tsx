@@ -10,9 +10,10 @@ export const ContentContainer = styled.div`
 `;
 
 export const ContentGraphStyle = styled.div`
-    width: 90vw;
+    width: 80vw;
     height: 250px;
-    background-color: #FFF;
+    margin-left: 25px;
+    background-color: transparent;
     color: #000;
 `;
 

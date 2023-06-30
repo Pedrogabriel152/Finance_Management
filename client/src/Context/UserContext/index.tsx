@@ -41,9 +41,6 @@ const UserProvider = ({children}:UserProviderProps) => {
         if(auth){
             setAuth(JSON.parse(auth));
         }
-
-        console.log(auth);
-
     }, []);
 
     const login = (email: string, password: string) => {

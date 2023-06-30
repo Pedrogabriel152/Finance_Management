@@ -19,8 +19,7 @@ const Content = ({title, type, options, table}: IContent) => {
                 yAxis: options?.yAxis,
                 series: options?.series
             };
-
-            console.log("Aquiiiiii",option)
+            console.log(option)
 
             chartInstance.setOption(option);
 
@@ -43,8 +42,8 @@ const Content = ({title, type, options, table}: IContent) => {
                     <div>Parcelas</div>
                     <div>Valor</div>
                 </TableTitleStyle>
-                {table?.tableBody.map((table: ITableBody) => (
-                    <TableBodyStyle>
+                {table?.tableBody.map((table: ITableBody, index: number) => (
+                    <TableBodyStyle key={index}>
                         <div>{table.name}</div>
                         <div>{table.plot_completed}/{table.installments}</div>
                         <div>{table.value_installment}</div>
