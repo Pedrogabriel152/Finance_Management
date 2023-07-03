@@ -20,17 +20,23 @@ import { ITableBody } from "../../Interfaces/ITableBody";
 import { ITableFooter } from "../../Interfaces/ITableFooter";
 
 // GraphQL
-import { useGetFinance, useGetFinancialSummary } from "../../Graphql/User/hooks";
+import { useGetFinance, useGetFinancialSummary, useGetFiveJobs } from "../../Graphql/User/hooks";
 import { useReactiveVar } from "@apollo/client";
-import { getFinanceVar, getFinancialSummaryVar } from "../../Graphql/User/state";
+import { getFinanceVar, getFinancialSummaryVar, getFiveJobsVar } from "../../Graphql/User/state";
+import { IJob } from "../../Interfaces/IJob";
 
 const Home = () => {
+    useGetFinancialSummary();
+    useGetFiveJobs();
     const [tableBodyExpense, setTableBodyExpense] = useState<ITableBody[]>([]);
     const tableFooterExpense: ITableFooter = {total: 0};
     const [tableBodyIncome, setTableBodyIncome] = useState<ITableBody[]>([]);
     const tableFooterIncome: ITableFooter = {total: 0};
+    const [tableBodyJob, setTableBodyJob] = useState<ITableBody[]>([]);
+    const tableFooterJob: ITableFooter = {total: 0};
     const [tableExpense, setTableExpense] = useState<ITable>();
     const [tableIncomes, setTableIncomes] = useState<ITable>();
+    const [tableJobs, setTableJobs] = useState<ITable>();
     const { getAuthentication, authentication } = useUserContext();
     const navigate = useNavigate();
     const finace = useGetFinance();   
@@ -38,8 +44,8 @@ const Home = () => {
     const date = new Date();
     const [month, setMonth] = useState<string>('Janeiro');
     const [optionsBar, setOptionsBar] = useState<IOptions | null>(null);
-    useGetFinancialSummary();
     const financialSummary = useReactiveVar(getFinancialSummaryVar);
+    const jobs = useReactiveVar(getFiveJobsVar);
 
     useEffect(() => {
         const auth = getAuthentication();
@@ -58,7 +64,10 @@ const Home = () => {
 
     useEffect(() => {
         setTableBodyExpense([]);
+        setTableBodyIncome([]);
+        setTableBodyJob([]);
         tableFooterExpense.total = 0;
+
         if(finace.error){
             localStorage.removeItem('@auth');
             navigate('/login');
@@ -81,7 +90,7 @@ const Home = () => {
             setTableExpense({
                 tableBody: tableBodyExpense,
                 tableFooter: tableFooterExpense
-            })
+            });
 
             // console.log(tableBodyExpense)
             content.incomes.map((income: any) => {
@@ -98,14 +107,28 @@ const Home = () => {
             setTableIncomes({
                 tableBody: tableBodyIncome,
                 tableFooter: tableFooterIncome
-            })
+            });
         }
 
-    }, [finace]);
+        if(jobs) {
+            jobs.map((job: IJob) => {
+                const table: ITableBody = {
+                    name: job.establishment,
+                    value_installment: job.wage
+                }
+                tableBodyJob.push(table);
+                tableFooterJob.total += table.value_installment;
+            });
+
+            setTableJobs({
+                tableBody: tableBodyJob,
+                tableFooter: tableFooterJob
+            });
+        }
+    }, [finace, jobs]);
 
     useEffect(() => {
-        const total = financialSummary?.totalIncomes.total;
-        if(financialSummary){
+        if(financialSummary?.totalIncomes){
             setOptionsBar({
                 xAxis: {
                     data: [ 'Rendas', 'Despesas']
@@ -116,18 +139,17 @@ const Home = () => {
                 series: [
                     {
                         type: "bar",
-                        data: [
-                            {
-                                value: total,
-                                // Specify the style for single bar
-                                itemStyle: {
-                                    color: '#91cc75',
-                                    shadowColor: '#91cc75',
-                                    borderType: 'dashed',
-                                    opacity: 1
-                                } 
+                        data: [{
+                            value: financialSummary?.totalIncomes.total,
+                            // Specify the style for single bar
+                            itemStyle: {
+                                color: '#91cc75',
+                                shadowColor: '#91cc75',
+                                borderType: 'dashed',
+                                opacity: 1
+                            } 
                             }, {
-                            value: 20,
+                            value: financialSummary?.totalExpenses.total,
                             // Specify the style for single bar
                             itemStyle: {
                                 color: 'red',
@@ -146,43 +168,6 @@ const Home = () => {
         }
     }, [financialSummary]);
 
-    const option: IOptions = {
-        xAxis: {
-            data: [ 'Rendas', 'Despesas']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-            type: 'bar',
-            data: [{
-                value: 45,
-                // Specify the style for single bar
-                itemStyle: {
-                  color: '#91cc75',
-                  shadowColor: '#91cc75',
-                  borderType: 'dashed',
-                  opacity: 1
-                }
-              }, {
-                value: 20,
-                // Specify the style for single bar
-                itemStyle: {
-                  color: 'red',
-                  shadowColor: '#red',
-                  borderType: 'dashed',
-                  opacity: 1
-                }
-              }],
-            label: {
-                show: true,
-                position: 'top',
-            },
-            }
-        ]
-    };
-
     if(!optionsBar){
         return <div></div>
     }
@@ -194,6 +179,7 @@ const Home = () => {
                 <Content title={`Resumo mês de ${month}`} type="graph" options={optionsBar}/>
                 <Content title="Despensas" type="table" table={tableExpense}/>
                 <Content title="Rendas" type="table" table={tableIncomes}/>
+                <Content title="Trabalhos" type="table" table={tableJobs}/>
             </BodyStyle>
             <Footer />
         </HomeStyle>

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type ITableBody = {
+    length: number
+}
+
 export const ContentContainer = styled.div`
     background-color: #FFF;
     margin-top: 90px;
@@ -63,8 +67,26 @@ export const TableBodyStyle = styled.div`
         margin-right: 8%;
     }
 `;
+// 15, 90, 70, 50
+export const TableFooterStyle = styled.div<ITableBody>`
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: ${(props: ITableBody) => `${props.length}px`};
 
-export const TableFooterStyle = styled.div`
+    div:first-child{
+        margin-left: 8%;
+    }
+
+    div:last-child{
+        margin-right: 8%;
+    }
+`;
+
+export const TableFooterRespStyle = styled.div`
+    position: relative;
+    background-color: blue;
+    bottom: 0;
     display: flex;
     justify-content: space-between;
     font-weight: bold;

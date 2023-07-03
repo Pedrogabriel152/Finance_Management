@@ -118,14 +118,19 @@ class IncomeRepository
         return DB::transaction(function () use($user_id){
             $currentMonth = date('m');
             $currentYear = date('Y');
+            $maxDay = 30;
             $minValue = "$currentYear-$currentMonth-01";
-            $maxValue = date('Y-m-d');
+
+            if($currentMonth == 2) {
+                $maxDay = 28;
+            }  
+            $maxValue = "$currentYear-$currentMonth-$maxDay";
             $totalIncomes = [];
 
             $incomesValueTotal = Income::where([
                 ['user_id', '=', $user_id],
                 ['received_income', '=', false]
-            ])->whereBetween('expires', [$minValue, $maxValue])->sum('value_installment');
+            ])->whereBetween(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), [$minValue, $maxValue])->sum('value_installment');
 
             $jobsValueTotal = Job::where('user_id', $user_id)->sum('wage');
 
@@ -133,7 +138,6 @@ class IncomeRepository
                 ['user_id', '=', $user_id],
                 ['received_income', '=', false]
             ])->count();
-
             $totalJobs = Job::where('user_id', $user_id)->count();
 
             $totalIncomes['totalIncomes'] = $totalIncome + $totalJobs;

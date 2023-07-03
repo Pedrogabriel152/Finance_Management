@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IContent } from "../../Interfaces/IContent";
 import * as echarts from 'echarts';
 import { ContentGraphStyle, ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
@@ -6,9 +6,9 @@ import { ITableBody } from "../../Interfaces/ITableBody";
 
 const Content = ({title, type, options, table}: IContent) => {
     const chartRef: any = useRef<HTMLDivElement>(null);
+    const [length, setLength] = useState<number>(0);
     // Create the echarts instance
-    
-    
+
     useEffect(() => {
         if(type === 'graph'){
             const chartInstance = echarts.init(chartRef.current);
@@ -19,7 +19,6 @@ const Content = ({title, type, options, table}: IContent) => {
                 yAxis: options?.yAxis,
                 series: options?.series
             };
-            console.log(option)
 
             chartInstance.setOption(option);
 
@@ -28,7 +27,14 @@ const Content = ({title, type, options, table}: IContent) => {
                 chartInstance.dispose();
             }
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if(table?.tableBody) {
+            const legth = table?.tableBody.length;
+            setLength(legth);
+        }
+    }, [table]);
     
     return(
 
@@ -39,17 +45,21 @@ const Content = ({title, type, options, table}: IContent) => {
                 <Title>{title}</Title>
                 <TableTitleStyle>
                     <div>Nome</div>
-                    <div>Parcelas</div>
+                    {table?.tableBody[0].installments &&
+                        <div>Parcelas</div>
+                    }
                     <div>Valor</div>
                 </TableTitleStyle>
                 {table?.tableBody.map((table: ITableBody, index: number) => (
                     <TableBodyStyle key={index}>
                         <div>{table.name}</div>
-                        <div>{table.plot_completed}/{table.installments}</div>
+                        {table.installments &&
+                            <div>{table.plot_completed}/{table.installments}</div>
+                        }
                         <div>{table.value_installment}</div>
                     </TableBodyStyle>
                 ))}
-                <TableFooterStyle>
+                <TableFooterStyle length={length === 5? 15 : length === 4? 50 : length === 3? 70 : 90}>
                     <div>Total</div>
                     <div>{table?.tableFooter.total}</div>
                 </TableFooterStyle>

@@ -54,6 +54,16 @@ export const GETFINANCIALSUMMARY = gql`
     }
 `;
 
+export const GETFIVEJOBS = gql`
+    query GetFiveJobs($user_id: ID!){
+        fiveJobs(user_id: $user_id){
+            wage
+            description
+            establishment
+        }
+    }
+`;
+
 // export const DELETE_TASK = gql`
 //     mutation deleteTask($id: ID!){
 //         deleteTask(id: $id){

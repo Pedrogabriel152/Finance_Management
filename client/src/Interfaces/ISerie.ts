@@ -1,8 +1,10 @@
 export interface ISerie {
     type: 'line'| 'bar'
     data: any[]
-    label: {
+    label?: {
         show: true,
         position: 'top',
     }
+    stack?: string
+    areaStyle?: {}
 }

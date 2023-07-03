@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { GETFINANCE, GETFINANCIALSUMMARY, LOGIN, REGISTER } from "./queries";
+import { GETFINANCE, GETFINANCIALSUMMARY, GETFIVEJOBS, LOGIN, REGISTER } from "./queries";
 import { IAuthentication } from "../../Interfaces/IAuthentication";
-import { authenticationVar, getFinanceVar, getFinancialSummaryVar } from "./state";
+import { authenticationVar, getFinanceVar, getFinancialSummaryVar, getFiveJobsVar } from "./state";
 import { useUserContext } from "../../Context/UserContext";
+import { IJob } from "../../Interfaces/IJob";
 
 export const useLogin = () => {
     return useMutation<{login: IAuthentication}>(LOGIN,{
@@ -32,7 +33,7 @@ export const useGetFinance = () => {
 
     return useQuery<{getFiveExpense: any, getFiveIncomes: any}>(GETFINANCE, {
         variables: {
-            user_id: auth.user_id? auth.user_id : 0
+            user_id: auth?.user_id? auth.user_id : 0
         },
         onCompleted(data) {
             if(data) {
@@ -51,18 +52,34 @@ export const useGetFinancialSummary = () => {
 
     return useQuery<{totalIncomes: any, totalExpenses: any}>(GETFINANCIALSUMMARY, {
         variables: {
-            user_id: auth.user_id? auth.user_id : 0
+            user_id: auth?.user_id? auth.user_id : 0
         },
         onCompleted(data){
             if(data){
                 getFinancialSummaryVar({
                     totalExpenses: data.totalExpenses,
                     totalIncomes: data.totalIncomes
-                })
+                });
             }
         }
-    })
-}
+    });
+};
+
+export const useGetFiveJobs = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+
+    return useQuery<{fiveJobs: IJob[]}>(GETFIVEJOBS, {
+        variables: {
+            user_id: auth?.user_id? auth.user_id : 0
+        },
+        onCompleted(data) {
+            if(data){
+                getFiveJobsVar(data.fiveJobs);
+            }
+        }
+    });
+};
 
 // export const useCreateTask = () => {
 //     return useMutation<{createTask: ICreateTask}>(CREATE_TASK,{

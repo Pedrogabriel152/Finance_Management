@@ -117,7 +117,17 @@ class ExpenseRepository
     // Search for total Expense amounts
     public static function getTotalExpenses(int $user_id){
         return DB::transaction(function () use($user_id){
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+            $maxDay = 30;
+            $minValue = "$currentYear-$currentMonth-01";
+
+            if($currentMonth == 2) {
+                $maxDay = 28;
+            }  
+            $maxValue = "$currentYear-$currentMonth-$maxDay";
             $totalExpenses = [];
+
             $totalExpense = Expense::where([
                 ['user_id', '=', $user_id],
                 ['installments_paid', '=', false]
@@ -125,7 +135,7 @@ class ExpenseRepository
             $totalValue = Expense::where([
                 ['user_id', '=', $user_id],
                 ['installments_paid', '=', false]
-            ])->sum('value_installment');
+            ])->where(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), "<=", $maxValue)->sum('value_installment');
             $totalExpenses['totalExpenses'] = $totalExpense;
             $totalExpenses['total'] = $totalValue;
       
