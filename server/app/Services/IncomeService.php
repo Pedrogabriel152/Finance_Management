@@ -192,4 +192,9 @@ class IncomeService
         $incomes = IncomeRepository::getTotalIncomes($user_id);
         return $incomes;
     }
+
+    public static function getIncomesMonth(int $user_id){
+        $incomesMonth = IncomeRepository::getIncomesMonth($user_id);
+        return $incomesMonth;
+    }
 }

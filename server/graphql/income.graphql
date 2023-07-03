@@ -44,6 +44,11 @@ type TotalIncome{
     total: Float!
 }
 
+type TotalIncomesMonth{
+    month: Int!
+    total: Float!
+}
+
 extend type Query @guard{
     income(id: ID!, user_id: ID!): MessageResponseIncome! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncome")
     incomes(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomes")
@@ -51,6 +56,7 @@ extend type Query @guard{
     incomesClose(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesclose")
     totalIncomes(user_id: ID!): TotalIncome! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getTotalEIncomes")
     getFiveIncomes(user_id: ID!): [Income]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getFiveIncomes")
+    searchIncomesMonth(user_id: ID!): [TotalIncomesMonth]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesMonth")
 }
 
 extend type Mutation @guard{

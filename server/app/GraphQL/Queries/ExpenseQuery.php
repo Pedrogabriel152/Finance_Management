@@ -56,4 +56,11 @@ final class ExpenseQuery
         $response = ExpenseService::getFiveExpenses($args['user_id']);
         return $response;
     }
+
+    // search expenses by month
+    public function getExpensesMonth($_, array $args) 
+    {
+        $response = ExpenseService::getExpensesMonth($args['user_id']);
+        return $response;
+    }
 }

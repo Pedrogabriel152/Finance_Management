@@ -207,4 +207,9 @@ class ExpenseService
         }
         return $newDateExpires;
     }
+
+    public static function getExpensesMonth(int $user_id){
+        $spentMonth = ExpenseRepository::getExpensesMonth($user_id);
+        return $spentMonth;
+    }
 }

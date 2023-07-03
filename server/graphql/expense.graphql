@@ -44,6 +44,11 @@ type TotalExpenses{
     total: Float!
 }
 
+type TotalExpensesMonth{
+    month: Int!
+    total: Float!
+}
+
 extend type Query @guard{
     expense(id: ID!, user_id: ID!): MessageResponseExpense! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpense")
     expenses(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpenses")
@@ -51,6 +56,7 @@ extend type Query @guard{
     expensesOpen(user_id:ID!): [Expense]! @paginate(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesOpen")
     totalExpenses(user_id: ID!): TotalExpenses! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getTotalExpenses")
     getFiveExpense(user_id: ID!): [Expense]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getFiveExpenses")
+    searchExpensesMonth(user_id: ID!): [TotalExpensesMonth]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesMonth")
 }
 
 extend type Mutation @guard{

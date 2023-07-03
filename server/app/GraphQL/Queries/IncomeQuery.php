@@ -54,4 +54,10 @@ final class IncomeQuery
         $response = IncomeService::getFiveIncomes($args['user_id']);
         return $response;
     }
+
+    public function getIncomesMonth($_, array $args)
+    {
+        $response = IncomeService::getIncomesMonth($args['user_id']);
+        return $response;
+    }
 }
