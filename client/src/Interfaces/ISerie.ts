@@ -7,4 +7,6 @@ export interface ISerie {
     }
     stack?: string
     areaStyle?: {}
+    lineStyle?: {}
+    itemStyle?: {}
 }

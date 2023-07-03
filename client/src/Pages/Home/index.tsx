@@ -46,6 +46,7 @@ const Home = () => {
     const [optionsBar, setOptionsBar] = useState<IOptions | null>(null);
     const financialSummary = useReactiveVar(getFinancialSummaryVar);
     const jobs = useReactiveVar(getFiveJobsVar);
+    const [months, setMonths] = useState<string[]>([]);
 
     useEffect(() => {
         const auth = getAuthentication();
@@ -57,10 +58,29 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        const months = ['Janeiro', 'Fevereiro', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro'];
+        const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro'];
         const month = date.getMonth();
-        setMonth(months[month - 1]);
-    }, [date])
+        setMonth(months[month + 1]);
+    }, [date]);
+
+    useEffect(() => {
+        setMonths([]);
+        const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
+        const lastMonths = [];
+        const month = date.getMonth();
+        let start = 11;
+        console.log(month);
+        for(let i=6;i>0;i--){
+            if(!months[month + 1 - i]) {
+                lastMonths.push(months[start]);
+                start --;
+            }else {
+                lastMonths.push(months[month + 1 - i]);
+            }
+        }
+        console.log(lastMonths);
+        setMonths(lastMonths);
+    }, [])
 
     useEffect(() => {
         setTableBodyExpense([]);
@@ -143,19 +163,19 @@ const Home = () => {
                             value: financialSummary?.totalIncomes.total,
                             // Specify the style for single bar
                             itemStyle: {
-                                color: '#91cc75',
-                                shadowColor: '#91cc75',
+                                color: '#3377FF',
+                                shadowColor: '#3377FF',
                                 borderType: 'dashed',
-                                opacity: 1
+                                opacity: .7
                             } 
                             }, {
                             value: financialSummary?.totalExpenses.total,
                             // Specify the style for single bar
                             itemStyle: {
-                                color: 'red',
-                                shadowColor: '#red',
+                                color: '#DD2222',
+                                shadowColor: '#DD2222',
                                 borderType: 'dashed',
-                                opacity: 1
+                                opacity: .8
                             }
                         }],
                         label: {
@@ -168,6 +188,56 @@ const Home = () => {
         }
     }, [financialSummary]);
 
+    console.log(months);
+
+    const optionasd: IOptions = {
+        xAxis: {
+            type: 'category',
+            data: months,
+            axisLabel: {
+                interval: 0, // ou 'autoRotate'
+                rotate: 0 // ajuste o valor de rotação conforme necessário
+            }
+        },
+        yAxis: {
+            type: "value"
+        },
+        series: [
+          {
+            data: [10, 22, 28, 43, 49, 20],
+            type: 'line',
+            stack: 'Rendas',
+            areaStyle: {
+                color: ' #3377FF',
+                shadowColor: ' #3377FF',
+                opacity: .7,
+            },
+            lineStyle: {
+                color: '#3377FF' // Define a cor da linha
+            },
+            itemStyle: {
+                color: '#3377FF' // Define a cor da bolinha
+            }
+          },
+          {
+            data: [5, 4, 3, 5, 10, 20],
+            type: 'line',
+            stack: 'Despesas',
+            areaStyle: {
+                color: '#DD2222',
+                shadowColor: '#DD2222',
+                opacity: .8
+            },
+            lineStyle: {
+                color: '#DD2222' // Define a cor da linha
+            },
+            itemStyle: {
+                color: '#DD2222' // Define a cor da bolinha
+            }
+          }, 
+        ],
+      };
+
     if(!optionsBar){
         return <div></div>
     }
@@ -177,6 +247,7 @@ const Home = () => {
             <NavBar />
             <BodyStyle>
                 <Content title={`Resumo mês de ${month}`} type="graph" options={optionsBar}/>
+                <Content title={`Resumo ultimos 6 meses`} type="graph" options={optionasd}/>
                 <Content title="Despensas" type="table" table={tableExpense}/>
                 <Content title="Rendas" type="table" table={tableIncomes}/>
                 <Content title="Trabalhos" type="table" table={tableJobs}/>
