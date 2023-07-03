@@ -154,7 +154,10 @@ const Home = () => {
                     data: [ 'Rendas', 'Despesas']
                 },
                 yAxis: {
-                    type: "value"
+                    type: "value",
+                    axisLabel: {
+                        fontSize: 10 // Define o tamanho da fonte desejado
+                    }
                 },
                 series: [
                     {
@@ -200,11 +203,14 @@ const Home = () => {
             }
         },
         yAxis: {
-            type: "value"
+            type: "value",
+            axisLabel: {
+                fontSize: 10 // Define o tamanho da fonte desejado
+            }
         },
         series: [
           {
-            data: [10, 22, 28, 43, 49, 20],
+            data: [3700, 2200, 2800, 4300, 4900, 2000],
             type: 'line',
             stack: 'Rendas',
             areaStyle: {
@@ -220,7 +226,7 @@ const Home = () => {
             }
           },
           {
-            data: [5, 4, 3, 5, 10, 20],
+            data: [500, 400, 300, 500, 1000, 2000],
             type: 'line',
             stack: 'Despesas',
             areaStyle: {
