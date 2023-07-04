@@ -20,9 +20,11 @@ import { ITableBody } from "../../Interfaces/ITableBody";
 import { ITableFooter } from "../../Interfaces/ITableFooter";
 
 // GraphQL
-import { useGetFinance, useGetFinancialSummary, useGetFiveJobs } from "../../Graphql/User/hooks";
+import { useGetFinance, useGetFinancialSummary } from "../../Graphql/Finance/hooks";
+import { useGetFiveJobs } from "../../Graphql/Job/hooks";
 import { useReactiveVar } from "@apollo/client";
-import { getFinanceVar, getFinancialSummaryVar, getFiveJobsVar } from "../../Graphql/User/state";
+import { getFinanceVar, getFinancialSummaryVar } from "../../Graphql/Finance/state";
+import { getFiveJobsVar } from "../../Graphql/Job/state";
 import { IJob } from "../../Interfaces/IJob";
 
 const Home = () => {
