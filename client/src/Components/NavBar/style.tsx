@@ -22,3 +22,29 @@ export const NavBarStyle = styled.header`
     }
     
 `;
+
+export const MenuStyle = styled.ul`
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+
+    li {
+        margin-right: 20px;
+        color: #000;
+
+        a{
+            color: #000;
+            text-decoration: none;
+        }
+
+        button {
+            font-size: 18px;
+            border: none;
+            background-color: transparent;
+        }
+    }
+
+
+`;

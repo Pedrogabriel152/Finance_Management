@@ -14,6 +14,10 @@ const Footer = () => {
             setSize(25);
         }
 
+        if(size > 501 && size < 1280) {
+            setSize(50)
+        }
+
     }, [size]);
 
     return (

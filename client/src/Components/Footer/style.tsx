@@ -17,6 +17,15 @@ export const FooteStyle = styled.footer`
     @media (max-width: 360px){
         height: 14.5vh;
     }
+
+    @media (min-width: 500px) and (max-width: 730px) {
+        height: 16vh;
+
+        p {
+            padding-top: 15px;
+            font-size: 16px;
+        }
+    }
 `;
 
 export const IconeFooterStyle = styled.div`
@@ -30,5 +39,9 @@ export const IconeFooterStyle = styled.div`
 
     a:last-child{
         margin-right: 30px;
+    }
+
+    @media (min-width: 500px) and (max-width: 730px) {
+        margin-top: 50px;
     }
 `;

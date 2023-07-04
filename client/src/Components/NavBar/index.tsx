@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavBarStyle } from "./style";
+import { NavBarStyle, MenuStyle } from "./style";
 import Logo from "../../Assets/Images/image.png";
 
 // Icons
@@ -31,6 +31,16 @@ const NavBar = () => {
             <Link to={'/'}><img src={Logo} alt="logo" /></Link>
             {handleToggleBar()}
             {viewModal && <ToggleMenu />}
+            {size > 501 && (
+                <MenuStyle>
+                    <li><Link to={'/'}>Home</Link></li>
+                    <li><Link to={'/jobs'}>Trabalhos</Link></li>
+                    <li><Link to={'/expense'}>Despesas</Link></li>
+                    <li><Link to={'/incomes'}>Rendas</Link></li>
+                    <li><Link to={'/profile'}>Perfil</Link></li>
+                    <li><button>Sair</button></li>
+                </MenuStyle>
+            )}
         </NavBarStyle>
     );
 }
