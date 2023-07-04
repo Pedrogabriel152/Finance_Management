@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IContent } from "../../Interfaces/IContent";
-import * as echarts from 'echarts';
 import { Chart } from "react-google-charts";
-import { ContentGraphStyle, ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
+import { ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
 import { ITableBody } from "../../Interfaces/ITableBody";
 
 const Content = ({title, type, options, table, data, chartType}: IContent) => {
