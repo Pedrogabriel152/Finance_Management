@@ -5,12 +5,12 @@ type ITableBody = {
 }
 
 type IDiv = {
-    isSencond?: string
+    sencond?: string
 }
 
 export const ContentContainer = styled.div<IDiv>`
     background-color: #FFF;
-    margin-top: ${(props: IDiv) => props.isSencond === "LineChart"? '40px' : '90px'};
+    margin-top: ${(props: IDiv) => props.sencond === "LineChart"? '40px' : '90px'};
     width: 90vw;
     margin-left: 5%;
     text-align: center;
@@ -39,6 +39,10 @@ export const Title = styled.h1`
     background-color: #E6E6E6;
     padding: 8px 0;
     text-align: center;
+
+    @media (min-width: 500px) and (max-width: 730px) {
+        font-size: 20px;
+    }
 `;
 
 export const TableTitleStyle = styled.div`
@@ -55,6 +59,10 @@ export const TableTitleStyle = styled.div`
     div:last-child{
         margin-right: 8%;
     }
+
+    @media (min-width: 500px) and (max-width: 730px) {
+        font-size: 18px;
+    }
 `;
 
 export const TableBodyStyle = styled.div`
@@ -70,6 +78,10 @@ export const TableBodyStyle = styled.div`
     div:last-child{
         margin-right: 8%;
     }
+
+    @media (min-width: 500px) and (max-width: 730px) {
+        font-size: 16px;
+    }
 `;
 // 15, 90, 70, 50
 export const TableFooterStyle = styled.div<ITableBody>`
@@ -84,6 +96,10 @@ export const TableFooterStyle = styled.div<ITableBody>`
 
     div:last-child{
         margin-right: 8%;
+    }
+
+    @media (min-width: 500px) and (max-width: 730px) {
+        margin-top: ${(props: ITableBody) => `${props.length - 10}px`};
     }
 `;
 

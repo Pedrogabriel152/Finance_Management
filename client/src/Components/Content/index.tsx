@@ -47,7 +47,7 @@ const Content = ({title, type, options, table, data, chartType}: IContent) => {
             </ContentTableStyle>
         )
         : (
-            <ContentContainer isSencond={chartType}>
+            <ContentContainer sencond={chartType}>
                 <Title>{title}</Title>
                 <Chart chartType={chartType} width="100%" height="250px" data={data} options={options}/>
             </ContentContainer>
