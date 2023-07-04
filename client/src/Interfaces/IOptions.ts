@@ -1,8 +1,9 @@
-import { ISerie } from "./ISerie";
-import { IXAxis } from "./IXAxis";
+import { IHAxis } from "./IHAxis";
+import { IVAxis } from "./IVAxis";
 
 export interface IOptions {
-    xAxis: IXAxis
-    series: ISerie[]
-    yAxis: {}
+    title: string
+    vAxis: IVAxis
+    hAxis: IHAxis
+    seriesType: string
 }

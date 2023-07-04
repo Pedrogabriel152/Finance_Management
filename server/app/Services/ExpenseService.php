@@ -209,7 +209,76 @@ class ExpenseService
     }
 
     public static function getExpensesMonth(int $user_id){
-        $spentMonth = ExpenseRepository::getExpensesMonth($user_id);
-        return $spentMonth;
+        $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
+        $expensesMonth = [];
+        $currentMonth = date('m');
+        $beginningMonth = intval($currentMonth) - 5;
+        $currentYear = date('Y');
+        $maxDay = 30;
+
+        if($currentMonth == 2) {
+            $maxDay = 28;
+        }
+
+        $beginningMonth = intval($currentMonth) - 5;
+        if($beginningMonth == 0) {
+            $beginningMonth = 12;
+        } 
+
+        if($beginningMonth < 0) {
+            $beginningMonth = 12 + $beginningMonth;
+        }
+
+        $beginningYear = $currentYear;
+        if($beginningMonth > intval($currentMonth)){
+            $beginningYear = $currentYear - 1;
+        }
+
+        if($beginningMonth < 10){
+            $beginningMonth = "0$beginningMonth";
+        }
+
+        $minDate = "$beginningYear-$beginningMonth-01";
+        $maxDate = "$currentYear-$currentMonth-$maxDay";
+
+        $spentMonth = ExpenseRepository::getExpensesMonth($user_id, $minDate, $maxDate);
+
+        if($beginningMonth == 0) {
+            $beginningMonth = 12;
+        } 
+
+        if($beginningMonth < 0) {
+            $beginningMonth = 12 + $beginningMonth;
+        }
+        
+        for($i=0;$i<6;$i++){
+            $expensesMonth[$i] = [
+                'month' => $beginningMonth,
+                "total" => 0
+            ];
+
+            $beginningMonth++;
+        }
+
+        foreach ($expensesMonth as $keyArray => $value) {  
+            foreach ($spentMonth as $key => $expenseMonth) {   
+                if(intval($expenseMonth->month) === $value['month']){
+                    $expensesMonth[$keyArray] = [
+                        'month' => $expenseMonth->month,
+                        'total' => $expenseMonth->total
+                    ];
+                } 
+            }
+        }
+
+        foreach ($expensesMonth as $key => $expenseMonth) {   
+            $expensesMonth[$key]['month'] = $months[intval($expenseMonth['month']) - 1];
+        }
+
+
+        foreach ($spentMonth as $key => $expenseMonth) {
+            $expenseMonth->month = $months[intval($expenseMonth->month) - 1];
+        }
+        return $expensesMonth;
     }
 }

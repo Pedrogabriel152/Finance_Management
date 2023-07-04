@@ -1,9 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { GETFINANCE, GETFINANCIALSUMMARY, GETFIVEJOBS } from "./queries";
-import { IAuthentication } from "../../Interfaces/IAuthentication";
-import { getFinanceVar, getFinancialSummaryVar } from "./state";
+import { GETFINANCE, GETFINANCIALSUMMARY, GETMONTHLYSUMMARY } from "./queries";
+import { getFinanceVar, getFinancialSummaryVar, getMonthlySummaryVar } from "./state";
 import { useUserContext } from "../../Context/UserContext";
-import { IJob } from "../../Interfaces/IJob";
+import { IFinanceMonth } from "../../Interfaces/IFinanceMonth";
 
 export const useGetFinance = () => {
     const {getAuthentication} = useUserContext();
@@ -43,41 +42,22 @@ export const useGetFinancialSummary = () => {
     });
 };
 
-// export const useCreateTask = () => {
-//     return useMutation<{createTask: ICreateTask}>(CREATE_TASK,{
-//         onCompleted(data) {
-//             if(data){
-//                 createTasksVar(data?.createTask)
-//             }
-//         },
-//         refetchQueries: [
-//             'GetTasks'
-//         ]
-//     });
-// };
+export const useGetMonthlySummaryVar = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
 
-// export const useDeleteTask = () => {
-//     return useMutation<{deleteTask: IDeleteTask}>(DELETE_TASK,{
-//         onCompleted(data) {
-//             if(data){
-//                 deleteTasksVar(data?.deleteTask)
-//             }
-//         },
-//         refetchQueries: [
-//             'GetTasks'
-//         ]
-//     });
-// };
-
-// export const useUpdateTask = () => {
-//     return useMutation<{updateTask: ICreateTask}>(EDIT_TASK,{
-//         onCompleted(data) {
-//             if(data){
-//                 updateTasksVar(data?.updateTask)
-//             }
-//         },
-//         refetchQueries: [
-//             'GetTasks'
-//         ]
-//     });
-// };
+    return useQuery<{searchExpensesMonth: IFinanceMonth[], searchIncomesMonth: IFinanceMonth[]}>(GETMONTHLYSUMMARY, {
+        variables: {
+            user_id: auth?.user_id? auth.user_id : 0
+        },
+        onCompleted(data){
+            if(data){
+                console.log(data)
+                getMonthlySummaryVar({
+                    expensesMonth: data.searchExpensesMonth,
+                    incomesMonth: data.searchIncomesMonth
+                });
+            }
+        }
+    })
+}

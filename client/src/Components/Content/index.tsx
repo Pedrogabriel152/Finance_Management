@@ -1,33 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IContent } from "../../Interfaces/IContent";
 import * as echarts from 'echarts';
+import { Chart } from "react-google-charts";
 import { ContentGraphStyle, ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
 import { ITableBody } from "../../Interfaces/ITableBody";
 
-const Content = ({title, type, options, table}: IContent) => {
-    const chartRef: any = useRef<HTMLDivElement>(null);
+const Content = ({title, type, options, table, data}: IContent) => {
     const [length, setLength] = useState<number>(0);
-    // Create the echarts instance
-
-    useEffect(() => {
-        if(type === 'graph'){
-            const chartInstance = echarts.init(chartRef.current);
-
-            // Configurar o gráfico com os dados fornecidos
-            const option = {
-                xAxis: options?.xAxis,
-                yAxis: options?.yAxis,
-                series: options?.series
-            };
-
-            chartInstance.setOption(option);
-
-            return () => {
-                // Limpar o gráfico quando o componente for desmontado
-                chartInstance.dispose();
-            }
-        }
-    }, []);
 
     useEffect(() => {
         if(table?.tableBody) {
@@ -35,6 +14,7 @@ const Content = ({title, type, options, table}: IContent) => {
             setLength(legth);
         }
     }, [table]);
+    //   };
     
     return(
 
@@ -59,6 +39,7 @@ const Content = ({title, type, options, table}: IContent) => {
                         <div>{table.value_installment}</div>
                     </TableBodyStyle>
                 ))}
+                
                 <TableFooterStyle length={length === 5? 15 : length === 4? 50 : length === 3? 70 : 90}>
                     <div>Total</div>
                     <div>{table?.tableFooter.total}</div>
@@ -68,7 +49,7 @@ const Content = ({title, type, options, table}: IContent) => {
         : (
             <ContentContainer>
                 <Title>{title}</Title>
-                <ContentGraphStyle ref={chartRef}/>
+                <Chart chartType="ColumnChart" width="100%" height="250px" data={data} />
             </ContentContainer>
         )
         }

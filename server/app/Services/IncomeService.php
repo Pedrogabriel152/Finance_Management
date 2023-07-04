@@ -194,7 +194,72 @@ class IncomeService
     }
 
     public static function getIncomesMonth(int $user_id){
-        $incomesMonth = IncomeRepository::getIncomesMonth($user_id);
-        return $incomesMonth;
+        $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
+        $incomesMonths = [];
+        $currentMonth = date('m');
+        $beginningMonth = intval($currentMonth) - 5;
+        $currentYear = date('Y');
+        $maxDay = 30;
+
+        if($currentMonth == 2) {
+            $maxDay = 28;
+        }
+
+        $beginningMonth = intval($currentMonth) - 5;
+        if($beginningMonth == 0) {
+            $beginningMonth = 12;
+        } 
+
+        if($beginningMonth < 0) {
+            $beginningMonth = 12 + $beginningMonth;
+        }
+
+        $beginningYear = $currentYear;
+        if($beginningMonth > intval($currentMonth)){
+            $beginningYear = $currentYear - 1;
+        }
+
+        if($beginningMonth < 10){
+            $beginningMonth = "0$beginningMonth";
+        }
+
+        $minDate = "$beginningYear-$beginningMonth-01";
+        $maxDate = "$currentYear-$currentMonth-$maxDay";
+
+        if($beginningMonth == 0) {
+            $beginningMonth = 12;
+        } 
+
+        if($beginningMonth < 0) {
+            $beginningMonth = 12 + $beginningMonth;
+        }
+        
+        for($i=0;$i<6;$i++){
+            $incomesMonths[$i] = [
+                'month' => $beginningMonth,
+                "total" => 0
+            ];
+
+            $beginningMonth++;
+        }
+
+        $incomesMonth = IncomeRepository::getIncomesMonth($user_id, $minDate, $maxDate);
+
+        foreach ($incomesMonths as $keyArray => $value) {  
+            foreach ($incomesMonth as $key => $incomeMonth) {   
+                if(intval($incomeMonth->month) === $value['month']){
+                    $incomesMonths[$keyArray] = [
+                        'month' => $incomeMonth->month,
+                        'total' => $incomeMonth->total
+                    ];
+                } 
+            }
+        }
+
+        foreach ($incomesMonths as $key => $incomeMonth) {   
+            $incomesMonths[$key]['month'] = $months[intval($incomeMonth['month']) - 1];
+        }
+
+        return $incomesMonths;
     }
 }

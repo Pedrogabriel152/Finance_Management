@@ -149,21 +149,8 @@ class ExpenseRepository
         });
     }
 
-    public static function getExpensesMonth(int $user_id) {
-        return DB::transaction(function () use($user_id){
-            $currentMonth = date('m');
-            $currentYear = date('Y');
-            $maxDay = 30;
-
-            if($currentMonth == 2) {
-                $maxDay = 28;
-            }
-
-            $beginningMonth = $currentMonth;
-            $beginningYear = $currentYear - 1;
-            $minDate = "$beginningYear-$beginningMonth-01";
-            $maxDate = "$currentYear-$currentMonth-$maxDay";
-
+    public static function getExpensesMonth(int $user_id, string $minDate, string $maxDate) {
+        return DB::transaction(function () use($user_id, $minDate, $maxDate){
             $spentMonth = Expense::select(
                 DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE)) as month"),
                 DB::raw("SUM(value_installment) as total")
