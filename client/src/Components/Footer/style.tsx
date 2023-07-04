@@ -13,6 +13,10 @@ export const FooteStyle = styled.footer`
         font-size: 12px;
         text-align: center;
     }
+
+    @media (max-width: 360px){
+        height: 14.5vh;
+    }
 `;
 
 export const IconeFooterStyle = styled.div`

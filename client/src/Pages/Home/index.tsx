@@ -39,8 +39,8 @@ const Home = () => {
     const [tableBodyJob, setTableBodyJob] = useState<ITableBody[]>([]);
     const [tableJobs, setTableJobs] = useState<ITable>();
     const [month, setMonth] = useState<string>('Janeiro');
-    const [optionsBar, setOptionsBar] = useState<IOptions | null>(null);
     const [optionsLine, setOptionsLine] = useState<IOptions | null>(null);
+    const [dataLine, setDataLine] = useState<any[]>([]);
     const [months, setMonths] = useState<string[]>([]);
     const [dataBars, setDataBras] = useState<any[]>([]);
     const tableFooterExpense: ITableFooter = {total: 0};   
@@ -154,22 +154,7 @@ const Home = () => {
     }, [finace, jobs]);
 
     useEffect(() => {
-
-        const data = [
-            ['Rendas', 'Despesas'],
-            ['Rendas', ]
-        ];
         if(financialSummary?.totalIncomes){
-            setOptionsBar({
-                hAxis: {
-                    title: "Gastos e Ganhos"
-                }, 
-                vAxis: {
-                    title: "Valor"
-                },
-                seriesType: "bars",
-                title: ""
-            });
             setDataBras([
                 ["Element", "Valor", { role: "style" }],
                 ['Rendas', financialSummary?.totalIncomes.total, 'stroke-color: #3377FF; fill-color: #3377FF; fill-opacity: 0.7'],
@@ -179,77 +164,30 @@ const Home = () => {
     }, [financialSummary]);
 
     useEffect(() => {
-        console.log("Values => ", months);
         if(months){
-            const options: IOptions = {
-                hAxis: {
-                    title: "Valor"
-                }, 
-                vAxis: {
-                    title: "Gastos e Ganhos"
-                },
-                seriesType: "bars",
-                title: ""
+            const data: any[][] = [["Mes", "Rendas", "Despesas"]];
+            setOptionsLine({
+                title: "",
+                curveType: "none",
+                legend: { position: "bottom" },
+                colors: ["#3377FF", "#DD2222"],
                 
-                // xAxis: {
-                //     type: 'category',
-                //     data: months,
-                //     axisLabel: {
-                //         interval: 0, // ou 'autoRotate'
-                //         rotate: 0 // ajuste o valor de rotação conforme necessário
-                //     }
-                // },
-                // yAxis: {
-                //     type: "value",
-                //     axisLabel: {
-                //         fontSize: 10 // Define o tamanho da fonte desejado
-                //     }
-                // },
-                // series: [
-                //   {
-                //     data: [3700, 2200, 2800, 4300, 4900, 2000],
-                //     type: 'line',
-                //     stack: 'Rendas',
-                //     areaStyle: {
-                //         color: ' #3377FF',
-                //         shadowColor: ' #3377FF',
-                //         opacity: .7,
-                //     },
-                //     lineStyle: {
-                //         color: '#3377FF' // Define a cor da linha
-                //     },
-                //     itemStyle: {
-                //         color: '#3377FF' // Define a cor da bolinha
-                //     }
-                //   },
-                //   {
-                //     data: [500, 400, 300, 500, 1000, 2000],
-                //     type: 'line',
-                //     stack: 'Despesas',
-                //     areaStyle: {
-                //         color: '#DD2222',
-                //         shadowColor: '#DD2222',
-                //         opacity: .8
-                //     },
-                //     lineStyle: {
-                //         color: '#DD2222' // Define a cor da linha
-                //     },
-                //     itemStyle: {
-                //         color: '#DD2222' // Define a cor da bolinha
-                //     }
-                //   }, 
-                // ],
-            };
+            });
 
-            
-    
-            setOptionsLine(options);
+            monthlySummary?.incomesMonth.map((income: any) => {
+                const line = [income.month, income.total];
+                data.push(line);
+            });
+
+            monthlySummary?.expensesMonth.map((expense: any, index: number) => {
+                data[index+1].push(expense.total);
+            });
+
+            setDataLine(data); 
         }
     }, [monthlySummary]);
 
-    
-
-    if(!optionsBar || !optionsLine){
+    if(!optionsLine){
         return <div></div>
     }
 
@@ -257,8 +195,8 @@ const Home = () => {
         <HomeStyle>
             <NavBar />
             <BodyStyle>
-                <Content title={`Resumo mês de ${month}`} type="graph" options={optionsBar} data={dataBars}/>
-                <Content title={`Resumo ultimos 6 meses`} type="graph" options={optionsLine}/>
+                <Content title={`Resumo mês de ${month}`} type="graph" data={dataBars} chartType="ColumnChart"/>
+                <Content title={`Resumo últimos 6 meses`} type="graph" data={dataLine} options={optionsLine} chartType="LineChart"/>
                 <Content title="Despensas" type="table" table={tableExpense}/>
                 <Content title="Rendas" type="table" table={tableIncomes}/>
                 <Content title="Trabalhos" type="table" table={tableJobs}/>

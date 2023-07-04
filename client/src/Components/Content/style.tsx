@@ -4,9 +4,13 @@ type ITableBody = {
     length: number
 }
 
-export const ContentContainer = styled.div`
+type IDiv = {
+    isSencond?: string
+}
+
+export const ContentContainer = styled.div<IDiv>`
     background-color: #FFF;
-    margin-top: 90px;
+    margin-top: ${(props: IDiv) => props.isSencond === "LineChart"? '40px' : '90px'};
     width: 90vw;
     margin-left: 5%;
     text-align: center;
