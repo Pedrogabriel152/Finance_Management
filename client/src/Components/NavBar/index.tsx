@@ -18,7 +18,7 @@ const NavBar = () => {
     }, [size]);
 
     const handleToggleBar = () => {
-        if(size < 501) {
+        if(size < 530) {
             if(viewModal){
                 return <FaAngleRight size={25} onClick={() => setViewModal(!viewModal)}/>
             }
@@ -31,7 +31,7 @@ const NavBar = () => {
             <Link to={'/'}><img src={Logo} alt="logo" /></Link>
             {handleToggleBar()}
             {viewModal && <ToggleMenu />}
-            {size > 501 && (
+            {size > 530 && (
                 <MenuStyle>
                     <li><Link to={'/'}>Home</Link></li>
                     <li><Link to={'/jobs'}>Trabalhos</Link></li>

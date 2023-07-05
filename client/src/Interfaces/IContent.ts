@@ -8,5 +8,5 @@ export interface IContent {
     data?: any[]
     options?: IOptions
     table?: ITable
-    
+    size: number    
 }

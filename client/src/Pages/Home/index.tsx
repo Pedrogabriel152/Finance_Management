@@ -34,6 +34,7 @@ const Home = () => {
     const date = new Date();
     const [tableExpense, setTableExpense] = useState<ITable>();
     const [tableIncomes, setTableIncomes] = useState<ITable>();
+    const [size, setSize] = useState<number>(500);
     const [tableBodyExpense, setTableBodyExpense] = useState<ITableBody[]>([]);
     const [tableBodyIncome, setTableBodyIncome] = useState<ITableBody[]>([]);
     const [tableBodyJob, setTableBodyJob] = useState<ITableBody[]>([]);
@@ -53,6 +54,12 @@ const Home = () => {
     const financialSummary = useReactiveVar(getFinancialSummaryVar);
     const jobs = useReactiveVar(getFiveJobsVar);
     const monthlySummary = useReactiveVar(getMonthlySummaryVar);
+
+    useEffect(() => {
+        const size = window.screen.width;
+
+        setSize(size);
+    }, [size]);
     
 
     useEffect(() => {
@@ -195,11 +202,11 @@ const Home = () => {
         <HomeStyle>
             <NavBar />
             <BodyStyle>
-                <Content title={`Resumo mês de ${month}`} type="graph" data={dataBars} chartType="ColumnChart"/>
-                <Content title={`Resumo últimos 6 meses`} type="graph" data={dataLine} options={optionsLine} chartType="LineChart"/>
-                <Content title="Despensas" type="table" table={tableExpense}/>
-                <Content title="Rendas" type="table" table={tableIncomes}/>
-                <Content title="Trabalhos" type="table" table={tableJobs}/>
+                <Content title={`Resumo mês de ${month}`} type="graph" data={dataBars} chartType="ColumnChart" size={size}/>
+                <Content title={`Resumo últimos 6 meses`} type="graph" data={dataLine} options={optionsLine} chartType="LineChart" size={size}/>
+                <Content title="Despensas" type="table" table={tableExpense} size={size}/>
+                <Content title="Rendas" type="table" table={tableIncomes} size={size}/>
+                <Content title="Trabalhos" type="table" table={tableJobs} size={size}/>
             </BodyStyle>
             <Footer />
         </HomeStyle>

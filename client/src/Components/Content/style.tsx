@@ -15,14 +15,11 @@ export const ContentContainer = styled.div<IDiv>`
     margin-left: 5%;
     text-align: center;
     height: 300px;
-`;
 
-export const ContentGraphStyle = styled.div`
-    width: 80vw;
-    height: 250px;
-    margin-left: 25px;
-    background-color: transparent;
-    color: #000;
+    @media (min-width: 1280px) {
+        width: 40vw;
+        margin-top: 90px;
+    }
 `;
 
 export const ContentTableStyle = styled.div`
@@ -32,6 +29,11 @@ export const ContentTableStyle = styled.div`
     margin-top: 40px;
     color: #000;
     margin-left: 5%;
+
+    @media (min-width: 1280px) {
+        width: 25vw;
+        margin-top: -50px;
+    }
 `;
 
 export const Title = styled.h1`
@@ -119,4 +121,5 @@ export const TableFooterRespStyle = styled.div`
     div:last-child{
         margin-right: 8%;
     }
+    
 `;

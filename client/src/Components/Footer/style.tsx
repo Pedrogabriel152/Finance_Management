@@ -26,6 +26,16 @@ export const FooteStyle = styled.footer`
             font-size: 16px;
         }
     }
+
+    @media (min-width: 1280px) {
+        height: 16vh;
+        margin-top: -44px;
+
+        p {
+            padding-top: 15px;
+            font-size: 16px;
+        }
+    }
 `;
 
 export const IconeFooterStyle = styled.div`
@@ -43,5 +53,13 @@ export const IconeFooterStyle = styled.div`
 
     @media (min-width: 500px) and (max-width: 730px) {
         margin-top: 50px;
+    }
+
+    @media (min-width: 1280px) {
+        justify-content: center;
+        
+        svg:first-child {
+            margin-right: 60px;
+        }
     }
 `;

@@ -4,7 +4,7 @@ import { Chart } from "react-google-charts";
 import { ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
 import { ITableBody } from "../../Interfaces/ITableBody";
 
-const Content = ({title, type, options, table, data, chartType}: IContent) => {
+const Content = ({title, type, options, table, data, chartType, size}: IContent) => {
     const [length, setLength] = useState<number>(0);
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const Content = ({title, type, options, table, data, chartType}: IContent) => {
         : (
             <ContentContainer sencond={chartType}>
                 <Title>{title}</Title>
-                <Chart chartType={chartType} width="100%" height="250px" data={data} options={options}/>
+                <Chart chartType={chartType} width='100%' height="250px" data={data} options={options}/>
             </ContentContainer>
         )
         }
