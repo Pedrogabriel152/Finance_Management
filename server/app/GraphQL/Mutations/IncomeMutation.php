@@ -35,5 +35,10 @@ final class IncomeMutation
         $response = IncomeService::payInstallment($args);
         return $response;
     }
+
+    public function updateMonthsPaid($_, array $args){
+        $response = IncomeService::updateMonthsPaid($args['user_id']);
+        return $response;
+    }
     
 }

@@ -287,12 +287,51 @@ class IncomeService
                         $beginningMonth = -($beginningMonth);
                     }
 
-                    dd($beginningMonth);
+                    // dd($beginningMonth);
                 }
             } 
         }
-        dd($incomesMonths);
+        // $arrayInicial = serialize([['month' => 0, 'paid' => 0, 'year' => 0]]);
+        // dd($arrayInicial);
 
-        dd($incomes);
+        // dd(unserialize($arrayInicial));
+
+        dd($income->months_paid);
+    }
+
+    public static function updateMonthsPaid(int $user_id) {
+        $incomes = Income::where('user_id', $user_id)->get();
+        $incomes = Income::whereId(11)->get();
+        
+        
+        foreach ($incomes as $key => $income) {
+            $month = date('m', strtotime($income->expires));
+            $year = date('Y', strtotime($income->expires));
+            $months_paid = [];
+            
+            if($income->installments_received > 0){
+                $installments_received = $income->installments_received;
+
+                for($i=1;$i <= $installments_received; $i++) {
+                    $month = intval($month) - $i;
+
+                    if($month == 0) {
+                        $month = 12 + $month;
+                    }
+                    
+                    $months_paid[] = [
+                        'month' => $month,
+                        'total' => $income->value_installment,
+                        'year' => $year
+                    ];
+                } 
+            }
+
+            if($months_paid) {
+                dd($months_paid);
+            }
+            
+        }
+        
     }
 }

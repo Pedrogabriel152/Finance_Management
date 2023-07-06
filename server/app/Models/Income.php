@@ -17,6 +17,7 @@ class Income extends Model
         'expires',
         'installments_received',
         'received_income',
+        'months_paid',
         'user_id',
     ];
 }
