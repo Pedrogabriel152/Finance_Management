@@ -156,24 +156,37 @@ class IncomeRepository
 
     public static function getIncomesMonth(int $user_id, string $minDate, string $maxDate) {
         return DB::transaction(function () use($user_id, $minDate, $maxDate){
-            $incomeMonth = Income::select(
-                DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE)) as month"),
-                DB::raw("SUM(value_installment) as total")
-            )
-            ->where('user_id', $user_id)
-            ->whereBetween('expires', [$minDate, $maxDate])
-            ->groupBy(DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE))"))
-            ->get();
+            $incomes = Income::where('user_id',$user_id)->whereBetween('created_at', [$minDate, $maxDate])->get();
+            //  ['created_at', '<=', $maxDate]
+            // $incomeMonth = Income::select(
+            //     DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE)) as month"),
+            //     DB::raw("SUM(value_installment) as total")
+            // )
+            // ->where('user_id', $user_id)
+            // ->whereBetween('expires', [$minDate, $maxDate])
+            // ->groupBy(DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE))"))
+            // ->get();
 
-            $incomeJob = Job::where('user_id', $user_id)->get();
+            // foreach ($incomes as $Key => $income) {
+            //     $month = date('m', strtotime($income->expires));
+                
+            //     if($income->installments_received > 0){
+            //         dd($income);
+            //     }
+                
+            // }
 
-            foreach ($incomeMonth as $keyIncome => $income) {
-                foreach ($incomeJob as $keyJob => $value) {
-                    $income->total = intval($income->total) + $value->wage;
-                }
-            }
+            // dd($incomeMonth);
 
-            return $incomeMonth;
+            // $incomeJob = Job::where('user_id', $user_id)->get();
+
+            // foreach ($incomeMonth as $keyIncome => $income) {
+            //     foreach ($incomeJob as $keyJob => $value) {
+            //         $income->total = intval($income->total) + $value->wage;
+            //     }
+            // }
+
+            return $incomes;
         });
     }
 }

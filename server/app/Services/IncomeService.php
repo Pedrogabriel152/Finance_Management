@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Income;
 use App\Repositories\IncomeRepository;
+use App\Repositories\JobRepository;
 
 class IncomeService
 {
@@ -243,7 +245,9 @@ class IncomeService
             $beginningMonth++;
         }
 
-        $incomesMonth = IncomeRepository::getIncomesMonth($user_id, $minDate, $maxDate);
+        $incomes = IncomeRepository::getIncomesMonth($user_id, $minDate, $maxDate);
+        $jobs = JobRepository::getJobs($user_id);
+        $incomesMonth = IncomeService::organizeIncome($incomes, $jobs, $incomesMonths);
 
         foreach ($incomesMonths as $keyArray => $value) {  
             foreach ($incomesMonth as $key => $incomeMonth) {   
@@ -261,5 +265,34 @@ class IncomeService
         }
 
         return $incomesMonths;
+    }
+
+    private static function organizeIncome($incomes, $jobs, array $incomesMonths){
+        foreach ($incomes as $key => $income) {
+            $month = date('m', strtotime($income->expires));
+            $year = date('Y', strtotime($income->expires));
+            $curentYear = date('Y');
+            foreach ($incomesMonths as $KeyMonths => $value) {
+                if(intval($month) === intval($value['month']) && intval($year) === intval($curentYear)){
+                    $incomesMonths[$KeyMonths] = [
+                        'month' => $month,
+                        'total' => $value['total'] + intval($income->value_installment)
+                    ];
+                }
+
+                if((intval($year) - 1) === intval($curentYear) && intval($income->installments_received) > 0){
+                    $beginningMonth = intval($month) - $income->value_installment;
+                    
+                    if($beginningMonth < 0) {
+                        $beginningMonth = -($beginningMonth);
+                    }
+
+                    dd($beginningMonth);
+                }
+            } 
+        }
+        dd($incomesMonths);
+
+        dd($incomes);
     }
 }
