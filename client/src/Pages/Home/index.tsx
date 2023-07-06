@@ -26,11 +26,12 @@ import { useReactiveVar } from "@apollo/client";
 import { getFinanceVar, getFinancialSummaryVar, getMonthlySummaryVar } from "../../Graphql/Finance/state";
 import { getFiveJobsVar } from "../../Graphql/Job/state";
 import { IJob } from "../../Interfaces/IJob";
+import ModalLoading from "../../Components/ModalLoading";
 
 const Home = () => {
-    useGetFinancialSummary();
-    useGetFiveJobs();
-    useGetMonthlySummaryVar();
+    const { loading: loadSummary } = useGetFinancialSummary();
+    const { loading: loadJobs } = useGetFiveJobs();
+    const { loading: loadSummaryMonths } = useGetMonthlySummaryVar();
     const date = new Date();
     const [tableExpense, setTableExpense] = useState<ITable>();
     const [tableIncomes, setTableIncomes] = useState<ITable>();
@@ -194,8 +195,14 @@ const Home = () => {
         }
     }, [monthlySummary]);
 
-    if(!optionsLine){
-        return <div></div>
+    if(loadJobs || loadSummary || loadSummaryMonths || !optionsLine){
+        return (
+            <>
+            <NavBar />
+            <ModalLoading/>
+            <Footer />
+            </>
+        )
     }
 
     return (

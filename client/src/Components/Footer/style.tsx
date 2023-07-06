@@ -29,7 +29,7 @@ export const FooteStyle = styled.footer`
 
     @media (min-width: 1280px) {
         height: 16vh;
-        margin-top: -44px;
+        margin-top: -43px;
 
         p {
             padding-top: 15px;

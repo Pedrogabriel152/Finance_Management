@@ -6,7 +6,7 @@ export const HomeStyle = styled.section`
 
 export const BodyStyle = styled.main`
     width: 100vw;
-    min-height: 88.5vh;
+    min-height: 88.45vh;
 
     @media (min-width: 1280px) {
         display: flex;

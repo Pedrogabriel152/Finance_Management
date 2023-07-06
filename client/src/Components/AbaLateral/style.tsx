@@ -33,7 +33,7 @@ export const AbaLateralStyle = styled.div`
             color: #000;
         }
 
-        @media (min-width: 1283px) {
+        @media (min-width: 1280px) {
             width: 20vw;
         }
 
