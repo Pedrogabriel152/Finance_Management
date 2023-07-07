@@ -39,7 +39,7 @@ const Content = ({title, type, options, table, data, chartType, size}: IContent)
                     </TableBodyStyle>
                 ))}
                 
-                <TableFooterStyle length={length === 5? 15 : length === 4? 50 : length === 3? 70 : 90}>
+                <TableFooterStyle length={length === 5? 15 : length === 4? 45 : length === 3? 70 : length === 2? 90 : 125}>
                     <div>Total</div>
                     <div>{table?.tableFooter.total}</div>
                 </TableFooterStyle>
