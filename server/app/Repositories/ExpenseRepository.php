@@ -136,7 +136,8 @@ class ExpenseRepository
             if($currentMonth == 2) {
                 $maxDay = 28;
             }  
-            $maxValue = "$currentYear-$currentMonth-$maxDay";
+            $maxDate = "$currentYear-$currentMonth-$maxDay";
+            $minDate = "$currentYear-$currentMonth-01";
             $totalExpenses = [];
 
             $totalExpense = Expense::where([
@@ -144,9 +145,8 @@ class ExpenseRepository
                 ['installments_paid', '=', false]
             ])->count();
             $totalValue = Expense::where([
-                ['user_id', '=', $user_id],
-                ['installments_paid', '=', false]
-            ])->where(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), "<=", $maxValue)->sum('value_installment');
+                ['user_id', '=', $user_id]
+            ])->whereBetween(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), [$minDate, $maxDate])->sum('value_installment');
             $totalExpenses['totalExpenses'] = $totalExpense;
             $totalExpenses['total'] = $totalValue;
       

@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Income;
 use App\Repositories\IncomeRepository;
 use App\Repositories\JobRepository;
-use DateTime;
 
 class IncomeService
 {
@@ -314,8 +312,6 @@ class IncomeService
                 }                 
             }
         }
-
         return $incomesMonths;
     }
-}
-    
+} 

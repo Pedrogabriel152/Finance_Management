@@ -141,17 +141,22 @@ class IncomeRepository
             $totalIncomes = [];
 
             $incomesValueTotal = Income::where([
-                ['user_id', '=', $user_id],
-                ['received_income', '=', false]
-            ])->whereBetween(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), [$minValue, $maxValue])->sum('value_installment');
+                ['user_id', '=', $user_id]
+            ])->whereBetween(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), [$minValue, $maxValue])->sum('value_installment');;
 
-            $jobsValueTotal = Job::where('user_id', $user_id)->sum('wage');
+            $jobsValueTotal = Job::where([
+                ['user_id', '=', $user_id],
+                ['leave', '=', null]
+            ])->sum('wage');
 
             $totalIncome = Income::where([
                 ['user_id', '=', $user_id],
                 ['received_income', '=', false]
             ])->count();
-            $totalJobs = Job::where('user_id', $user_id)->count();
+            $totalJobs = Job::where([
+                ['user_id', '=', $user_id],
+                ['leave', '=', null]
+            ])->count();
 
             $totalIncomes['totalIncomes'] = $totalIncome + $totalJobs;
             $totalIncomes['total'] = $incomesValueTotal + $jobsValueTotal;
@@ -162,7 +167,10 @@ class IncomeRepository
 
     public static function getFiveIncomes(int $user_id){
         return DB::transaction(function () use($user_id) {
-            $incomes = Income::where('user_id', $user_id)->orderBy('value_installment', 'desc')->limit(5)->get();
+            $incomes = Income::where([
+                ['user_id', '=', $user_id],
+                ['received_income', '=', false]
+            ])->orderBy('value_installment', 'desc')->limit(5)->get();
             return $incomes;
         });
     }

@@ -48,7 +48,10 @@ class JobRepository
 
     // Search the database for an five jobs
     public static function getFiveJobs(int $user_id) {
-        $jobs = Job::where('user_id', $user_id)->orderBy('wage', 'desc')->limit(5)->get();
+        $jobs = Job::where([
+            ['user_id', '=', $user_id],
+            ['active', '=', true]
+        ])->orderBy('wage', 'desc')->limit(5)->get();
         return $jobs;
     }
 
@@ -59,6 +62,13 @@ class JobRepository
             $jobExist->wage = $args['wage'];
             $jobExist->user_id = $args['user_id'];
             $jobExist->establishment = $args['establishment'];
+
+            if(array_key_exists('active', $args)){
+                $jobLeaved = DateTime::createFromFormat('d/m/Y', date('d-m-Y'));
+                $jobExist->leave = $jobLeaved;
+                $jobExist->active = false;
+                $jobExist->save();
+            }
             $jobExist->save();
             return $jobExist;
         });
