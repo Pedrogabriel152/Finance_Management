@@ -23,6 +23,7 @@ class JobRepository
             if(array_key_exists('leave', $args['job'])){
                 $jobLeaved = DateTime::createFromFormat('d/m/Y', $args['job']['leave']);
                 $newJob->leave = $jobLeaved;
+                $newJob->active = false;
                 $newJob->save();
             }
 

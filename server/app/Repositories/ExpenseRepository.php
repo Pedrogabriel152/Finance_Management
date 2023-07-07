@@ -79,10 +79,10 @@ class ExpenseRepository
         return DB::transaction(function () use($expense){
             $updateExpense = $expense;
             $months_paid = unserialize($updateExpense->months_paid);
-            $updateExpense->installments_paid = $expense->installments_paid + 1;
-            if($updateExpense->installments_received == 0) {
+            if($updateExpense->installments_paid === 0) {
                 $months_paid = [];
             }
+            $updateExpense->installments_paid = $expense->installments_paid + 1;
 
             if(!$updateExpense->paid_expense){
                 $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
@@ -91,9 +91,10 @@ class ExpenseRepository
                 $updateExpense->expires = $newDateExpires;
                 $months_paid[] = [
                     'month' => $month,
-                    'total' => floatValue($updateExpense->value_installment),
+                    'total' => floatval($updateExpense->value_installment),
                     'year' => $year
                 ];
+                $updateExpense->months_paid = serialize($months_paid);
             }
 
             if($updateExpense->installments_paid === $updateExpense->installments){
@@ -162,14 +163,7 @@ class ExpenseRepository
 
     public static function getExpensesMonth(int $user_id, string $minDate, string $maxDate) {
         return DB::transaction(function () use($user_id, $minDate, $maxDate){
-            $spentMonth = Expense::select(
-                DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE)) as month"),
-                DB::raw("SUM(value_installment) as total")
-            )
-            ->where('user_id', $user_id)
-            ->whereBetween('expires', [$minDate, $maxDate])
-            ->groupBy(DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE))"))
-            ->get();
+            $spentMonth = Expense::where('user_id',$user_id)->whereBetween('created_at', [$minDate, $maxDate])->get();
 
             return $spentMonth;
         });

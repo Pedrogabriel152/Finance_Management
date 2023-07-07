@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Income;
 use App\Repositories\IncomeRepository;
 use App\Repositories\JobRepository;
+use DateTime;
 
 class IncomeService
 {
@@ -239,26 +240,19 @@ class IncomeService
         for($i=0;$i<6;$i++){
             $incomesMonths[$i] = [
                 'month' => $beginningMonth,
-                "total" => 0
+                "total" => 0,
+                'year' => $beginningMonth > 12? $currentYear : $beginningYear
             ];
 
             $beginningMonth++;
+            if($beginningMonth > 12) {
+                $beginningMonth == 1;
+            }
         }
 
         $incomes = IncomeRepository::getIncomesMonth($user_id, $minDate, $maxDate);
         $jobs = JobRepository::getJobs($user_id);
-        $incomesMonth = IncomeService::organizeIncome($incomes, $jobs, $incomesMonths);
-
-        foreach ($incomesMonths as $keyArray => $value) {  
-            foreach ($incomesMonth as $key => $incomeMonth) {   
-                if(intval($incomeMonth->month) === $value['month']){
-                    $incomesMonths[$keyArray] = [
-                        'month' => $incomeMonth->month,
-                        'total' => $incomeMonth->total
-                    ];
-                } 
-            }
-        }
+        $incomesMonths = IncomeService::organizeIncome($incomes, $jobs, $incomesMonths);
 
         foreach ($incomesMonths as $key => $incomeMonth) {   
             $incomesMonths[$key]['month'] = $months[intval($incomeMonth['month']) - 1];
@@ -267,12 +261,12 @@ class IncomeService
         return $incomesMonths;
     }
 
-    private static function organizeIncome($incomes, $jobs, array $incomesMonths){
+    private static function organizeIncome($incomes, $jobs, array $incomesMonths){ 
         foreach ($incomes as $key => $income) {
+            $currentYear = date('Y');
             $monthsPaids = unserialize($income->months_paid);
             $monthYear = date('Y', strtotime($income->expires));
             $monthExpires = date('m', strtotime($income->expires));
-            $currentYear = date('Y');
         
             foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
                 foreach ($incomesMonths as $keyIncomes => $incomeMonth) {
@@ -288,17 +282,39 @@ class IncomeService
                             $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
                         }
 
-                        if(intval($monthYear) === intval($currentYear) && intval($monthExpires) === intval($incomeMonth['month'])){
-                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
+                        if(!$income->received_income){
+                            if(intval($monthYear) === intval($currentYear) && intval($monthExpires) === intval($incomeMonth['month'])){
+                                $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
+                            }
                         }
                     }                    
                 }
             } 
         }
 
-        dd($jobs);
+        foreach ($jobs as $key => $job) {
+            foreach ($incomesMonths as $keyIncomes => $incomeMonth) {   
+                $date = $incomeMonth['year']."-".$incomeMonth['month'].'-01';
+                $dateStartedMonth = date('m-Y', strtotime($date));
+                $dateStartedJob = date('m-Y',  strtotime($job->started));
 
-        dd($incomesMonths);
+                if($dateStartedMonth >= $dateStartedJob){
+                    if($job->leave) {
+                        $monthLeaved = date('m-Y', strtotime($job->leave));
+                        $dateLeaveddMonth = date('m-Y', strtotime($incomeMonth['year']."-".$incomeMonth['month']."-30"));
+            
+                        if($monthLeaved >= $dateLeaveddMonth) {
+                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($job->wage);
+                        }
+                    } 
+
+                    if(!$job->leave) {
+                        $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($job->wage);
+                    }
+                }                 
+            }
+        }
+
         return $incomesMonths;
     }
 }

@@ -108,7 +108,7 @@ class IncomeRepository
                 $year = date('Y', strtotime($updateIncome->expires));
                 $updateIncome->expires = $newDateExpires;
                 $months_paid[] = [
-                    'month' => intval($month) ,
+                    'month' => intval($month),
                     'total' => floatval($updateIncome->value_installment),
                     'year' => $year
                 ];
@@ -170,37 +170,6 @@ class IncomeRepository
     public static function getIncomesMonth(int $user_id, string $minDate, string $maxDate) {
         return DB::transaction(function () use($user_id, $minDate, $maxDate){
             $incomes = Income::where('user_id',$user_id)->whereBetween('created_at', [$minDate, $maxDate])->get();
-            //  ['created_at', '<=', $maxDate]
-            // $incomeMonth = Income::select(
-            //     DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE)) as month"),
-            //     DB::raw("SUM(value_installment) as total")
-            // )
-            // ->where('user_id', $user_id)
-            // ->whereBetween('expires', [$minDate, $maxDate])
-            // ->groupBy(DB::raw("EXTRACT(MONTH FROM CAST(expires AS DATE))"))
-            // ->get();
-
-            // foreach ($incomes as $Key => $income) {
-            //     $month = date('m', strtotime($income->expires));
-                
-            //     if($income->installments_received > 0){
-            //         dd($income);
-            //     }
-                
-            // }
-
-            // dd($incomeMonth);
-
-            // $incomeJob = Job::where('user_id', $user_id)->get();
-
-            // foreach ($incomeMonth as $keyIncome => $income) {
-            //     foreach ($incomeJob as $keyJob => $value) {
-            //         $income->total = intval($income->total) + $value->wage;
-            //     }
-            // }
-
-            // dd($incomes);
-
             return $incomes;
         });
     }
