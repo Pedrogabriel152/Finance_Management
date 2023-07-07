@@ -96,7 +96,8 @@ class JobService
                 ];
             }
 
-            $jobExist->delete();
+            $jobExist = JobRepository::updateActiviJob($jobExist);
+
             return [
                 'code' => 200,
                 'message' => "Trabalho deletado com!" 

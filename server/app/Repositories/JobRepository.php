@@ -73,4 +73,15 @@ class JobRepository
             return $jobExist;
         });
     }
+
+    public static function updateActiviJob(object $jobExist) {
+        return DB::transaction(function () use ($jobExist) {
+            $jobLeaved = date('d-m-Y');
+            $jobExist->leave = $jobLeaved;
+            $jobExist->active = false;
+            $jobExist->save();
+
+            return $jobExist;
+        });
+    }
 }

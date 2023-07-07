@@ -11,7 +11,7 @@ import Footer from "../../Components/Footer";
 import Content from "../../Components/Content";
 
 // Style
-import { BodyStyle, HomeStyle, GraphqStyle } from "./style";
+import { BodyStyle, HomeStyle } from "./style";
 
 // Interfaces
 import { IOptions } from "../../Interfaces/IOptions";
