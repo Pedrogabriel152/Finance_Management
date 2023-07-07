@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use DateTime;
 use App\Models\Job;
 use Illuminate\Support\Facades\DB;
 
@@ -10,12 +11,20 @@ class JobRepository
     // Save a new Job in the database
     public static function create(array $args){
         return DB::transaction(function () use($args){
+            $jobStarted = DateTime::createFromFormat('d/m/Y', $args['job']['started']);
             $newJob = Job::create([
                 'description' => $args['job']['description']? $args['job']['description'] : '',
                 'wage' => floatval($args['job']['wage']),
                 'establishment' => $args['job']['establishment'],
-                'user_id' => $args['job']['user_id']
+                'started' => $jobStarted,
+                'user_id' => $args['job']['user_id'],
             ]);
+
+            if(array_key_exists('leave', $args['job'])){
+                $jobLeaved = DateTime::createFromFormat('d/m/Y', $args['job']['leave']);
+                $newJob->leave = $jobLeaved;
+                $newJob->save();
+            }
 
             return $newJob;
         });

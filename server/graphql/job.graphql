@@ -7,6 +7,9 @@ type Job{
     wage: Float!
     establishment: String!
     user_id: Int!
+    active: Boolean!
+    leave: String
+    started: String!
     created_at: DateTime
     updated_at: DateTime
 }
@@ -16,6 +19,8 @@ input JobInput{
     wage: Float!
     establishment: String!
     user_id: Int!
+    started: String!
+    leave: String
 }
 
 interface MessageJob{

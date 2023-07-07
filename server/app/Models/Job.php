@@ -16,5 +16,8 @@ class Job extends Model
         'wage',
         'establishment',
         'user_id',
+        'active',
+        'started',
+        'leave'
     ];
 }

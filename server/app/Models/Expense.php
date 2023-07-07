@@ -18,6 +18,7 @@ class Expense extends Model
         'expires',
         'installments_paid',
         'paid_expense',
+        'months_paid',
         'user_id',
     ];
 }

@@ -78,11 +78,22 @@ class ExpenseRepository
     public static function updatePayInstallment(object $expense){
         return DB::transaction(function () use($expense){
             $updateExpense = $expense;
+            $months_paid = unserialize($updateExpense->months_paid);
             $updateExpense->installments_paid = $expense->installments_paid + 1;
+            if($updateExpense->installments_received == 0) {
+                $months_paid = [];
+            }
 
             if(!$updateExpense->paid_expense){
                 $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
+                $month = date('m', strtotime($updateExpense->expires));
+                $year = date('Y', strtotime($updateExpense->expires));
                 $updateExpense->expires = $newDateExpires;
+                $months_paid[] = [
+                    'month' => $month,
+                    'total' => floatValue($updateExpense->value_installment),
+                    'year' => $year
+                ];
             }
 
             if($updateExpense->installments_paid === $updateExpense->installments){

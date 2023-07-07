@@ -11,6 +11,7 @@ type Expense {
     expires: String!
     installments_paid: Int!
     paid_expense: Boolean!
+    months_paid: String!
     user_id: Int!
     created_at: DateTime
     updated_at: DateTime

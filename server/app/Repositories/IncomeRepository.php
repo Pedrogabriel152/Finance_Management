@@ -96,11 +96,24 @@ class IncomeRepository
     public static function updatePayInstallment(object $income){
         return DB::transaction(function () use($income){
             $updateIncome = $income;
+            $months_paid = unserialize($updateIncome->months_paid);
+            if($updateIncome->installments_received == 0) {
+                $months_paid = [];
+            }
             $updateIncome->installments_received = $income->installments_received + 1;
 
             if(!$updateIncome->received_income){
                 $newDateExpires = IncomeService::updateDateExpire($updateIncome);
+                $month = date('m', strtotime($updateIncome->expires));
+                $year = date('Y', strtotime($updateIncome->expires));
                 $updateIncome->expires = $newDateExpires;
+                $months_paid[] = [
+                    'month' => intval($month) ,
+                    'total' => floatval($updateIncome->value_installment),
+                    'year' => $year
+                ];
+
+                $updateIncome->months_paid = serialize($months_paid);
             }
 
             if($updateIncome->installments_received === $updateIncome->installments){

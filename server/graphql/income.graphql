@@ -12,6 +12,7 @@ type Income {
     installments_received: Int!
     received_income: Boolean!
     user_id: Int!
+    months_paid: String!
     created_at: DateTime
     updated_at: DateTime
 }
@@ -63,6 +64,5 @@ extend type Mutation @guard{
     createIncome(income: IncomeInput!): MessageResponseIncome! @field(resolver: "App\\GraphQL\\Mutations\\IncomeMutation@createIncome")
     payInstallmentIncome(id: ID!, user_id: ID!): MessageResponseIncome! @field(resolver: "App\\GraphQL\\Mutations\\IncomeMutation@payInstallment")
     editIncome(id:ID!, user_id: ID!, income: IncomeInput!): MessageResponseIncome! @field(resolver: "App\\GraphQL\\Mutations\\IncomeMutation@editIncome")
-    updateIncomes(user_id: ID!): [Income] @field(resolver: "App\\GraphQL\\Mutations\\IncomeMutation@updateMonthsPaid")
 }
 

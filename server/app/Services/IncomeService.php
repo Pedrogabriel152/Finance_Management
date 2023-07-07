@@ -269,69 +269,37 @@ class IncomeService
 
     private static function organizeIncome($incomes, $jobs, array $incomesMonths){
         foreach ($incomes as $key => $income) {
-            $month = date('m', strtotime($income->expires));
-            $year = date('Y', strtotime($income->expires));
-            $curentYear = date('Y');
-            foreach ($incomesMonths as $KeyMonths => $value) {
-                if(intval($month) === intval($value['month']) && intval($year) === intval($curentYear)){
-                    $incomesMonths[$KeyMonths] = [
-                        'month' => $month,
-                        'total' => $value['total'] + intval($income->value_installment)
-                    ];
-                }
-
-                if((intval($year) - 1) === intval($curentYear) && intval($income->installments_received) > 0){
-                    $beginningMonth = intval($month) - $income->value_installment;
-                    
-                    if($beginningMonth < 0) {
-                        $beginningMonth = -($beginningMonth);
+            $monthsPaids = unserialize($income->months_paid);
+            $monthYear = date('Y', strtotime($income->expires));
+            $monthExpires = date('m', strtotime($income->expires));
+            $currentYear = date('Y');
+        
+            foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
+                foreach ($incomesMonths as $keyIncomes => $incomeMonth) {
+                    $month = date('m', strtotime($income->expires));
+                    if($monthPaid['month'] === 0 && $monthYear === $currentYear){
+                        if(intval($incomeMonth['month']) === intval($month)){
+                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
+                        }
                     }
 
-                    // dd($beginningMonth);
+                    if(intval($monthPaid['month']) > 0) {
+                        if(intval($monthPaid['month']) === intval($incomeMonth['month']) && $monthPaid['year'] === $currentYear){
+                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
+                        }
+
+                        if(intval($monthYear) === intval($currentYear) && intval($monthExpires) === intval($incomeMonth['month'])){
+                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
+                        }
+                    }                    
                 }
             } 
         }
-        // $arrayInicial = serialize([['month' => 0, 'paid' => 0, 'year' => 0]]);
-        // dd($arrayInicial);
 
-        // dd(unserialize($arrayInicial));
+        dd($jobs);
 
-        dd($income->months_paid);
-    }
-
-    public static function updateMonthsPaid(int $user_id) {
-        $incomes = Income::where('user_id', $user_id)->get();
-        $incomes = Income::whereId(11)->get();
-        
-        
-        foreach ($incomes as $key => $income) {
-            $month = date('m', strtotime($income->expires));
-            $year = date('Y', strtotime($income->expires));
-            $months_paid = [];
-            
-            if($income->installments_received > 0){
-                $installments_received = $income->installments_received;
-
-                for($i=1;$i <= $installments_received; $i++) {
-                    $month = intval($month) - $i;
-
-                    if($month == 0) {
-                        $month = 12 + $month;
-                    }
-                    
-                    $months_paid[] = [
-                        'month' => $month,
-                        'total' => $income->value_installment,
-                        'year' => $year
-                    ];
-                } 
-            }
-
-            if($months_paid) {
-                dd($months_paid);
-            }
-            
-        }
-        
+        dd($incomesMonths);
+        return $incomesMonths;
     }
 }
+    
