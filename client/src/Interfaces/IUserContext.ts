@@ -11,4 +11,5 @@ export interface IUserContext{
     createUserDatabase: (user: IUserInput) => void
     loading: boolean
     getAuthentication: () => any
+    logout: () => any
 }

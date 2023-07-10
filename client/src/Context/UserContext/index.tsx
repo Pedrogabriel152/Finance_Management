@@ -19,7 +19,8 @@ export const UserContext = createContext<IUserContext>({
     register: () => null,
     createUserDatabase: () => null,
     SaveLocalStorage: () => null,
-    getAuthentication: () => null
+    getAuthentication: () => null,
+    logout: () => null
 });
 
 const UserProvider = ({children}:UserProviderProps) => {
@@ -30,9 +31,14 @@ const UserProvider = ({children}:UserProviderProps) => {
     const [auth, setAuth] = useState<any>();
 
     useEffect(() => {
-        setLoading(true);
-        SaveLocalStorage();
-        setLoading(false);
+        async function loading(){
+            setLoading(true);
+            await SaveLocalStorage();
+            setLoading(false);
+        }
+
+        loading();
+        
     }, [authentication]);
 
     useEffect(() => {
@@ -49,7 +55,12 @@ const UserProvider = ({children}:UserProviderProps) => {
                 email, 
                 password
             }
-        })
+        });
+
+        if(authentication) {
+            const authJSON = JSON.stringify(authentication);
+            localStorage.setItem('@auth', authJSON);
+        }
     }
 
     const register = (user: IUserInput) => {
@@ -75,10 +86,10 @@ const UserProvider = ({children}:UserProviderProps) => {
         });
     }
 
-    const SaveLocalStorage = () => {
+    const SaveLocalStorage = async () => {
         if(authentication) {
             const authJSON = JSON.stringify(authentication);
-            localStorage.setItem('@auth', authJSON);
+            await localStorage.setItem('@auth', authJSON);
         }
     }
 
@@ -91,25 +102,9 @@ const UserProvider = ({children}:UserProviderProps) => {
         return null;
     }
 
-    // const deleteTask = (item: ITask) => {
-    //     removeTask({
-    //         variables: {
-    //             id: item.id
-    //         }
-    //     })
-    // }
-
-    // const editTask = (task: ITask) => {
-    //     updateTask({
-    //         variables: {
-    //             id: task.id,
-    //             task: {
-    //                 descricao: task.descricao,
-    //                 status: task.status
-    //             }
-    //         }
-    //     })
-    // }
+    const logout = () => {
+        localStorage.removeItem('@auth');
+    }
 
     return (
         <UserContext.Provider 
@@ -120,7 +115,8 @@ const UserProvider = ({children}:UserProviderProps) => {
                 login: login,
                 SaveLocalStorage,
                 register: register,
-                getAuthentication: getAuthentication
+                getAuthentication: getAuthentication,
+                logout: logout
             }} 
         >
             {children}

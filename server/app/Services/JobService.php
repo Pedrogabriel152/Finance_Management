@@ -109,4 +109,24 @@ class JobService
              ];
         }
     }
+
+    public static function getActiveJobs(int $user_id){
+        $activeJobs = JobRepository::getActiveJobs($user_id);
+
+        if(!$activeJobs){
+            return [];
+        }
+
+        return $activeJobs;
+    }
+
+    public static function getIdleJobs(int $user_id) {
+        $idleJobs = JobRepository::getIdleJobs($user_id);
+
+        if(!$idleJobs){
+            return [];
+        }
+
+        return $idleJobs;
+    }
 }

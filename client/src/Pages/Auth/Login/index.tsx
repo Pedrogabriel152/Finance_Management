@@ -17,16 +17,17 @@ import { useUserContext } from "../../../Context/UserContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
-    const { login, authentication } = useUserContext();
+    const { login, authentication, getAuthentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
     useEffect(() => {
-        if(authentication?.code == 200){
+        const auth = getAuthentication();
+        if(auth?.code == 200){
             navigate('/');
             toast.success('Bem vindo de volta');
         }
-    }, [authentication])
+    }, [])
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({
@@ -39,10 +40,7 @@ const Login = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         login(user.email, user.password);
-        if(authentication?.code == 200){
-            navigate('/');
-            return;
-        }
+        navigate('/');
         
     }
 

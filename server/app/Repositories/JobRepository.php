@@ -84,4 +84,22 @@ class JobRepository
             return $jobExist;
         });
     }
+
+    public static function getActiveJobs(int $user_id) {
+        $activeJobs = Job::where([
+            ['user_id', '=', $user_id],
+            ['active', '=', true]
+        ])->paginate(6);
+
+        return $activeJobs;
+    }
+
+    public static function getIdleJobs(int $user_id){
+        $idleJobs = Job::where([
+            ['user_id', '=', $user_id],
+            ['active', '=', false]
+        ])->paginate(6);
+
+        return $idleJobs;
+    }
 }

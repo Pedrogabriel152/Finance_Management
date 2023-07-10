@@ -40,4 +40,16 @@ final class JobQuery
     public function updateJob($_, array $args){
         
     }
+
+    public function getActiveJobs($_, array $args)
+    {
+        $response = JobService::getActiveJobs($args['user_id']);
+        return $response;
+    }
+
+    public function getIdleJobs($_, array $args)
+    {
+        $response = JobService::getIdleJobs($args['user_id']);
+        return $response;
+    }
 }

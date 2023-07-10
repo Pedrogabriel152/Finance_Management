@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavBarStyle, MenuStyle } from "./style";
 import Logo from "../../Assets/Images/image.png";
 
@@ -6,10 +7,13 @@ import Logo from "../../Assets/Images/image.png";
 import { FaBars, FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ToggleMenu from "../ToggleMenu";
+import { useUserContext } from "../../Context/UserContext";
 
 const NavBar = () => {
     const [size, setSize] = useState<number>(500);
     const [viewModal, setViewModal] = useState<boolean>(false);
+    const  { logout } = useUserContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const size = window.screen.width;
@@ -26,6 +30,11 @@ const NavBar = () => {
         }
     }
 
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    }
+
     return(
         <NavBarStyle>
             <Link to={'/'}><img src={Logo} alt="logo" /></Link>
@@ -38,7 +47,7 @@ const NavBar = () => {
                     <li><Link to={'/expense'}>Despesas</Link></li>
                     <li><Link to={'/incomes'}>Rendas</Link></li>
                     <li><Link to={'/profile'}>Perfil</Link></li>
-                    <li><button>Sair</button></li>
+                    <li><button onClick={handleLogout}>Sair</button></li>
                 </MenuStyle>
             )}
         </NavBarStyle>
