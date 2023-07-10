@@ -1,54 +1,45 @@
 import BackTable from "../BackTable";
-import { TableJobStyle } from "./style";
+import { TableJobStyle, TableHead, TableBoddy } from "./style";
 
 const TableJob = () => {
     return (
         <TableJobStyle>
             <BackTable titles={['Todos', 'Ativos', 'Inativos']} active={0}/>
-            <table>
-                <th>
-                    <td>Estabelecimento</td>
-                    <td>Início</td>
-                    <td>Termino</td>
-                    <td>Salário</td>
-                </th>
-                <tr>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                </tr>
-                <tr>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                </tr>
-                <tr>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                </tr>
-                <tr>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                </tr>
-                <tr>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                </tr>
-                <tr>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                    <td>ytas</td>
-                </tr>
-            </table>
+            <TableHead>
+                <div>Nome</div>
+                <div>Status</div>
+                <div>Salário</div>
+            </TableHead>
+            <TableBoddy>
+                <div>ytas</div>
+                <div>Ativo</div>
+                <div>1200,00</div>
+            </TableBoddy>
+            <TableBoddy>
+                <div>ytas</div>
+                <div>Ativo</div>
+                <div>1200,00</div>
+            </TableBoddy>
+            <TableBoddy>
+                <div>Produzindo Certo</div>
+                <div>Inativo</div>
+                <div>1200,00</div>
+            </TableBoddy>
+            <TableBoddy>
+                <div>ytas</div>
+                <div>Inativo</div>
+                <div>1200,00</div>
+            </TableBoddy>
+            <TableBoddy>
+                <div>ytas</div>
+                <div>Ativo</div>
+                <div>1200,00</div>
+            </TableBoddy>
+            <TableBoddy>
+                <div>KSI</div>
+                <div>Ativo</div>
+                <div>1200,00</div>
+            </TableBoddy>
         </TableJobStyle>
     );
 }

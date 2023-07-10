@@ -8,7 +8,7 @@ export const Titles = styled.div`
 
     div {
         padding: 8px 25px;
-        margin-bottom: 5px;
+        margin-bottom: 1px;
     }
 
     div#active {
