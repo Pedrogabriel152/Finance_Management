@@ -48,12 +48,7 @@ class JobService
     // Search service an five Jobs
     public static function getFiveJobs(int $user_id) {
         $jobs = JobRepository::getFiveJobs($user_id);
-        
-        if(!$jobs) {
-            return [];
-        }
-
-        return $jobs;
+        return $jobs? $jobs: [];
     }
 
     // Job update service
@@ -112,21 +107,11 @@ class JobService
 
     public static function getActiveJobs(int $user_id){
         $activeJobs = JobRepository::getActiveJobs($user_id);
-
-        if(!$activeJobs){
-            return [];
-        }
-
-        return $activeJobs;
+        return $activeJobs? $activeJobs : [];
     }
 
     public static function getIdleJobs(int $user_id) {
         $idleJobs = JobRepository::getIdleJobs($user_id);
-
-        if(!$idleJobs){
-            return [];
-        }
-
-        return $idleJobs;
+        return $idleJobs? $idleJobs : [];
     }
 }

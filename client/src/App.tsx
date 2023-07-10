@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import ABApolloClient from './Components/ApooloClient';
 import Rotas from './Routes';

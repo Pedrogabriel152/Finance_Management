@@ -1,5 +1,6 @@
 import Footer from "../../Components/Footer";
 import NavBar from "../../Components/NavBar";
+import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
 import { JobStyle, JobBodyStyle } from "./style";
 
@@ -9,6 +10,7 @@ const Job = () => {
             <NavBar/>
             <JobBodyStyle>
                 <TableJob />
+                <Paginate/>
             </JobBodyStyle>
             <Footer/>
         </JobStyle>

@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
+export const TableJobContainer = styled.div`
+    padding-top: 120px;
+`;
+
 export const TableJobStyle = styled.div`
     background-color: #FFF;
-    margin-top: 120px;
     width: 90vw;
     margin-left: 5%;
+    border-radius: 8px;
 `;
 
 export const TableHead = styled.div`

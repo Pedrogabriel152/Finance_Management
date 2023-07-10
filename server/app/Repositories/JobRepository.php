@@ -33,7 +33,7 @@ class JobRepository
 
     // Search the database for an jobs
     public static function getJobs(int $id){
-        $jobs = Job::where('user_id', $id)->orderBy('created_at','desc')->get();
+        $jobs = Job::where('user_id', $id)->orderBy('created_at','desc')->paginate(6);
         return $jobs;
     }
 

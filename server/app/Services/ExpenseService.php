@@ -66,12 +66,7 @@ class ExpenseService
     public static function getExpenses(array $args){
         try {
             $expenses = ExpenseRepository::getExpenses($args);
-
-            if(!$expenses){
-                return [];
-            }
-
-            return $expenses;
+            return $expenses? $expenses : [];
 
         } catch (\Throwable $th) {
             return [];
@@ -82,12 +77,7 @@ class ExpenseService
     public static function getFiveExpenses(int $user_id){
         try {
             $expenses = ExpenseRepository::getFiveExpenses($user_id);
-
-            if(!$expenses){
-                return [];
-            }
-
-            return $expenses;
+            return $expenses? $expenses : [];
 
         } catch (\Throwable $th) {
             return [];
@@ -108,12 +98,7 @@ class ExpenseService
     // Search service an expense close
     public static function getExpensesClose(array $args){
         $expense = ExpenseRepository::getExpensesClose($args);
-        
-        if(!$expense){
-            return [];
-        }
-
-        return $expense;
+        return $expense? $expense : [];
     }
 
     // Paid installment upgrade service

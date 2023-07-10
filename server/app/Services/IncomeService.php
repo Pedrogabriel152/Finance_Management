@@ -51,12 +51,7 @@ class IncomeService
     public static function getFiveIncomes(int $user_id){
         try {
             $incomes = IncomeRepository::getFiveIncomes($user_id);
-
-            if(!$incomes){
-                return [];
-            }
-
-            return $incomes;
+            return $incomes? $incomes : [];
 
         } catch (\Throwable $th) {
             return [];
@@ -66,23 +61,13 @@ class IncomeService
     // Search service an incomes open
     public static function getIncomesOpen(array $args){
         $incomes = IncomeRepository::getIncomesOpen($args);
-        
-        if(!$incomes){
-            return [];
-        }
-
-        return $incomes;
+        return $incomes? $incomes : [];
     }
 
     // Search service an incomes close
     public static function getIncomesClose(array $args){
         $incomes = IncomeRepository::getIncomesClose($args);
-        
-        if(!$incomes){
-            return [];
-        }
-
-        return $incomes;
+        return $incomes? $incomes : [];
     }
 
     // Search service an incomes
