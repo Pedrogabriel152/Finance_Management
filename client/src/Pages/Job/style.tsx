@@ -6,5 +6,5 @@ export const JobStyle = styled.section`
 
 export const JobBodyStyle = styled.main`
     width: 100vw;
-    min-height: 82.62vh;
+    min-height: 88.45vh;
 `;

@@ -1,8 +1,13 @@
 import { IBackTable } from "../../Interfaces/IBackTable";
+import { Titles } from "./style";
 
-const BackTable = ({titles}: IBackTable) => {
+const BackTable = ({titles, active}: IBackTable) => {
     return (
-        <h1>Olá</h1>
+        <Titles>
+            {titles.map((title, index) => (
+                <div key={index} id={index == active? "active" : ''}>{title}</div>
+            ))} 
+        </Titles>
     );
 }
 

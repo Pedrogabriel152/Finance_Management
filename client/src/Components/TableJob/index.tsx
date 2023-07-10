@@ -4,20 +4,51 @@ import { TableJobStyle } from "./style";
 const TableJob = () => {
     return (
         <TableJobStyle>
-            <div>
-                <BackTable titles={['Todos', 'Ativos', 'Inativos']}/>
-                <table>
-                    <th>
-                        <td>Estabelecimento</td>
-                        <td>Início</td>
-                        <td>Termino</td>
-                        <td>Salário</td>
-                    </th>
-                    <tr>
-                        <td>ytas</td>
-                    </tr>
-                </table>
-            </div>
+            <BackTable titles={['Todos', 'Ativos', 'Inativos']} active={0}/>
+            <table>
+                <th>
+                    <td>Estabelecimento</td>
+                    <td>Início</td>
+                    <td>Termino</td>
+                    <td>Salário</td>
+                </th>
+                <tr>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                </tr>
+                <tr>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                </tr>
+                <tr>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                </tr>
+                <tr>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                </tr>
+                <tr>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                </tr>
+                <tr>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                    <td>ytas</td>
+                </tr>
+            </table>
         </TableJobStyle>
     );
 }
