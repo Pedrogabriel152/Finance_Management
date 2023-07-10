@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const JobStyle = styled.main`
+export const JobStyle = styled.section`
+    margin: 0;
+`;
+
+export const JobBodyStyle = styled.main`
     width: 100vw;
-    min-height: 88.5vh;
-    h1{
-        height: 75vh;
-        margin-top: 90px;
-    }
+    min-height: 82.62vh;
 `;

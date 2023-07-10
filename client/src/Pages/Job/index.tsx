@@ -1,12 +1,15 @@
 import Footer from "../../Components/Footer";
 import NavBar from "../../Components/NavBar";
-import { JobStyle } from "./style";
+import TableJob from "../../Components/TableJob";
+import { JobStyle, JobBodyStyle } from "./style";
 
 const Job = () => {
     return (
         <JobStyle>
             <NavBar/>
-            <h1>JOBS</h1>
+            <JobBodyStyle>
+                <TableJob />
+            </JobBodyStyle>
             <Footer/>
         </JobStyle>
     );

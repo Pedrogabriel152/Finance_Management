@@ -13,10 +13,3 @@ export const BodyStyle = styled.main`
         flex-wrap: wrap;
     }
 `;
-
-export const GraphqStyle = styled.div`
-    width: 400px;
-    height: 400px;
-    margin-top: 3em;
-    z-index: 1;
-`;
