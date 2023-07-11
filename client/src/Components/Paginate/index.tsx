@@ -1,13 +1,18 @@
 import Pagination from "@mui/material/Pagination";
 import { PaginateStyle } from "./style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const Paginate = ({ count, currentPage, lastPage }: IPaginateInfo) => {
-    const [page, setPage] = useState<number>(1);
+    const {page: atualPage} = useParams();
+    const [page, setPage] = useState<number>(parseInt(atualPage? atualPage : '1'));
+    const navigate = useNavigate();
+
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        console.log(value)
         setPage(value);
+        navigate(`/jobs/${value}`);
+        console.log(value)
     }
     return (
         <PaginateStyle>

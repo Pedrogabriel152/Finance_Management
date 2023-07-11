@@ -12,4 +12,6 @@ export interface IUserContext{
     loading: boolean
     getAuthentication: () => any
     logout: () => any
+    setPage: (page: number) => void
+    page?: number
 }

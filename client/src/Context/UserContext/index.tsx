@@ -8,6 +8,7 @@ import { IUserContext } from "../../Interfaces/IUserContext";
 import { useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister } from "../../Graphql/User/hooks";
+import { useLocation, useParams } from "react-router-dom";
 
 interface UserProviderProps {
     children: ReactElement
@@ -20,7 +21,9 @@ export const UserContext = createContext<IUserContext>({
     createUserDatabase: () => null,
     SaveLocalStorage: () => null,
     getAuthentication: () => null,
-    logout: () => null
+    logout: () => null,
+    setPage: () => null,
+    page: 1
 });
 
 const UserProvider = ({children}:UserProviderProps) => {
@@ -29,6 +32,7 @@ const UserProvider = ({children}:UserProviderProps) => {
     const [Register, {loading: loadRegister}] = useRegister();
     const authentication = useReactiveVar(authenticationVar);
     const [auth, setAuth] = useState<any>();
+    const [page, setPage] = useState<number>(1);
 
     useEffect(() => {
         async function loading(){
@@ -104,6 +108,10 @@ const UserProvider = ({children}:UserProviderProps) => {
         localStorage.removeItem('@auth');
     }
 
+    const handlePage = (page: number) => {
+        setPage(page);
+    }
+
     return (
         <UserContext.Provider 
             value={{
@@ -114,7 +122,9 @@ const UserProvider = ({children}:UserProviderProps) => {
                 SaveLocalStorage,
                 register: register,
                 getAuthentication: getAuthentication,
-                logout: logout
+                logout: logout,
+                setPage: handlePage,
+                page: page
             }} 
         >
             {children}

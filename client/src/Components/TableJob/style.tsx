@@ -7,6 +7,7 @@ export const TableJobContainer = styled.div`
 export const TableJobStyle = styled.div`
     background-color: #FFF;
     width: 90vw;
+    min-height: 48vh;
     margin-left: 5%;
     border-radius: 8px;
 `;
