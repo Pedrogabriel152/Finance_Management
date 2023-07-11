@@ -26,7 +26,6 @@ export const useGetFiveJobs = () => {
 export const useGetJobs = (page: number) => {
     const {getAuthentication} = useUserContext();
     const auth = getAuthentication();
-    console.log("Page => ",page)
 
     const client = useApolloClient();
 
@@ -55,7 +54,6 @@ export const useGetJobs = (page: number) => {
         },
         onCompleted(data) {
             if (data) {
-                console.log(data);
                 getJobsVar(data.jobs);
             }
         },

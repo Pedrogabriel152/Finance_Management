@@ -9,29 +9,24 @@ import { getJobsVar } from "../../Graphql/Job/state";
 import { useEffect, useState } from "react";
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 import { useParams } from "react-router-dom";
+import { IDataJobs } from "../../Interfaces/IDataJobs";
+import { ITableJobs } from "../../Interfaces/ITableJobs";
 
 const Job = () => {
     const { page } = useParams();
-    const [search, setSearch] = useState<number>(1);
     useGetJobs(parseInt(page? page : '1'));
     const jobsPaginate = useReactiveVar(getJobsVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
-
-    // useEffect(() => {
-    //     if(page){
-    //         setSearch(parseInt(page));
-    //     }
-        
-    //     console.log("Page => ",page);
-    // }, [page])
+    const [jobs, setJobs] = useState<any>(null);
 
     useEffect(() => {
         if(jobsPaginate) {
             setPaginateInfo(jobsPaginate.paginatorInfo);
+            setJobs(jobsPaginate.data)
         }
     }, [jobsPaginate]);
 
-    if(!paginateInfo){
+    if(!paginateInfo || !jobs){
         return <div></div>
     }
 
@@ -39,7 +34,7 @@ const Job = () => {
         <JobStyle>
             <NavBar/>
             <JobBodyStyle>
-                <TableJob />
+                <TableJob jobs={jobs}/>
                 <Paginate 
                     count={paginateInfo.count} 
                     currentPage={paginateInfo.currentPage} 

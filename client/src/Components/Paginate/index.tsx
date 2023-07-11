@@ -12,7 +12,6 @@ const Paginate = ({ count, currentPage, lastPage }: IPaginateInfo) => {
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
         navigate(`/jobs/${value}`);
-        console.log(value)
     }
     return (
         <PaginateStyle>
