@@ -15,19 +15,12 @@ import IconesRodape from "../../../Components/Icones";
 import AbaLateral from "../../../Components/AbaLateral";
 import { useUserContext } from "../../../Context/UserContext";
 import { toast } from "react-toastify";
+import { api } from "../../../utils/api";
 
 const Login = () => {
     const { login, authentication, getAuthentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
-
-    useEffect(() => {
-        const auth = getAuthentication();
-        if(auth?.code == 200){
-            navigate('/');
-            toast.success('Bem vindo de volta');
-        }
-    }, [])
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser({
@@ -37,10 +30,28 @@ const Login = () => {
         
     }
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: ChangeEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        login(user.email, user.password);
-        navigate('/');
+        if(localStorage.getItem('@auth')){
+            localStorage.removeItem('@auth');
+        }
+        api.get('/sanctum/csrf-cookie').then(response => {
+            api.post('/api/login', {
+                email: user.email,
+                password: user.password
+            })
+            .then(async (res: any) => {
+                try{
+                    localStorage.setItem('@auth', JSON.stringify(res.data));
+                }catch(error: any){
+                    console.log(error);
+                }
+                navigate('/');
+            })
+            .catch((error: any) => {
+                toast.error(error.response.data.message);
+            })
+        });
         
     }
 

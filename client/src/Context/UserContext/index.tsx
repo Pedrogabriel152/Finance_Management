@@ -57,10 +57,8 @@ const UserProvider = ({children}:UserProviderProps) => {
             }
         });
 
-        if(authentication) {
-            const authJSON = JSON.stringify(authentication);
-            localStorage.setItem('@auth', authJSON);
-        }
+        const authJSON = JSON.stringify(authentication);
+        localStorage.setItem('@auth', authJSON);
     }
 
     const register = (user: IUserInput) => {

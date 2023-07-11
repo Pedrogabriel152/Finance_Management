@@ -4,20 +4,21 @@ namespace App\Repositories;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class UserRepository 
 {
     // Save a new User in the database
-    public static function create(array $args){
-        return DB::transaction(function () use ($args){
-            $hash = password_hash($args['user']['password'], PASSWORD_BCRYPT);
+    public static function create(Request $request){
+        return DB::transaction(function () use ($request){
+            $hash = password_hash($request->password, PASSWORD_BCRYPT);
             $newUser = User::create([
-                "name" => $args['user']['name'],
-                "email" => $args['user']['email'],
-                "cpf" => $args['user']['cpf'],
-                "address" => $args['user']['address'],
+                "name" => $request->name,
+                "email" => $request->email,
+                "cpf" => $request->cpf,
+                "address" => $request->address,
                 "password" => $hash,
-                "phone" => $args['user']['phone'],
+                "phone" => $request->phone,
             ]);
 
             return $newUser;

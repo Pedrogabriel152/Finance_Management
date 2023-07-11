@@ -17,6 +17,7 @@ import { Container, ContainerInternoSingin } from "../style";
 // Context
 import { useUserContext } from "../../../Context/UserContext";
 import { toast } from "react-toastify";
+import { api } from "../../../utils/api";
 
 const Singin = () => {
     const { register, authentication } = useUserContext();
@@ -94,22 +95,25 @@ const Singin = () => {
             toast.error("As senhas precisam ser iguais");
             return;
         }
-        register({
-            address: user.address,
-            cpf: user.cpf,
+        api.post('/api/register', {
             email: user.email,
             name: user.name,
+            cpf: user.cpf,
+            address: user.address,
             password: user.password,
             phone: user.phone
-        });
-
-        if(authentication?.code == 200){
+        })
+        .then((res: any) => {
+            if(localStorage.getItem('@auth')){
+                localStorage.removeItem('@auth');
+            }
+            localStorage.setItem('@auth', JSON.stringify(res.data));
             navigate('/');
-            toast.success('Bem vindo ao sistema!');
-            return;
-        }
-
-        toast.error(authentication?.message);
+            toast.success('Bem vindo ao sistema');
+        })
+        .catch((error: any) => {
+            toast.error(error.response.data.message);
+        })
     }
 
     const inputs: IInput[] = [

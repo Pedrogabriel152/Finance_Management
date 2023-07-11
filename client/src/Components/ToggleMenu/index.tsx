@@ -1,8 +1,17 @@
 import React from "react";
 import { ToggleMenuStyle } from "./style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserContext } from "../../Context/UserContext";
 
 const ToggleMenu = () => {
+    const  { logout } = useUserContext();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    }
+
     return(
         <ToggleMenuStyle>
             <ul>
@@ -11,7 +20,7 @@ const ToggleMenu = () => {
                 <li><Link to={'/expense'}>Despesas</Link></li>
                 <li><Link to={'/incomes'}>Rendas</Link></li>
                 <li><Link to={'/profile'}>Perfil</Link></li>
-                <li><button>Sair</button></li>
+                <li><button onClick={handleLogout}>Sair</button></li>
             </ul>
         </ToggleMenuStyle>
     );
