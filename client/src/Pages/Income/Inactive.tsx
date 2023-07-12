@@ -13,15 +13,15 @@ import { toast } from "react-toastify";
 const InactiveJob = () => {
     const { page } = useParams();
     const { loading, error } = useGetIdleJobs(parseInt(page? page : '1'));
-    const jobsIdlePaginate = useReactiveVar(getIdleJobsVar);
+    const inactieIncomes = useReactiveVar(getIdleJobsVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
-    const [jobs, setJobs] = useState<any>(null);
+    const [incomes, setIncomes] = useState<any>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(jobsIdlePaginate) {
-            setPaginateInfo(jobsIdlePaginate.paginatorInfo);
-            setJobs(jobsIdlePaginate.data)
+        if(inactieIncomes) {
+            setPaginateInfo(inactieIncomes.paginatorInfo);
+            setIncomes(inactieIncomes.data)
         }
         if(error) {
             console.log(error)
@@ -30,15 +30,15 @@ const InactiveJob = () => {
             toast.error('Faça o login primeiro');
             return;
         }
-    }, [jobsIdlePaginate]);
+    }, [inactieIncomes]);
 
-    if(loading || !paginateInfo || !jobs){
+    if(!paginateInfo || !incomes){
         return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
     }
 
     return (
         <JobBodyStyle>
-            <TableJob data={jobs}/>
+            <TableJob data={incomes}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />

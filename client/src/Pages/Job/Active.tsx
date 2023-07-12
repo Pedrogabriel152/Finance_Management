@@ -1,13 +1,21 @@
-import { useReactiveVar } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+// Components
 import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
-import { useGetActiveJobs } from "../../Graphql/Job/hooks";
-import { JobBodyStyle } from "./style";
-import { getActiveJobsVar } from "../../Graphql/Job/state";
-import { useEffect, useState } from "react";
-import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
-import { useNavigate, useParams } from "react-router-dom";
 import ModalLoading from "../../Components/ModalLoading";
+import { useReactiveVar } from "@apollo/client";
+
+// GraphQL
+import { useGetActiveJobs } from "../../Graphql/Job/hooks";
+import { getActiveJobsVar } from "../../Graphql/Job/state";
+import { JobBodyStyle } from "./style";
+
+// Interfaces
+import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+
+// Toastify
 import { toast } from "react-toastify";
 
 const ActiveJob = () => {
@@ -33,13 +41,13 @@ const ActiveJob = () => {
         }
     }, [jobsActivePaginate]);
 
-    if(!paginateInfo || !jobs  ){
+    if(loading || !paginateInfo || !jobs  ){
         return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
     }
 
     return (
         <JobBodyStyle>
-            <TableJob jobs={jobs}/>
+            <TableJob data={jobs}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />

@@ -1,44 +1,45 @@
 import { useReactiveVar } from "@apollo/client";
 import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
-import { useGetIdleJobs, useGetJobs } from "../../Graphql/Job/hooks";
+import { useGetActiveJobs } from "../../Graphql/Job/hooks";
 import { JobBodyStyle } from "./style";
-import { getIdleJobsVar, getJobsVar } from "../../Graphql/Job/state";
+import { getActiveJobsVar } from "../../Graphql/Job/state";
 import { useEffect, useState } from "react";
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 import { useNavigate, useParams } from "react-router-dom";
 import ModalLoading from "../../Components/ModalLoading";
 import { toast } from "react-toastify";
 
-const InactiveJob = () => {
+const ActiveJob = () => {
     const { page } = useParams();
-    const { loading, error } = useGetIdleJobs(parseInt(page? page : '1'));
-    const jobsIdlePaginate = useReactiveVar(getIdleJobsVar);
+    const { loading, error } =  useGetActiveJobs(parseInt(page? page : '1'));
+    const incomesActive = useReactiveVar(getActiveJobsVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
-    const [jobs, setJobs] = useState<any>(null);
+    const [incomes, setIncomes] = useState<any>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(jobsIdlePaginate) {
-            setPaginateInfo(jobsIdlePaginate.paginatorInfo);
-            setJobs(jobsIdlePaginate.data)
+        if(incomesActive) {
+            setPaginateInfo(incomesActive.paginatorInfo);
+            setIncomes(incomesActive.data)
         }
         if(error) {
-            console.log(error)
-            localStorage.removeItem('@auth');
+            if(localStorage.getItem('@auth')){
+                localStorage.removeItem('@auth');
+            }
             navigate('/login');
             toast.error('Faça o login primeiro');
             return;
         }
-    }, [jobsIdlePaginate]);
+    }, [incomesActive]);
 
-    if(loading || !paginateInfo || !jobs){
+    if(!paginateInfo || !incomes  ){
         return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
     }
 
     return (
         <JobBodyStyle>
-            <TableJob data={jobs}/>
+            <TableJob data={incomes}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />
@@ -46,4 +47,4 @@ const InactiveJob = () => {
     );
 }
 
-export default InactiveJob;
+export default ActiveJob;

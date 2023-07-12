@@ -37,13 +37,13 @@ const AllJob = () => {
         
     }
 
-    if(!paginateInfo || !jobs){
+    if(loading || !paginateInfo || !jobs){
         return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
     }
 
     return (
         <JobBodyStyle>
-            <TableJob jobs={jobs}/>
+            <TableJob data={jobs}/>
             <Paginate  
                 lastPage={paginateInfo!.lastPage} 
             />
