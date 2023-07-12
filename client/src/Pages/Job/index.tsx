@@ -9,8 +9,6 @@ import { getJobsVar } from "../../Graphql/Job/state";
 import { useEffect, useState } from "react";
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 import { useParams } from "react-router-dom";
-import { IDataJobs } from "../../Interfaces/IDataJobs";
-import { ITableJobs } from "../../Interfaces/ITableJobs";
 
 const Job = () => {
     const { page } = useParams();
@@ -35,9 +33,7 @@ const Job = () => {
             <NavBar/>
             <JobBodyStyle>
                 <TableJob jobs={jobs}/>
-                <Paginate 
-                    count={paginateInfo.count} 
-                    currentPage={paginateInfo.currentPage} 
+                <Paginate  
                     lastPage={paginateInfo.lastPage} 
                 />
             </JobBodyStyle>

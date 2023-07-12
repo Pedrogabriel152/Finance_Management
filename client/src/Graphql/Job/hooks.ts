@@ -5,6 +5,7 @@ import { useUserContext } from "../../Context/UserContext";
 import { setContext } from '@apollo/client/link/context';
 import { IJob } from "../../Interfaces/IJob";
 import { IPaginate } from "../../Interfaces/IPaginate";
+import { updateLink } from "../../utils/updateLink";
 
 export const useGetFiveJobs = () => {
     const {getAuthentication} = useUserContext();
@@ -28,24 +29,8 @@ export const useGetJobs = (page: number) => {
     const auth = getAuthentication();
 
     const client = useApolloClient();
-
-    const updateLink = (newUrl: any) => {
-    const httpLink = createHttpLink({ uri: newUrl });
-
-    const authLink = setContext((_, { headers }) => {
-      return {
-        headers: {
-          ...headers,
-          'Authorization': `Bearer ${auth.token}`,
-        },
-      };
-    });
-
-    const link = authLink.concat(httpLink);
-        client.setLink(link);
-    };
-
-    updateLink(`http://localhost/graphql?page=${page}`);
+    
+    updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
     const { data } = useQuery<{ jobs: IPaginate }>(GETJOBS, {
         variables: {
