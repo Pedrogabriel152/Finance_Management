@@ -9,34 +9,25 @@ import { getJobsVar } from "../../Graphql/Job/state";
 import { useEffect, useState } from "react";
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 import { useParams } from "react-router-dom";
+import AllJob from "./All";
+import ActiveJob from "./Active";
+import InactiveJob from "./Inactive";
 
 const Job = () => {
-    const { page } = useParams();
-    useGetJobs(parseInt(page? page : '1'));
-    const jobsPaginate = useReactiveVar(getJobsVar);
-    const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
-    const [jobs, setJobs] = useState<any>(null);
-
-    useEffect(() => {
-        if(jobsPaginate) {
-            setPaginateInfo(jobsPaginate.paginatorInfo);
-            setJobs(jobsPaginate.data)
-        }
-    }, [jobsPaginate]);
-
-    if(!paginateInfo || !jobs){
-        return <div></div>
-    }
+    const { status } = useParams();
 
     return (
         <JobStyle>
             <NavBar/>
-            <JobBodyStyle>
-                <TableJob jobs={jobs}/>
-                <Paginate  
-                    lastPage={paginateInfo.lastPage} 
-                />
-            </JobBodyStyle>
+            {status == 'all' && (
+                <AllJob />
+            )}
+            {status == 'active' && (
+                <ActiveJob />
+            )}
+            {status == 'inactive' && (
+                <InactiveJob />
+            )}
             <Footer/>
         </JobStyle>
     );

@@ -5,12 +5,12 @@ const updateLink = (newUrl: any, auth: any, client: ApolloClient<object>) => {
     const httpLink = createHttpLink({ uri: newUrl });
 
     const authLink = setContext((_, { headers }) => {
-    return {
-        headers: {
-        ...headers,
-        'Authorization': `Bearer ${auth.token}`,
-        },
-    };
+        return {
+            headers: {
+            ...headers,
+            'Authorization': `Bearer ${auth.token}`,
+            },
+        };
     });
 
     const link = authLink.concat(httpLink);

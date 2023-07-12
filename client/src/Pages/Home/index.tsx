@@ -75,7 +75,6 @@ const Home = () => {
     useEffect(() => {
         const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro'];
         const month = date.getMonth();
-        console.log(month)
         setMonth(months[month]);
     }, [date]);
 
@@ -102,11 +101,13 @@ const Home = () => {
         setTableBodyJob([]);
         tableFooterExpense.total = 0;
 
-        if(finace.error){
-            localStorage.removeItem('@auth');
-            navigate('/login');
-            toast.error('Faça o login primeiro');
-            return;
+        if(finace) {
+            if(finace.error){
+                localStorage.removeItem('@auth');
+                navigate('/login');
+                toast.error('Faça o login primeiro');
+                return;
+            }
         }
 
         if(content){
@@ -126,7 +127,6 @@ const Home = () => {
                 tableFooter: tableFooterExpense
             });
 
-            // console.log(tableBodyExpense)
             content.incomes.map((income: any) => {
                 const table: ITableBody = {
                     installments: income.installments,
