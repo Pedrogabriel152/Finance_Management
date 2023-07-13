@@ -40,6 +40,12 @@ export const TableBoddy = styled.div`
         margin-top: 25px;
         min-width: 23%;
         max-width: 23%;
+
+        a {
+            color: #000;
+            font-weight: 500;
+            cursor: pointer;
+        }
     }
 
     div:first-child {

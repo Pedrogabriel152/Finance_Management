@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ITableJobs } from "../../Interfaces/ITableJobs";
 import BackTable from "../BackTable";
 import { TableJobStyle, TableHead, TableBoddy,TableJobContainer } from "./style";
@@ -17,7 +17,7 @@ const TableJob = ({data} : ITableJobs) => {
                 </TableHead>
                 {data.map((job: any, index: number) => (
                     <TableBoddy key={index}>
-                        <div>{job.establishment}</div>
+                        <div><Link to={`/job/${job.id}`}>{job.establishment}</Link></div>
                         <div>{job.active? 'Ativo': 'Inativo'}</div>
                         <div>{parseFloat(job.wage).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                     </TableBoddy> 
