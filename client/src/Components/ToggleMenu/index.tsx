@@ -17,7 +17,7 @@ const ToggleMenu = () => {
             <ul>
                 <li><Link to={'/'}>Home</Link></li>
                 <li><Link to={'/jobs/all/1'}>Trabalhos</Link></li>
-                <li><Link to={'/expense'}>Despesas</Link></li>
+                <li><Link to={'/expenses/all/1'}>Despesas</Link></li>
                 <li><Link to={'/incomes/all/1'}>Rendas</Link></li>
                 <li><Link to={'/profile'}>Perfil</Link></li>
                 <li><button onClick={handleLogout}>Sair</button></li>

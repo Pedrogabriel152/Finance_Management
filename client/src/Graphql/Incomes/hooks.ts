@@ -1,5 +1,5 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETACTIVEJOBS, GETIDLEJOBS, GETJOBS } from "./queries";
+import { GETACTIVEJOBS, GETIDLEJOBS, GETEXPENSES } from "./queries";
 import { getActiveJobsVar, getIdleJobsVar, getJobsVar } from "./state";
 import { useUserContext } from "../../Context/UserContext";
 import { setContext } from '@apollo/client/link/context';
@@ -14,7 +14,7 @@ export const useGetJobs = (page: number) => {
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ jobs: IPaginate }>(GETJOBS, {
+    return useQuery<{ jobs: IPaginate }>(GETEXPENSES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,

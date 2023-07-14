@@ -1,13 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const GETJOBS = gql`
-    query GetJobs($user_id: ID!, $first: Int!){
+export const GETEXPENSES = gql`
+    query GetExpenses($user_id: ID!, $first: Int!){
         jobs(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
-                wage
-                active
+                expires
+                value_installment
+                received_income
             }
             paginatorInfo{
                 count

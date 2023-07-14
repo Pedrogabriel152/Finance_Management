@@ -44,7 +44,7 @@ class ExpenseRepository
         return DB::transaction(function () use($args){
             $expenses = Expense::where([
                 ['user_id', '=', $args['user_id']]
-            ])->orderBy('created_at', 'desc')->paginate(15);
+            ])->orderBy('created_at', 'desc')->paginate(6);
             
             return $expenses;
         });
@@ -56,7 +56,7 @@ class ExpenseRepository
             $incomes = Expense::where([
                 ['user_id', '=', $args['user_id']],
                 ['paid_expense', '=', false]
-            ])->orderBy('created_at', 'desc')->paginate(15);
+            ])->orderBy('created_at', 'desc')->paginate(6);
 
             return $incomes;
         });
@@ -68,7 +68,7 @@ class ExpenseRepository
             $incomes = Expense::where([
                 ['user_id', '=', $args['user_id']],
                 ['paid_expense', '=', true]
-            ])->orderBy('created_at', 'desc')->paginate(15);
+            ])->orderBy('created_at', 'desc')->paginate(6);
 
             return $incomes;
         });
