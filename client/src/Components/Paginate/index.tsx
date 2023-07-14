@@ -8,10 +8,12 @@ const Paginate = ({ lastPage }: IPaginateInfo) => {
     const {page: atualPage} = useParams();
     const [page, setPage] = useState<number>(parseInt(atualPage? atualPage : '1'));
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
-        navigate(`/jobs/all/${value}`);
+        const atualLocation = location.pathname.split('/')
+        navigate(`/${atualLocation[1]}/all/${value}`);
     }
     return (
         <PaginateStyle>
