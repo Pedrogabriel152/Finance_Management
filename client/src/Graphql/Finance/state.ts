@@ -1,4 +1,6 @@
 import { makeVar } from "@apollo/client";
+
+// Interfaces
 import { IFinace } from "../../Interfaces/IFinace";
 import { IFinancialSummary } from "../../Interfaces/IFinancialSummary";
 import { IMonthlySummary } from "../../Interfaces/IMonthlySummary";

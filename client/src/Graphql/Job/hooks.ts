@@ -1,10 +1,20 @@
+// Graphql
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
+
+// Queries
 import { GETACTIVEJOBS, GETFIVEJOBS, GETIDLEJOBS, GETJOBS } from "./queries";
+
+// Reactive Vars
 import { getActiveJobsVar, getFiveJobsVar, getIdleJobsVar, getJobsVar } from "./state";
+
+// Context
 import { useUserContext } from "../../Context/UserContext";
-import { setContext } from '@apollo/client/link/context';
+
+// Interfaces
 import { IJob } from "../../Interfaces/IJob";
 import { IPaginate } from "../../Interfaces/IPaginate";
+
+// Utils
 import { updateLink } from "../../utils/updateLink";
 
 export const useGetFiveJobs = () => {

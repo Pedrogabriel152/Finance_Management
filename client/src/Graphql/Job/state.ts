@@ -1,4 +1,6 @@
 import { makeVar } from "@apollo/client";
+
+// Interfaces
 import { IJob } from "../../Interfaces/IJob";
 import { IPaginate } from "../../Interfaces/IPaginate";
 

@@ -1,7 +1,15 @@
 import { useMutation, useQuery } from "@apollo/client";
+
+// Queries
 import { GETFINANCE, GETFINANCIALSUMMARY, GETMONTHLYSUMMARY } from "./queries";
+
+// Reactive Vars
 import { getFinanceVar, getFinancialSummaryVar, getMonthlySummaryVar } from "./state";
+
+// Context
 import { useUserContext } from "../../Context/UserContext";
+
+// Interfaces
 import { IFinanceMonth } from "../../Interfaces/IFinanceMonth";
 
 export const useGetFinance = () => {

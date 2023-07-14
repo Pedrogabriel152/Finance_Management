@@ -1,6 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
+
+// Queries
 import { LOGIN, REGISTER } from "./queries";
+
+// Interfaces 
 import { IAuthentication } from "../../Interfaces/IAuthentication";
+
+// Reactive Vars
 import { authenticationVar } from "./state";
 
 export const useLogin = () => {
