@@ -6,6 +6,7 @@ import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
 import { useReactiveVar } from "@apollo/client";
 import ModalLoading from "../../Components/ModalLoading";
+import NewButton from "../../Components/NewButton";
 
 // Styled
 import { JobBodyStyle } from "./style";
@@ -53,6 +54,7 @@ const AllJob = () => {
 
     return (
         <JobBodyStyle>
+            <NewButton path="job"/>
             <TableJob data={jobs}/>
             <Paginate  
                 lastPage={paginateInfo!.lastPage} 

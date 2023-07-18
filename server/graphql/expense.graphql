@@ -58,6 +58,9 @@ extend type Query @guard{
     totalExpenses(user_id: ID!): TotalExpenses! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getTotalExpenses")
     getFiveExpense(user_id: ID!): [Expense]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getFiveExpenses")
     searchExpensesMonth(user_id: ID!): [TotalExpensesMonth]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getExpensesMonth")
+    getActiveExpense(user_id: ID!): [Expense]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getActiveExpenses")
+    getIdleExpense(user_id: ID!): [Expense]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getIdleExpenses")
+    getAllExpense(user_id: ID!): [Expense]! @field(resolver: "App\\GraphQL\\Queries\\ExpenseQuery@getAllExpenses")
 }
 
 extend type Mutation @guard{

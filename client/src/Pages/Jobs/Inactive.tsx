@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
 import ModalLoading from "../../Components/ModalLoading";
+import NewButton from "../../Components/NewButton";
 
 // Styled
 import { JobBodyStyle } from "./style";
@@ -48,6 +49,7 @@ const InactiveJob = () => {
 
     return (
         <JobBodyStyle>
+            <NewButton path="job"/>
             <TableJob data={jobs}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 

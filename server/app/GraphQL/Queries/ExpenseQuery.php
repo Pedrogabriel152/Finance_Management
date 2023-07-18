@@ -63,4 +63,22 @@ final class ExpenseQuery
         $response = ExpenseService::getExpensesMonth($args['user_id']);
         return $response;
     }
+
+    public function getActiveExpenses($_, array $args)
+    {
+        $response = ExpenseService::getActiveExpenses($args['user_id']);
+        return $response;
+    }
+
+    public function getIdleExpenses($_, array $args) 
+    {
+        $response = ExpenseService::getIdleExpenses($args['user_id']);
+        return $response;
+    }
+
+    public function getAllExpenses($_, array $args)
+    {
+        $response = ExpenseService::getAllExpenses($args['user_id']);
+        return $response;
+    }
 }

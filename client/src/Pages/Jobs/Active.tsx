@@ -6,6 +6,7 @@ import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
 import ModalLoading from "../../Components/ModalLoading";
 import { useReactiveVar } from "@apollo/client";
+import NewButton from "../../Components/NewButton";
 
 // GraphQL
 import { useGetActiveJobs } from "../../Graphql/Job/hooks";
@@ -47,6 +48,7 @@ const ActiveJob = () => {
 
     return (
         <JobBodyStyle>
+            <NewButton path="job"/>
             <TableJob data={jobs}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 

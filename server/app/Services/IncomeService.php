@@ -299,4 +299,19 @@ class IncomeService
         }
         return $incomesMonths;
     }
+
+    public static function getActiveIncomes(int $user_id){
+        $activeIncome = IncomeRepository::getActiveIncomes($user_id);
+        return $activeIncome? $activeIncome : [];
+    }
+
+    public static function getIdleIncomes(int $user_id) {
+        $idleIncome = IncomeRepository::getIdleIncomes($user_id);
+        return $idleIncome? $idleIncome : [];
+    }
+
+    public static function getAllIncomes(int $user_id) {
+        $Incomes = IncomeRepository::getAllIncomes($user_id);
+        return $Incomes;
+    }
 } 

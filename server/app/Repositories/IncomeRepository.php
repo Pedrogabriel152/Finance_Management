@@ -181,4 +181,33 @@ class IncomeRepository
             return $incomes;
         });
     }
+
+    public static function getActiveIncomes(int $user_id) {
+        return DB::transaction(function () use($user_id) {
+            $incomes = Income::where([
+                ['user_id', '=', $user_id],
+                ['received_income', '=', false]
+            ])->orderBy('value_installment', 'desc')->paginate(6);
+            return $incomes;
+        });
+    }
+
+    public static function getIdleIncomes(int $user_id) {
+        return DB::transaction(function () use($user_id) {
+            $incomes = Income::where([
+                ['user_id', '=', $user_id],
+                ['received_income', '=', true]
+            ])->orderBy('value_installment', 'desc')->paginate(6);
+            return $incomes;
+        });
+    }
+    
+    public static function getAllIncomes(int $user_id) {
+        return DB::transaction(function () use($user_id) {
+            $incomes = Income::where([
+                ['user_id', '=', $user_id],
+            ])->orderBy('value_installment', 'desc')->paginate(6);
+            return $incomes;
+        });
+    }
 }

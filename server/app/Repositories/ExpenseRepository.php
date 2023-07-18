@@ -168,4 +168,33 @@ class ExpenseRepository
             return $spentMonth;
         });
     }
+
+    public static function getActiveExpense(int $user_id) {
+        return DB::transaction(function () use($user_id) {
+            $expenses = Expense::where([
+                ['user_id', '=', $user_id],
+                ['installments_paid', '=', false]
+            ])->orderBy('value_installment', 'desc')->paginate(6);
+            return $expenses;
+        });
+    }
+
+    public static function getIdleExpense(int $user_id) {
+        return DB::transaction(function () use($user_id) {
+            $expenses = Expense::where([
+                ['user_id', '=', $user_id],
+                ['installments_paid', '=', true]
+            ])->orderBy('value_installment', 'desc')->paginate(6);
+            return $expenses;
+        });
+    }
+
+    public static function getAllExpense(int $user_id) {
+        return DB::transaction(function () use($user_id) {
+            $expenses = Expense::where([
+                ['user_id', '=', $user_id],
+            ])->orderBy('value_installment', 'desc')->paginate(6);
+            return $expenses;
+        });
+    }
 }

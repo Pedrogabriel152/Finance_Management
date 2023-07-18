@@ -286,4 +286,19 @@ class ExpenseService
 
         return $expensesMonth;
     }
+
+    public static function getActiveExpenses(int $user_id){
+        $activeExpense = ExpenseRepository::getActiveExpense($user_id);
+        return $activeExpense? $activeExpense : [];
+    }
+
+    public static function getIdleExpenses(int $user_id) {
+        $idleExpense = ExpenseRepository::getIdleExpense($user_id);
+        return $idleExpense? $idleExpense : [];
+    }
+
+    public static function getAllExpenses(int $user_id) {
+        $expenses = ExpenseRepository::getAllExpense($user_id);
+        return $expenses;
+    }
 }

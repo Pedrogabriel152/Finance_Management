@@ -59,6 +59,9 @@ extend type Query @guard{
     totalIncomes(user_id: ID!): TotalIncome! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getTotalEIncomes")
     getFiveIncomes(user_id: ID!): [Income]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getFiveIncomes")
     searchIncomesMonth(user_id: ID!): [TotalIncomesMonth]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesMonth")
+    getActiveIncomes(user_id: ID!): [Income]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getActiveIncomes")
+    getIdleIncomes(user_id: ID!): [Income]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIdleIncomes")
+    getAllIncomes(user_id: ID!): [Income]! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getAllIncomes")
 }
 
 extend type Mutation @guard{

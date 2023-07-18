@@ -60,4 +60,22 @@ final class IncomeQuery
         $response = IncomeService::getIncomesMonth($args['user_id']);
         return $response;
     }
+
+    public function getActiveIncomes($_, array $args)
+    {
+        $response = IncomeService::getActiveIncomes($args['user_id']);
+        return $response;
+    }
+
+    public function getIdleIncomes($_, array $args) 
+    {
+        $response = IncomeService::getIdleIncomes($args['user_id']);
+        return $response;
+    }
+
+    public function getAllIncomes($_, array $args)
+    {
+        $response = IncomeService::getAllIncomes($args['user_id']);
+        return $response;
+    }
 }
