@@ -8,7 +8,6 @@ import { IUserContext } from "../../Interfaces/IUserContext";
 import { useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister } from "../../Graphql/User/hooks";
-import { useLocation, useParams } from "react-router-dom";
 
 interface UserProviderProps {
     children: ReactElement

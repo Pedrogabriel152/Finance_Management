@@ -85,7 +85,7 @@ export const TableBodyStyle = styled.div`
         font-size: 16px;
     }
 `;
-// 15, 90, 70, 50
+
 export const TableFooterStyle = styled.div<ITableBody>`
     display: flex;
     justify-content: space-between;

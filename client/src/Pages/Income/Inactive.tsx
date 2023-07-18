@@ -1,13 +1,23 @@
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+// GraphQL
 import { useReactiveVar } from "@apollo/client";
+import { useGetIdleJobs, useGetJobs } from "../../Graphql/Job/hooks";
+import { getIdleJobsVar, getJobsVar } from "../../Graphql/Job/state";
+
+// Interfaces
+import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+
+// Styled
+import { JobBodyStyle } from "./style";
+
+// Components
+import ModalLoading from "../../Components/ModalLoading";
 import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
-import { useGetIdleJobs, useGetJobs } from "../../Graphql/Job/hooks";
-import { JobBodyStyle } from "./style";
-import { getIdleJobsVar, getJobsVar } from "../../Graphql/Job/state";
-import { useEffect, useState } from "react";
-import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
-import { useNavigate, useParams } from "react-router-dom";
-import ModalLoading from "../../Components/ModalLoading";
+
+// Toastify
 import { toast } from "react-toastify";
 
 const InactiveJob = () => {

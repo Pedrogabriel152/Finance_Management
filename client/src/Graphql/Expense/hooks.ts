@@ -1,11 +1,13 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { GETACTIVEJOBS, GETIDLEJOBS, GETJOBS } from "./queries";
 import { getActiveJobsVar, getIdleJobsVar, getJobsVar } from "./state";
-import { useUserContext } from "../../Context/UserContext";
-import { setContext } from '@apollo/client/link/context';
-import { IJob } from "../../Interfaces/IJob";
-import { IPaginate } from "../../Interfaces/IPaginate";
 import { updateLink } from "../../utils/updateLink";
+
+// Context
+import { useUserContext } from "../../Context/UserContext";
+
+// Interfaces
+import { IPaginate } from "../../Interfaces/IPaginate";
 
 export const useGetJobs = (page: number) => {
     const {getAuthentication} = useUserContext();

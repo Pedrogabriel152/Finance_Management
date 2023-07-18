@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
+// Styled
 import { FooteStyle, IconeFooterStyle } from "./style";
+
+// Icons
 import { FaGithub, FaFacebook, FaInstagram, FaEnvelope } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 

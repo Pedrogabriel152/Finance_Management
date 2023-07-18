@@ -1,6 +1,7 @@
-import React from "react";
 import { ToggleMenuStyle } from "./style";
 import { Link, useNavigate } from "react-router-dom";
+
+// Context
 import { useUserContext } from "../../Context/UserContext";
 
 const ToggleMenu = () => {

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+
+// Styled
 import { ButtonStyle } from './style';
-import { IoMdAddCircle } from 'react-icons/io';
 
 interface INewButton {
     path: string,

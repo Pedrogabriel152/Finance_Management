@@ -13,13 +13,12 @@ const Content = ({title, type, options, table, data, chartType, size}: IContent)
             setLength(legth);
         }
     }, [table]);
-    //   };
     
     return(
 
         <>
         {type === 'table' 
-        ?(
+        ? (
             <ContentTableStyle>
                 <Title>{title}</Title>
                 <TableTitleStyle>
@@ -35,23 +34,21 @@ const Content = ({title, type, options, table, data, chartType, size}: IContent)
                         {table.installments &&
                             <div>{table.plot_completed}/{table.installments}</div>
                         }
-                        <div>{table.value_installment}</div>
+                        <div>{table.value_installment.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                     </TableBodyStyle>
                 ))}
                 
                 <TableFooterStyle length={length === 5? 15 : length === 4? 45 : length === 3? 70 : length === 2? 90 : 125}>
                     <div>Total</div>
-                    <div>{table?.tableFooter.total}</div>
+                    <div>{table?.tableFooter.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                 </TableFooterStyle>
             </ContentTableStyle>
-        )
-        : (
+        ) : (
             <ContentContainer sencond={chartType}>
                 <Title>{title}</Title>
                 <Chart chartType={chartType} width='100%' height="250px" data={data} options={options}/>
             </ContentContainer>
-        )
-        }
+        )}
         </>
     );
 }

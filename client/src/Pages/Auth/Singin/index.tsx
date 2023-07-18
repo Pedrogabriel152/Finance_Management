@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 
 const Singin = () => {
-    const { register, authentication } = useUserContext();
+    const { authentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 

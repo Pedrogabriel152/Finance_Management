@@ -9,6 +9,7 @@ import { useUserContext } from "../../Context/UserContext";
 import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
 import Content from "../../Components/Content";
+import ModalLoading from "../../Components/ModalLoading";
 
 // Style
 import { BodyStyle, HomeStyle } from "./style";
@@ -18,6 +19,7 @@ import { IOptions } from "../../Interfaces/IOptions";
 import { ITable } from "../../Interfaces/ITable";
 import { ITableBody } from "../../Interfaces/ITableBody";
 import { ITableFooter } from "../../Interfaces/ITableFooter";
+import { IJob } from "../../Interfaces/IJob";
 
 // GraphQL
 import { useGetFinance, useGetFinancialSummary, useGetMonthlySummaryVar } from "../../Graphql/Finance/hooks";
@@ -25,8 +27,6 @@ import { useGetFiveJobs } from "../../Graphql/Job/hooks";
 import { useReactiveVar } from "@apollo/client";
 import { getFinanceVar, getFinancialSummaryVar, getMonthlySummaryVar } from "../../Graphql/Finance/state";
 import { getFiveJobsVar } from "../../Graphql/Job/state";
-import { IJob } from "../../Interfaces/IJob";
-import ModalLoading from "../../Components/ModalLoading";
 
 const Home = () => {
     const { loading: loadSummary } = useGetFinancialSummary();

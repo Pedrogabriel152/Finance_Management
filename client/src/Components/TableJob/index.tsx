@@ -1,6 +1,12 @@
 import { Link, useParams } from "react-router-dom";
+
+// Interface
 import { ITableJobs } from "../../Interfaces/ITableJobs";
+
+// Components
 import BackTable from "../BackTable";
+
+// Styled
 import { TableJobStyle, TableHead, TableBoddy,TableJobContainer } from "./style";
 
 const TableJob = ({data} : ITableJobs) => {

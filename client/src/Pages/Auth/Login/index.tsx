@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../Components/Logo";
 
@@ -18,7 +18,6 @@ import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 
 const Login = () => {
-    const { login, authentication, getAuthentication } = useUserContext();
     const navigate = useNavigate();
     const [user, setUser] = useState<any>({});
 
