@@ -8,11 +8,11 @@ import ModalLoading from "../../Components/ModalLoading";
 // GraphQL
 import { useGetActiveJobs } from "../../Graphql/Job/hooks";
 import { useReactiveVar } from "@apollo/client";
-import { getActiveJobsVar } from "../../Graphql/Job/state";
+import { getActiveIcomesVar } from "../../Graphql/Incomes/state";
 import { useEffect, useState } from "react";
 
 // Style
-import { JobBodyStyle } from "./style";
+import { IncomeBodyStyle } from "./style";
 
 // Toastify
 import { toast } from "react-toastify";
@@ -23,7 +23,7 @@ import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 const ActiveJob = () => {
     const { page } = useParams();
     const { loading, error } =  useGetActiveJobs(parseInt(page? page : '1'));
-    const incomesActive = useReactiveVar(getActiveJobsVar);
+    const incomesActive = useReactiveVar(getActiveIcomesVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
     const [incomes, setIncomes] = useState<any>(null);
     const navigate = useNavigate();
@@ -44,16 +44,16 @@ const ActiveJob = () => {
     }, [incomesActive]);
 
     if(!paginateInfo || !incomes  ){
-        return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
+        return <IncomeBodyStyle><ModalLoading/></IncomeBodyStyle>
     }
 
     return (
-        <JobBodyStyle>
+        <IncomeBodyStyle>
             <TableJob data={incomes}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />
-        </JobBodyStyle>
+        </IncomeBodyStyle>
     );
 }
 

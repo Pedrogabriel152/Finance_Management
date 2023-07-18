@@ -10,7 +10,7 @@ import InactiveJob from "./Inactive";
 // Styled
 import { JobStyle } from "./style";
 
-const Job = () => {
+const Incomes = () => {
     const { status } = useParams();
 
     return (
@@ -30,4 +30,4 @@ const Job = () => {
     );
 }
 
-export default Job;
+export default Incomes;

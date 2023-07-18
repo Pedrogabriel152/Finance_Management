@@ -10,7 +10,7 @@ import { getIdleJobsVar, getJobsVar } from "../../Graphql/Job/state";
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 
 // Styled
-import { JobBodyStyle } from "./style";
+import { IncomeBodyStyle } from "./style";
 
 // Components
 import ModalLoading from "../../Components/ModalLoading";
@@ -43,16 +43,16 @@ const InactiveJob = () => {
     }, [inactieIncomes]);
 
     if(!paginateInfo || !incomes){
-        return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
+        return <IncomeBodyStyle> <ModalLoading/></IncomeBodyStyle>
     }
 
     return (
-        <JobBodyStyle>
+        <IncomeBodyStyle>
             <TableJob data={incomes}/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />
-        </JobBodyStyle>
+        </IncomeBodyStyle>
     );
 }
 

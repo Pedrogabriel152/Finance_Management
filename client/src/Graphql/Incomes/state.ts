@@ -1,6 +1,6 @@
 import { makeVar } from "@apollo/client";
 import { IPaginate } from "../../Interfaces/IPaginate";
 
-export const getJobsVar = makeVar<IPaginate | null>(null);
-export const getActiveJobsVar = makeVar<IPaginate | null>(null);
-export const getIdleJobsVar = makeVar<IPaginate | null>(null);
+export const getIcomesVar = makeVar<IPaginate | null>(null);
+export const getActiveIcomesVar = makeVar<IPaginate | null>(null);
+export const getIdleIcomesVar = makeVar<IPaginate | null>(null);

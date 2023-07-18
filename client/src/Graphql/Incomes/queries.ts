@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const GETEXPENSES = gql`
-    query GetExpenses($user_id: ID!, $first: Int!){
-        jobs(user_id: $user_id, first: $first){
+export const GETINCOMES = gql`
+    query GetIncomes($user_id: ID!, $first: Int!){
+        getAllIncomes(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
