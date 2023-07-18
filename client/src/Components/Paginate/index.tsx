@@ -1,8 +1,15 @@
-import Pagination from "@mui/material/Pagination";
-import { PaginateStyle } from "./style";
-import { useEffect, useState } from "react";
-import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+// Paginate
+import Pagination from "@mui/material/Pagination";
+
+// Styled
+import { PaginateStyle } from "./style";
+
+// Interfaces
+import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+
 
 const Paginate = ({ lastPage }: IPaginateInfo) => {
     const {page: atualPage} = useParams();

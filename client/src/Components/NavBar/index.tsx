@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 // Components
 import { NavBarStyle, MenuStyle } from "./style";
 import Logo from "../../Assets/Images/image.png";
+import ToggleMenu from "../ToggleMenu";
 
 // Icons
 import { FaBars, FaAngleRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import ToggleMenu from "../ToggleMenu";
+
+// Context
 import { useUserContext } from "../../Context/UserContext";
 
 const NavBar = () => {

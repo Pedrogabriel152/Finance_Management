@@ -1,4 +1,6 @@
 import LogoImg from "../../Assets/Images/image.png";
+
+// Styled
 import { LogoComponentLogin, LogoComponentRegister } from "./style";
 
 interface ImgProps{

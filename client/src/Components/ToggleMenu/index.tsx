@@ -1,5 +1,7 @@
-import { ToggleMenuStyle } from "./style";
 import { Link, useNavigate } from "react-router-dom";
+
+// Styled
+import { ToggleMenuStyle } from "./style";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";

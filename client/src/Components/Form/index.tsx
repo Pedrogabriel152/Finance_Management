@@ -13,6 +13,8 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 
 // Interfaces
 import { IForm } from "../../Interfaces/IForm";
+
+// Components
 import Button from "../Button";
 
 const Form = ({text, inputs, link, submit}: IForm) => {

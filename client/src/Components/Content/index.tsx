@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
+
+// Interfaces
 import { IContent } from "../../Interfaces/IContent";
-import { Chart } from "react-google-charts";
-import { ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
 import { ITableBody } from "../../Interfaces/ITableBody";
+
+// Google charts
+import { Chart } from "react-google-charts";
+
+// Styled
+import { ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
+
 
 const Content = ({title, type, options, table, data, chartType, size}: IContent) => {
     const [length, setLength] = useState<number>(0);

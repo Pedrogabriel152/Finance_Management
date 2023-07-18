@@ -1,6 +1,10 @@
-import { IBackTable } from "../../Interfaces/IBackTable";
-import { Titles } from "./style";
 import { useLocation, useNavigate } from "react-router-dom";
+
+// Styled
+import { Titles } from "./style";
+
+// Interfaces
+import { IBackTable } from "../../Interfaces/IBackTable";
 
 const BackTable = ({titles, active}: IBackTable) => {
     const navigate = useNavigate();

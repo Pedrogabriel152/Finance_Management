@@ -1,4 +1,3 @@
-import React from "react";
 import { AbaLateralStyle } from "./style";
 import { Link } from "react-router-dom";
 
