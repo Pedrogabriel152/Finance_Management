@@ -19,10 +19,12 @@ import { toast } from "react-toastify";
 
 // Interfaces
 import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+import TableAll from "../../Components/TableAll";
+import { useGetActiveIncomes } from "../../Graphql/Incomes/hooks";
 
 const ActiveJob = () => {
     const { page } = useParams();
-    const { loading, error } =  useGetActiveJobs(parseInt(page? page : '1'));
+    const { loading, error } =  useGetActiveIncomes(parseInt(page? page : '1'));
     const incomesActive = useReactiveVar(getActiveIcomesVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
     const [incomes, setIncomes] = useState<any>(null);
@@ -49,7 +51,7 @@ const ActiveJob = () => {
 
     return (
         <IncomeBodyStyle>
-            <TableJob data={incomes}/>
+            <TableAll data={incomes} text="income"/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />

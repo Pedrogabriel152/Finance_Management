@@ -19,14 +19,15 @@ export const GETINCOMES = gql`
     }
 `;
 
-export const GETACTIVEJOBS = gql`
-    query ActiveJobs($user_id: ID!, $first: Int!) {
-        getActiveJobs(user_id: $user_id, first: $first){
+export const GETACTIVEINCOMES = gql`
+    query ActiveIncomes($user_id: ID!, $first: Int!) {
+        getActiveIncomes(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
-                wage
-                active
+                expires
+                value_installment
+                received_income
             }
             paginatorInfo{
                 count

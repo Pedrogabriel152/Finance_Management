@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import Paginate from "../../Components/Paginate";
 import TableJob from "../../Components/TableJob";
 import ModalLoading from "../../Components/ModalLoading";
+import TableAll from "../../Components/TableAll";
 
 const AllJob = () => {
     const { page } = useParams();
@@ -54,7 +55,7 @@ const AllJob = () => {
 
     return (
         <IncomeBodyStyle>
-            <TableJob data={incomes}/>
+            <TableAll data={incomes} text="income"/>
             <Paginate  
                 lastPage={paginateInfo!.lastPage} 
             />

@@ -19,6 +19,7 @@ import TableJob from "../../Components/TableJob";
 
 // Toastify
 import { toast } from "react-toastify";
+import TableAll from "../../Components/TableAll";
 
 const InactiveJob = () => {
     const { page } = useParams();
@@ -48,7 +49,7 @@ const InactiveJob = () => {
 
     return (
         <IncomeBodyStyle>
-            <TableJob data={incomes}/>
+            <TableAll data={incomes} text="income"/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />

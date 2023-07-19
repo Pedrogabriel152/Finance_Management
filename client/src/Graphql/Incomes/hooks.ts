@@ -1,5 +1,5 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETACTIVEJOBS, GETIDLEJOBS, GETINCOMES } from "./queries";
+import { GETACTIVEINCOMES, GETIDLEJOBS, GETINCOMES } from "./queries";
 import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar } from "./state";
 
 // Context
@@ -33,21 +33,21 @@ export const useGetIncomes = (page: number) => {
     });
 };
 
-export const useGetActiveJobs = (page: number) => {
+export const useGetActiveIncomes = (page: number) => {
     const {getAuthentication} = useUserContext();
     const auth = getAuthentication();
     const client = useApolloClient();
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ getActiveJobs: IPaginate }>(GETACTIVEJOBS, {
+    return useQuery<{ getActiveIncomes: IPaginate }>(GETACTIVEINCOMES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,
         },
         onCompleted(data) {
             if (data) {
-                getActiveIcomesVar(data.getActiveJobs);
+                getActiveIcomesVar(data.getActiveIncomes);
             }
         },
         fetchPolicy: 'cache-and-network',

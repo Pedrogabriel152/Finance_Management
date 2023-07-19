@@ -1,6 +1,6 @@
-export interface IDataJobs {
+export interface IDataAll {
     establishment: string
-    wage: number
+    value_installment: number
     active: boolean
     id: number
 }
