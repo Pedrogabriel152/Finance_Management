@@ -5,6 +5,8 @@ import Home from "../Pages/Home";
 import Jobs from "../Pages/Tables/Jobs";
 import Incomes from "../Pages/Tables/Incomes";
 import Expenses from "../Pages/Tables/Expenses";
+import Job from "../Pages/Job";
+import CreateJob from "../Pages/Job/create";
 
 const Rotas = () => {
     return(
@@ -14,7 +16,8 @@ const Rotas = () => {
             <Route path="/jobs/:status/:page" element={<Jobs />}/>
             <Route path="/incomes/:status/:page" element={<Incomes />}/>
             <Route path="/expenses/:status/:page" element={<Expenses />}/>
-            <Route path="/job/:id" element={<Jobs />}/>
+            <Route path="/job/:id" element={<Job />}/>
+            <Route path="/create/job" element={<CreateJob />}/>
             <Route path="/" element={<Home />}/>
         </Routes>
     );

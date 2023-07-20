@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import { ButtonStyle } from './style';
 
 interface INewButton {
-    path: string,
+    path: string
+    text: string
 }
 
-const NewButton = ({path}: INewButton) => {
+const NewButton = ({path, text}: INewButton) => {
     return (
         <ButtonStyle>
             <Link to={`/create/${path}`}>
-                <span id='icon'>+</span><span> Add {path}</span>
+                <span id='icon'>+</span><span> Add {text}</span>
             </Link>
         </ButtonStyle>
     );

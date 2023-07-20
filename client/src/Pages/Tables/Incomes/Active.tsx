@@ -50,14 +50,14 @@ const ActiveIncomes = () => {
 
     if(!paginateInfo || !incomes){
         return <DataBodyStyle> 
-            <NewButton path="Renda"/>
+            <NewButton path="income" text="Renda"/>
             <TableAll data={[]} text="income"/>
         </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="Renda"/>
+            <NewButton path="income" text="Renda"/>
             <TableAll data={incomes} text="income"/>
             {paginateInfo.lastPage >= 2 && (
                 <Paginate  

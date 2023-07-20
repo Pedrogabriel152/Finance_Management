@@ -49,14 +49,14 @@ const InactiveJob = () => {
 
     if(!paginateInfo || !jobs){
         return <DataBodyStyle> 
-            <NewButton path="Trabalho"/>
+            <NewButton path="job" text="Trabalho"/>
             <TableJob data={[]}/>
         </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="Trabalho"/>
+            <NewButton path="job" text="Trabalho"/>
             <TableJob data={jobs}/>
             {paginateInfo.lastPage >= 2 && (
                 <Paginate  
