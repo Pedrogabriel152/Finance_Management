@@ -146,8 +146,7 @@ class IncomeRepository
 
             $jobsValueTotal = Job::where([
                 ['user_id', '=', $user_id],
-                ['leave', '=', null]
-            ])->sum('wage');
+            ])->whereBetween('leave', [$minValue, $maxValue])->orWhereNull('leave')->sum('wage');
 
             $totalIncome = Income::where([
                 ['user_id', '=', $user_id],
@@ -156,7 +155,7 @@ class IncomeRepository
             $totalJobs = Job::where([
                 ['user_id', '=', $user_id],
                 ['leave', '=', null]
-            ])->count();
+            ])->whereBetween('leave', [$minValue, $maxValue])->orWhereNull('leave')->count();
 
             $totalIncomes['totalIncomes'] = $totalIncome + $totalJobs;
             $totalIncomes['total'] = $incomesValueTotal + $jobsValueTotal;

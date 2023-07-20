@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Paginate from "../../../Components/Paginate";
 import TableAll from "../../../Components/TableAll";
 import ModalLoading from "../../../Components/ModalLoading";
+import NewButton from "../../../Components/NewButton";
 
 // GraphQL
 import { useGetActiveIncomes } from "../../../Graphql/Incomes/hooks";
@@ -19,7 +20,6 @@ import { toast } from "react-toastify";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
-import NewButton from "../../../Components/NewButton";
 
 const ActiveIncomes = () => {
     const { page } = useParams();

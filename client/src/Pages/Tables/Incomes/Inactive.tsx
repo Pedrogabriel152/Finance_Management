@@ -16,10 +16,10 @@ import { DataBodyStyle } from "../style";
 import ModalLoading from "../../../Components/ModalLoading";
 import Paginate from "../../../Components/Paginate";
 import TableAll from "../../../Components/TableAll";
+import NewButton from "../../../Components/NewButton";
 
 // Toastify
 import { toast } from "react-toastify";
-import NewButton from "../../../Components/NewButton";
 
 const InactiveIncomes = () => {
     const { page } = useParams();

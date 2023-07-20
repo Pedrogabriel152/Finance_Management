@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { useGetIdleIcomes } from "../../../Graphql/Incomes/hooks";
-import { getIdleIcomesVar } from "../../../Graphql/Incomes/state";
+import { useGetIdleExpenses } from "../../../Graphql/Expense/hooks";
+import { getIdleExpenseVar } from "../../../Graphql/Expense/state";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
@@ -16,12 +16,10 @@ import { DataBodyStyle } from "../style";
 import ModalLoading from "../../../Components/ModalLoading";
 import Paginate from "../../../Components/Paginate";
 import TableAll from "../../../Components/TableAll";
+import NewButton from "../../../Components/NewButton";
 
 // Toastify
 import { toast } from "react-toastify";
-import NewButton from "../../../Components/NewButton";
-import { useGetIdleExpenses } from "../../../Graphql/Expense/hooks";
-import { getIdleExpenseVar } from "../../../Graphql/Expense/state";
 
 const InactiveExpenses = () => {
     const { page } = useParams();
