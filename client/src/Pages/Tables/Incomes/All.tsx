@@ -3,25 +3,25 @@ import { useEffect, useState } from "react";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { useGetIncomes } from "../../Graphql/Incomes/hooks";
-import { getIcomesVar } from "../../Graphql/Incomes/state";
+import { useGetIncomes } from "../../../Graphql/Incomes/hooks";
+import { getIcomesVar } from "../../../Graphql/Incomes/state";
 
 // Interfaces
-import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
 
 // Style
-import { IncomeBodyStyle } from "./style";
+import { DataBodyStyle } from "../style";
 
 // Toastify
 import { toast } from "react-toastify";
 
 // Components
-import Paginate from "../../Components/Paginate";
-import TableJob from "../../Components/TableJob";
-import ModalLoading from "../../Components/ModalLoading";
-import TableAll from "../../Components/TableAll";
+import Paginate from "../../../Components/Paginate";
+import ModalLoading from "../../../Components/ModalLoading";
+import TableAll from "../../../Components/TableAll";
+import NewButton from "../../../Components/NewButton";
 
-const AllJob = () => {
+const AllIncomes = () => {
     const { page } = useParams();
     const { loading, error } = useGetIncomes(parseInt(page? page : '1'));
     const allIncomes = useReactiveVar(getIcomesVar);
@@ -30,7 +30,6 @@ const AllJob = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(allIncomes)
         if(allIncomes) {
             setPaginateInfo(allIncomes.paginatorInfo);
             setIncomes(allIncomes.data)
@@ -50,17 +49,18 @@ const AllJob = () => {
     }
 
     if(!paginateInfo || !incomes){
-        return <IncomeBodyStyle> <ModalLoading/></IncomeBodyStyle>
+        return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
     }
 
     return (
-        <IncomeBodyStyle>
+        <DataBodyStyle>
+            <NewButton path="renda"/>
             <TableAll data={incomes} text="income"/>
             <Paginate  
                 lastPage={paginateInfo!.lastPage} 
             />
-        </IncomeBodyStyle>
+        </DataBodyStyle>
     );
 }
 
-export default AllJob;
+export default AllIncomes;

@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../Pages/Auth/Login";
 import Singin from "../Pages/Auth/Singin";
 import Home from "../Pages/Home";
-import Jobs from "../Pages/Jobs";
-import Incomes from "../Pages/Income";
+import Jobs from "../Pages/Tables/Jobs";
+import Incomes from "../Pages/Tables/Incomes";
 
 const Rotas = () => {
     return(

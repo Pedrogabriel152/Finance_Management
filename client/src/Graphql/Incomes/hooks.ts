@@ -1,5 +1,5 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETACTIVEINCOMES, GETIDLEJOBS, GETINCOMES } from "./queries";
+import { GETACTIVEINCOMES, GETIDLEINCOMES, GETINCOMES } from "./queries";
 import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar } from "./state";
 
 // Context
@@ -25,7 +25,6 @@ export const useGetIncomes = (page: number) => {
         },
         onCompleted(data) {
             if (data) {
-                console.log(data)
                 getIcomesVar(data.getAllIncomes);
             }
         },
@@ -54,14 +53,14 @@ export const useGetActiveIncomes = (page: number) => {
     });
 };
 
-export const useGetIdleJobs = (page: number) => {
+export const useGetIdleIcomes = (page: number) => {
     const {getAuthentication} = useUserContext();
     const auth = getAuthentication();
     const client = useApolloClient();
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ getIdleJobs: IPaginate }>(GETIDLEJOBS, {
+    return useQuery<{ getIdleJobs: IPaginate }>(GETIDLEINCOMES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,

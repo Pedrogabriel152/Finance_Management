@@ -38,14 +38,15 @@ export const GETACTIVEINCOMES = gql`
     }
 `;
 
-export const GETIDLEJOBS = gql`
-    query IdleJobs($user_id: ID!, $first: Int!) {
-        getIdleJobs(user_id: $user_id, first: $first){
+export const GETIDLEINCOMES = gql`
+    query IdleIncomes($user_id: ID!, $first: Int!) {
+        getIdleIncomes(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
-                wage
-                active
+                expires
+                value_installment
+                received_income
             }
             paginatorInfo{
                 count

@@ -1,28 +1,27 @@
 import { useNavigate, useParams } from "react-router-dom";
 
 // Components
-import Paginate from "../../Components/Paginate";
-import TableJob from "../../Components/TableJob";
-import ModalLoading from "../../Components/ModalLoading";
+import Paginate from "../../../Components/Paginate";
+import TableAll from "../../../Components/TableAll";
+import ModalLoading from "../../../Components/ModalLoading";
 
 // GraphQL
-import { useGetActiveJobs } from "../../Graphql/Job/hooks";
+import { useGetActiveIncomes } from "../../../Graphql/Incomes/hooks";
 import { useReactiveVar } from "@apollo/client";
-import { getActiveIcomesVar } from "../../Graphql/Incomes/state";
+import { getActiveIcomesVar } from "../../../Graphql/Incomes/state";
 import { useEffect, useState } from "react";
 
 // Style
-import { IncomeBodyStyle } from "./style";
+import { DataBodyStyle } from "../style";
 
 // Toastify
 import { toast } from "react-toastify";
 
 // Interfaces
-import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
-import TableAll from "../../Components/TableAll";
-import { useGetActiveIncomes } from "../../Graphql/Incomes/hooks";
+import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
+import NewButton from "../../../Components/NewButton";
 
-const ActiveJob = () => {
+const ActiveIncomes = () => {
     const { page } = useParams();
     const { loading, error } =  useGetActiveIncomes(parseInt(page? page : '1'));
     const incomesActive = useReactiveVar(getActiveIcomesVar);
@@ -46,17 +45,18 @@ const ActiveJob = () => {
     }, [incomesActive]);
 
     if(!paginateInfo || !incomes  ){
-        return <IncomeBodyStyle><ModalLoading/></IncomeBodyStyle>
+        return <DataBodyStyle><ModalLoading/></DataBodyStyle>
     }
 
     return (
-        <IncomeBodyStyle>
+        <DataBodyStyle>
+            <NewButton path="renda"/>
             <TableAll data={incomes} text="income"/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />
-        </IncomeBodyStyle>
+        </DataBodyStyle>
     );
 }
 
-export default ActiveJob;
+export default ActiveIncomes;

@@ -1,20 +1,20 @@
 import { useParams } from "react-router-dom";
 
 // Components
-import Footer from "../../Components/Footer";
-import NavBar from "../../Components/NavBar";
+import Footer from "../../../Components/Footer";
+import NavBar from "../../../Components/NavBar";
 import AllJob from "./All";
 import ActiveJob from "./Active";
 import InactiveJob from "./Inactive";
 
 // Styled
-import { JobStyle } from "./style";
+import { BoddyStyle } from "../style";
 
-const Incomes = () => {
+const Jobs = () => {
     const { status } = useParams();
 
     return (
-        <JobStyle>
+        <BoddyStyle>
             <NavBar/>
             {status == 'all' && (
                 <AllJob />
@@ -26,8 +26,8 @@ const Incomes = () => {
                 <InactiveJob />
             )}
             <Footer/>
-        </JobStyle>
+        </BoddyStyle>
     );
 }
 
-export default Incomes;
+export default Jobs;

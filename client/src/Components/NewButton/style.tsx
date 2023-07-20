@@ -4,13 +4,14 @@ export const ButtonStyle = styled.div`
     position: absolute;
     top: 80px;
     background-color: #FFF;
-    width: 100px;
+    width: 130px;
     right: 20px;
     border-radius: 8px;
     color: #000;
     display: flex;
     align-items: center;
     cursor: pointer;
+    text-align: center;
     
     a {
         text-decoration: none;

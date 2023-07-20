@@ -2,21 +2,21 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Components
-import Paginate from "../../Components/Paginate";
-import TableJob from "../../Components/TableJob";
+import Paginate from "../../../Components/Paginate";
+import TableJob from "../../../Components/TableJob";
 import { useReactiveVar } from "@apollo/client";
-import ModalLoading from "../../Components/ModalLoading";
-import NewButton from "../../Components/NewButton";
+import ModalLoading from "../../../Components/ModalLoading";
+import NewButton from "../../../Components/NewButton";
 
 // Styled
-import { JobBodyStyle } from "./style";
+import { DataBodyStyle } from "../style";
 
 // GraphQL
-import { useGetJobs } from "../../Graphql/Job/hooks";
-import { getJobsVar } from "../../Graphql/Job/state";
+import { useGetJobs } from "../../../Graphql/Job/hooks";
+import { getJobsVar } from "../../../Graphql/Job/state";
 
 // Interface
-import { IPaginateInfo } from "../../Interfaces/IPaginateInfo";
+import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
 
 // Toastify
 import { toast } from "react-toastify";
@@ -49,17 +49,17 @@ const AllJob = () => {
     }
 
     if(loading || !paginateInfo || !jobs){
-        return <JobBodyStyle> <ModalLoading/></JobBodyStyle>
+        return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
     }
 
     return (
-        <JobBodyStyle>
+        <DataBodyStyle>
             <NewButton path="job"/>
             <TableJob data={jobs}/>
             <Paginate  
                 lastPage={paginateInfo!.lastPage} 
             />
-        </JobBodyStyle>
+        </DataBodyStyle>
     );
 }
 
