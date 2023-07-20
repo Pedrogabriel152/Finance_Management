@@ -11,7 +11,7 @@ const NewButton = ({path}: INewButton) => {
     return (
         <ButtonStyle>
             <Link to={`/create/${path}`}>
-                <span id='icon'>+</span><span> New {path}</span>
+                <span id='icon'>+</span><span> Add {path}</span>
             </Link>
         </ButtonStyle>
     );

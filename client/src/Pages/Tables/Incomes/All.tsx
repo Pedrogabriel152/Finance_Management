@@ -46,17 +46,26 @@ const AllIncomes = () => {
         
     }
 
-    if(!paginateInfo || !incomes){
+    if(loading) {
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
+    }
+
+    if(!paginateInfo || !incomes){
+        return <DataBodyStyle> 
+            <NewButton path="Renda"/>
+            <TableAll data={[]} text="income"/>
+        </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="renda"/>
+            <NewButton path="Renda"/>
             <TableAll data={incomes} text="income"/>
-            <Paginate  
-                lastPage={paginateInfo!.lastPage} 
-            />
+            {paginateInfo.lastPage >= 2 && (
+                <Paginate  
+                    lastPage={paginateInfo.lastPage} 
+                />
+            )}
         </DataBodyStyle>
     );
 }

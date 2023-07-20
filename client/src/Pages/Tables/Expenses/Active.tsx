@@ -33,7 +33,6 @@ const ActiveExpenses = () => {
         if(expensesActive) {
             setPaginateInfo(expensesActive.paginatorInfo);
             setExpenses(expensesActive.data)
-            console.log(expensesActive.data)
         }
         if(error) {
             if(localStorage.getItem('@auth')){
@@ -45,17 +44,26 @@ const ActiveExpenses = () => {
         }
     }, [expensesActive]);
 
-    if(!paginateInfo || !expenses  ){
-        return <DataBodyStyle><ModalLoading/></DataBodyStyle>
+    if(loading) {
+        return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
+    }
+
+    if(!paginateInfo || !expenses){
+        return <DataBodyStyle> 
+            <NewButton path="Despesa"/>
+            <TableAll data={[]} text="expense"/>
+        </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="despesa"/>
-            <TableAll data={expenses} text="income"/>
-            <Paginate  
-                lastPage={paginateInfo.lastPage} 
-            />
+            <NewButton path="Despesa"/>
+            <TableAll data={expenses} text="expense"/>
+            {paginateInfo.lastPage >= 2 && (
+                <Paginate  
+                    lastPage={paginateInfo.lastPage} 
+                />
+            )}
         </DataBodyStyle>
     );
 }

@@ -48,17 +48,26 @@ const AllJob = () => {
         
     }
 
-    if(loading || !paginateInfo || !jobs){
+    if(loading){
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
+    }
+
+    if(!paginateInfo || !jobs){
+        return <DataBodyStyle> 
+            <NewButton path="Trabalho"/>
+            <TableJob data={[]}/>
+        </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="job"/>
+            <NewButton path="Trabalho"/>
             <TableJob data={jobs}/>
-            <Paginate  
-                lastPage={paginateInfo!.lastPage} 
-            />
+            {paginateInfo.lastPage >= 2 && (
+                <Paginate  
+                    lastPage={paginateInfo.lastPage} 
+                />
+            )}
         </DataBodyStyle>
     );
 }

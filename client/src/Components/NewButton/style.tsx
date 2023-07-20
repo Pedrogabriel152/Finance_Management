@@ -12,6 +12,7 @@ export const ButtonStyle = styled.div`
     align-items: center;
     cursor: pointer;
     text-align: center;
+    font-weight: bold;
     
     a {
         text-decoration: none;

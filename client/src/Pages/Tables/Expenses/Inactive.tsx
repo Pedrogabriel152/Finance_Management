@@ -50,16 +50,21 @@ const InactiveExpenses = () => {
     }
 
     if(!paginateInfo || !expenses){
-        return <DataBodyStyle> <TableAll data={[]} text="income"/></DataBodyStyle>
+        return <DataBodyStyle> 
+            <NewButton path="Despesa"/>
+            <TableAll data={[]} text="expense"/>
+        </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="despesa"/>
-            <TableAll data={expenses} text="income"/>
-            <Paginate  
-                lastPage={paginateInfo.lastPage} 
-            />
+            <NewButton path="Despesa"/>
+            <TableAll data={expenses} text="expense"/>
+            {paginateInfo.lastPage >= 2 && (
+                <Paginate  
+                    lastPage={paginateInfo.lastPage} 
+                />
+            )}
         </DataBodyStyle>
     );
 }
