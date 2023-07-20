@@ -20,7 +20,9 @@ class IncomeRepository
                 'installments' => intval($args['installments']),
                 'value_installment' => floatval($args['value_installment']),
                 'expires' => $dateExpires,
-                'user_id' => $args['user_id']
+                'user_id' => $args['user_id'],
+                'months_paid' => $args['months_paid']? $args['months_paid'] : '',
+                'installments_received' => $args['installments_received']? $args['installments_received'] : 0
             ]);
 
             return $newIncome;
@@ -142,7 +144,7 @@ class IncomeRepository
 
             $incomesValueTotal = Income::where([
                 ['user_id', '=', $user_id]
-            ])->whereBetween(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), [$minValue, $maxValue])->sum('value_installment');;
+            ])->whereBetween(DB::raw("TO_CHAR(expires, 'YYYY-MM-DD')"), [$minValue, $maxValue])->sum('value_installment');
 
             $jobsValueTotal = Job::where([
                 ['user_id', '=', $user_id],

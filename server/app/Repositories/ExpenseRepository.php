@@ -12,15 +12,17 @@ class ExpenseRepository
     // Save a new Expense in the database
     public static function createExpense(array $args){
         return DB::transaction(function () use($args){
-            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
+            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
             $newExpense = Expense::create([
-                'description' => $args['expense']['description']? $args['expense']['description'] : '',
-                'merchandise_purchased' => $args['expense']['merchandise_purchased'],
-                'establishment' => $args['expense']['establishment'],
-                'installments' => $args['expense']['installments'],
+                'description' => $args['description']? $args['description'] : '',
+                'merchandise_purchased' => $args['merchandise_purchased'],
+                'establishment' => $args['establishment'],
+                'installments' => $args['installments'],
                 'expires' => $dateExpires,
-                'value_installment' => floatval($args['expense']['value_installment']),
-                'user_id' => $args['expense']['user_id']
+                'value_installment' => floatval($args['value_installment']),
+                'user_id' => $args['user_id'],
+                'months_paid' => $args['months_paid']? $args['months_paid'] : '',
+                'installments_paid' => $args['installments_paid']? $args['installments_paid'] : 0
             ]);
             
             return $newExpense;

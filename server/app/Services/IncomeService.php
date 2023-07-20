@@ -2,13 +2,34 @@
 
 namespace App\Services;
 
-use App\Repositories\IncomeRepository;
+use DateTime;
 use App\Repositories\JobRepository;
+use App\Repositories\IncomeRepository;
 
 class IncomeService
 {
     // Income creation service
     public static function createIncome(array $args){
+
+        if($args['income']['installments_received'] >= 1){
+            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
+            $months_paid = [];
+            
+            for($i=$args['income']['installments_received'];$i>=1;$i--){
+                $dateExpires->modify("-{$i} months");
+                $expiresYear = $dateExpires->format('Y');
+                $expireMonth = $dateExpires->format('m');
+                $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
+
+                $months_paid[] = [
+                    'month' => intval($expireMonth),
+                    'total' => floatval($args['income']['value_installment']),
+                    'year' => $expiresYear
+                ];
+            }
+            $args['income']['months_paid'] = serialize($months_paid);
+        }
+
         $newIncome = IncomeRepository::create($args['income']);
         
         if(!$newIncome){

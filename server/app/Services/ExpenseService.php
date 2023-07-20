@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ExpenseRepository;
+use DateTime;
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -11,7 +12,26 @@ class ExpenseService
     // Expense creation service
     public static function createExpense(array $args){
         try {
-            $newExpense = ExpenseRepository::createExpense($args);
+            if($args['expense']['installments_paid'] >= 1){
+                $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
+                $months_paid = [];
+                
+                for($i=$args['expense']['installments_paid'];$i>=1;$i--){
+                    $dateExpires->modify("-{$i} months");
+                    $expiresYear = $dateExpires->format('Y');
+                    $expireMonth = $dateExpires->format('m');
+                    $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
+    
+                    $months_paid[] = [
+                        'month' => intval($expireMonth),
+                        'total' => floatval($args['expense']['value_installment']),
+                        'year' => $expiresYear
+                    ];
+                }
+                $args['expense']['months_paid'] = serialize($months_paid);
+            }
+            
+            $newExpense = ExpenseRepository::createExpense($args['expense']);
            
             if(!$newExpense){
                 return [
