@@ -51,7 +51,7 @@ const ActiveExpenses = () => {
 
     return (
         <DataBodyStyle>
-            <NewButton path="renda"/>
+            <NewButton path="despesa"/>
             <TableAll data={expenses} text="income"/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 

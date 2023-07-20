@@ -8,7 +8,7 @@ export const GETEXPENSES = gql`
                 establishment
                 expires
                 value_installment
-                installments_paid
+                paid_expense
             }
             paginatorInfo{
                 count
@@ -27,7 +27,7 @@ export const GETACTIVEEXPENSES = gql`
                 establishment
                 expires
                 value_installment
-                installments_paid
+                paid_expense
             }
             paginatorInfo{
                 count
@@ -46,7 +46,7 @@ export const GETIDLEEXPENSES = gql`
                 establishment
                 expires
                 value_installment
-                installments_paid
+                paid_expense
             }
             paginatorInfo{
                 count

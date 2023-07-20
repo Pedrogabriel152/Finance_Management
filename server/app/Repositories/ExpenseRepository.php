@@ -173,7 +173,7 @@ class ExpenseRepository
         return DB::transaction(function () use($user_id) {
             $expenses = Expense::where([
                 ['user_id', '=', $user_id],
-                ['installments_paid', '=', false]
+                ['paid_expense', '=', false]
             ])->orderBy('value_installment', 'desc')->paginate(6);
             return $expenses;
         });
@@ -183,7 +183,7 @@ class ExpenseRepository
         return DB::transaction(function () use($user_id) {
             $expenses = Expense::where([
                 ['user_id', '=', $user_id],
-                ['installments_paid', '=', true]
+                ['paid_expense', '=', true]
             ])->orderBy('value_installment', 'desc')->paginate(6);
             return $expenses;
         });

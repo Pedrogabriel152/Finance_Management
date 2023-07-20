@@ -20,10 +20,10 @@ const Expenses = () => {
                 <AllExpenses />
             )}
             {status == 'active' && (
-                <InactiveIncomes />
+                <ActiveExpenses />
             )}
             {status == 'inactive' && (
-                <ActiveExpenses />
+                <InactiveIncomes />
             )}
             <Footer/>
         </BoddyStyle>

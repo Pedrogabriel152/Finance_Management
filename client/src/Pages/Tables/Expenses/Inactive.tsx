@@ -20,19 +20,21 @@ import TableAll from "../../../Components/TableAll";
 // Toastify
 import { toast } from "react-toastify";
 import NewButton from "../../../Components/NewButton";
+import { useGetIdleExpenses } from "../../../Graphql/Expense/hooks";
+import { getIdleExpenseVar } from "../../../Graphql/Expense/state";
 
-const InactiveIncomes = () => {
+const InactiveExpenses = () => {
     const { page } = useParams();
-    const { loading, error } = useGetIdleIcomes(parseInt(page? page : '1'));
-    const inactieIncomes = useReactiveVar(getIdleIcomesVar);
+    const { loading, error } = useGetIdleExpenses(parseInt(page? page : '1'));
+    const inactiveExpenses = useReactiveVar(getIdleExpenseVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
-    const [incomes, setIncomes] = useState<any>(null);
+    const [expenses, setExpenses] = useState<any>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(inactieIncomes) {
-            setPaginateInfo(inactieIncomes.paginatorInfo);
-            setIncomes(inactieIncomes.data)
+        if(inactiveExpenses) {
+            setPaginateInfo(inactiveExpenses.paginatorInfo);
+            setExpenses(inactiveExpenses.data)
         }
         if(error) {
             console.log(error)
@@ -41,20 +43,20 @@ const InactiveIncomes = () => {
             toast.error('Faça o login primeiro');
             return;
         }
-    }, [inactieIncomes]);
+    }, [inactiveExpenses]);
 
     if(loading) {
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
     }
 
-    if(!paginateInfo || !incomes){
+    if(!paginateInfo || !expenses){
         return <DataBodyStyle> <TableAll data={[]} text="income"/></DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
-            <NewButton path="renda"/>
-            <TableAll data={incomes} text="income"/>
+            <NewButton path="despesa"/>
+            <TableAll data={expenses} text="income"/>
             <Paginate  
                 lastPage={paginateInfo.lastPage} 
             />
@@ -62,4 +64,4 @@ const InactiveIncomes = () => {
     );
 }
 
-export default InactiveIncomes;
+export default InactiveExpenses;
