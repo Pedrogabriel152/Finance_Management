@@ -1,13 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const GETJOBS = gql`
-    query GetJobs($user_id: ID!, $first: Int!){
-        jobs(user_id: $user_id, first: $first){
+export const GETEXPENSES = gql`
+    query GetExpenses($user_id: ID!, $first: Int!){
+        getAllExpense(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
-                wage
-                active
+                expires
+                value_installment
+                installments_paid
             }
             paginatorInfo{
                 count
@@ -18,14 +19,15 @@ export const GETJOBS = gql`
     }
 `;
 
-export const GETACTIVEJOBS = gql`
-    query ActiveJobs($user_id: ID!, $first: Int!) {
-        getActiveJobs(user_id: $user_id, first: $first){
+export const GETACTIVEEXPENSES = gql`
+    query ActiveExpenses($user_id: ID!, $first: Int!) {
+        getActiveExpense(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
-                wage
-                active
+                expires
+                value_installment
+                installments_paid
             }
             paginatorInfo{
                 count
@@ -36,14 +38,15 @@ export const GETACTIVEJOBS = gql`
     }
 `;
 
-export const GETIDLEJOBS = gql`
-    query IdleJobs($user_id: ID!, $first: Int!) {
-        getIdleJobs(user_id: $user_id, first: $first){
+export const GETIDLEEXPENSES = gql`
+    query IdleExpenses($user_id: ID!, $first: Int!) {
+        getIdleExpense(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
-                wage
-                active
+                expires
+                value_installment
+                installments_paid
             }
             paginatorInfo{
                 count

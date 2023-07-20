@@ -3,31 +3,31 @@ import { useParams } from "react-router-dom";
 // Components
 import Footer from "../../../Components/Footer";
 import NavBar from "../../../Components/NavBar";
-import AllIncomes from "./All";
-import ActiveIncomes from "./Active";
+import AllExpenses from "./All";
+import ActiveExpenses from "./Active";
 import InactiveIncomes from "./Inactive";
 
 // Styled
 import { BoddyStyle } from "../style";
 
-const Incomes = () => {
+const Expenses = () => {
     const { status } = useParams();
 
     return (
         <BoddyStyle>
             <NavBar/>
             {status == 'all' && (
-                <AllIncomes />
+                <AllExpenses />
             )}
             {status == 'active' && (
-                <ActiveIncomes />
+                <InactiveIncomes />
             )}
             {status == 'inactive' && (
-                <InactiveIncomes />
+                <ActiveExpenses />
             )}
             <Footer/>
         </BoddyStyle>
     );
 }
 
-export default Incomes;
+export default Expenses;

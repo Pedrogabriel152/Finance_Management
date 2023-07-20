@@ -1,6 +1,6 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETACTIVEJOBS, GETIDLEJOBS, GETJOBS } from "./queries";
-import { getActiveJobsVar, getIdleJobsVar, getJobsVar } from "./state";
+import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES } from "./queries";
+import { getActiveExpenseVar, getExpenseVar, getIdleExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";
 
 // Context
@@ -9,63 +9,63 @@ import { useUserContext } from "../../Context/UserContext";
 // Interfaces
 import { IPaginate } from "../../Interfaces/IPaginate";
 
-export const useGetJobs = (page: number) => {
+export const useGetExpenses = (page: number) => {
     const {getAuthentication} = useUserContext();
     const auth = getAuthentication();
     const client = useApolloClient();
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ jobs: IPaginate }>(GETJOBS, {
+    return useQuery<{ getAllExpense: IPaginate }>(GETEXPENSES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,
         },
         onCompleted(data) {
             if (data) {
-                getJobsVar(data.jobs);
+                getExpenseVar(data.getAllExpense);
             }
         },
         fetchPolicy: 'cache-and-network',
     });
 };
 
-export const useGetActiveJobs = (page: number) => {
+export const useGetActiveExpenses = (page: number) => {
     const {getAuthentication} = useUserContext();
     const auth = getAuthentication();
     const client = useApolloClient();
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ getActiveJobs: IPaginate }>(GETACTIVEJOBS, {
+    return useQuery<{ getActiveExpense: IPaginate }>(GETACTIVEEXPENSES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,
         },
         onCompleted(data) {
             if (data) {
-                getActiveJobsVar(data.getActiveJobs);
+                getActiveExpenseVar(data.getActiveExpense);
             }
         },
         fetchPolicy: 'cache-and-network',
     });
 };
 
-export const useGetIdleJobs = (page: number) => {
+export const useGetIdleExpenses = (page: number) => {
     const {getAuthentication} = useUserContext();
     const auth = getAuthentication();
     const client = useApolloClient();
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ getIdleJobs: IPaginate }>(GETIDLEJOBS, {
+    return useQuery<{ getIdleExpense: IPaginate }>(GETIDLEEXPENSES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,
         },
         onCompleted(data) {
             if (data) {
-                getIdleJobsVar(data.getIdleJobs);
+                getIdleExpenseVar(data.getIdleExpense);
             }
         },
         fetchPolicy: 'cache-and-network',

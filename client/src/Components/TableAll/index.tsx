@@ -1,14 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 
 // Interface
-import { ITableJobs } from "../../Interfaces/ITableJobs";
+import { ITableAll } from "../../Interfaces/ITableAll";
 
 // Components
 import BackTable from "../BackTable";
 
 // Styled
 import { TableAllStyle, TableHead, TableBoddy,TableAllContainer } from "./style";
-import { ITableAll } from "../../Interfaces/ITableAll";
 
 const TableAll = ({data, text} : ITableAll) => {
     const {status} = useParams();
@@ -21,7 +20,7 @@ const TableAll = ({data, text} : ITableAll) => {
                 <TableHead>
                     <div>Nome</div>
                     <div>Status</div>
-                    <div>Salário</div>
+                    <div>Parcela</div>
                 </TableHead>
                 {data.map((job: any, index: number) => (
                     <TableBoddy key={index}>

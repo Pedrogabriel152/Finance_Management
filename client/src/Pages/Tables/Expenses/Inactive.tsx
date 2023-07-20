@@ -3,51 +3,52 @@ import { useEffect, useState } from "react";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { useGetIncomes } from "../../../Graphql/Incomes/hooks";
-import { getIcomesVar } from "../../../Graphql/Incomes/state";
+import { useGetIdleIcomes } from "../../../Graphql/Incomes/hooks";
+import { getIdleIcomesVar } from "../../../Graphql/Incomes/state";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
 
-// Style
+// Styled
 import { DataBodyStyle } from "../style";
+
+// Components
+import ModalLoading from "../../../Components/ModalLoading";
+import Paginate from "../../../Components/Paginate";
+import TableAll from "../../../Components/TableAll";
 
 // Toastify
 import { toast } from "react-toastify";
-
-// Components
-import Paginate from "../../../Components/Paginate";
-import ModalLoading from "../../../Components/ModalLoading";
-import TableAll from "../../../Components/TableAll";
 import NewButton from "../../../Components/NewButton";
 
-const AllIncomes = () => {
+const InactiveIncomes = () => {
     const { page } = useParams();
-    const { loading, error } = useGetIncomes(parseInt(page? page : '1'));
-    const allIncomes = useReactiveVar(getIcomesVar);
+    const { loading, error } = useGetIdleIcomes(parseInt(page? page : '1'));
+    const inactieIncomes = useReactiveVar(getIdleIcomesVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
     const [incomes, setIncomes] = useState<any>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(allIncomes) {
-            setPaginateInfo(allIncomes.paginatorInfo);
-            setIncomes(allIncomes.data)
+        if(inactieIncomes) {
+            setPaginateInfo(inactieIncomes.paginatorInfo);
+            setIncomes(inactieIncomes.data)
         }
-    }, [allIncomes]);
-
-    if(error) {
-        console.log(error)
-        if(localStorage.getItem('@auth')){
+        if(error) {
+            console.log(error)
             localStorage.removeItem('@auth');
+            navigate('/login');
+            toast.error('Faça o login primeiro');
+            return;
         }
-        navigate('/login');
-        toast.error('Faça o login primeiro');
-        
+    }, [inactieIncomes]);
+
+    if(loading) {
+        return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
     }
 
     if(!paginateInfo || !incomes){
-        return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
+        return <DataBodyStyle> <TableAll data={[]} text="income"/></DataBodyStyle>
     }
 
     return (
@@ -55,10 +56,10 @@ const AllIncomes = () => {
             <NewButton path="renda"/>
             <TableAll data={incomes} text="income"/>
             <Paginate  
-                lastPage={paginateInfo!.lastPage} 
+                lastPage={paginateInfo.lastPage} 
             />
         </DataBodyStyle>
     );
 }
 
-export default AllIncomes;
+export default InactiveIncomes;

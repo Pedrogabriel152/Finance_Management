@@ -4,6 +4,7 @@ import Singin from "../Pages/Auth/Singin";
 import Home from "../Pages/Home";
 import Jobs from "../Pages/Tables/Jobs";
 import Incomes from "../Pages/Tables/Incomes";
+import Expenses from "../Pages/Tables/Expenses";
 
 const Rotas = () => {
     return(
@@ -12,7 +13,7 @@ const Rotas = () => {
             <Route path="/singin" element={<Singin />}/>
             <Route path="/jobs/:status/:page" element={<Jobs />}/>
             <Route path="/incomes/:status/:page" element={<Incomes />}/>
-            <Route path="/expenses/:status/:page" element={<Jobs />}/>
+            <Route path="/expenses/:status/:page" element={<Expenses />}/>
             <Route path="/job/:id" element={<Jobs />}/>
             <Route path="/" element={<Home />}/>
         </Routes>
