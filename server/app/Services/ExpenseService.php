@@ -12,8 +12,17 @@ class ExpenseService
     // Expense creation service
     public static function createExpense(array $args){
         try {
+            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
+            $month = $dateExpires->format('m');
+            $year = $dateExpires->format('Y');
+            $maxDateExpires = DateTime::createFromFormat('d/m/Y', "28/$month/$year");
+
+            if($dateExpires > $maxDateExpires) {
+                $dateExpires = $maxDateExpires;
+                $args['expense']['expires'] = "28/$month/$year";
+            }
+
             if($args['expense']['installments_paid'] >= 1){
-                $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
                 $months_paid = [];
                 
                 for($i=$args['expense']['installments_paid'];$i>=1;$i--){
@@ -258,10 +267,16 @@ class ExpenseService
         for($i=0;$i<6;$i++){
             $expensesMonth[$i] = [
                 'month' => $beginningMonth,
-                "total" => 0
+                "total" => 0,
+                'year' => $beginningYear
             ];
 
             $beginningMonth++;
+
+            if($beginningMonth > 12) {
+                $beginningMonth = 1;
+                $beginningYear++;
+            }
         }
 
         $spentMonth = ExpenseRepository::getExpensesMonth($user_id, $minDate, $maxDate);
@@ -275,51 +290,33 @@ class ExpenseService
     }
 
     public static function organizeExpense($spentsMonth, array $expensesMonth){ 
-        // 300 é total que deve dar
-        // $dateExpires->modify("-{$i} months");
-        // $expiresYear = $dateExpires->format('Y');
-        // $expireMonth = $dateExpires->format('m');
-        // $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
         foreach ($spentsMonth as $key => $spentMonth) {
-            $currentYear = date('Y');
             $monthsPaids = unserialize($spentMonth->months_paid);
-            $monthYear = date('Y', strtotime($spentMonth->expires));
-            $monthExpires = date('m', strtotime($spentMonth->expires));
             
             $dateExpires = new DateTime($spentMonth->expires);
-            $i =5;
-            // dd($dateExpires->modify("-{$i} months"));
-            $default = serialize([
-                'month' => 0,
-                'year' => 0,
-                'paid' => 0,
-                'expires' => null
-            ]);
-            dd($default);
-        
+
             foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
                 foreach ($expensesMonth as $keyExpenses => $expenseMonth) {
-                    $month = date('m', strtotime($spentMonth->expires));
-                    if($monthPaid['month'] === 0 && $monthYear === $currentYear){
-                        if(intval($expenseMonth['month']) === intval($month)){
-                            $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);
-                        }
+                    $yearExpenseMonth = date('Y', strtotime($expenseMonth['year']));
+                    $dateExpires = DateTime::createFromFormat('d/m/Y', $monthPaid['expires']);
+                    $maxDate = DateTime::createFromFormat('d/m/Y', '28/'.$expenseMonth['month'].'/'.$yearExpenseMonth);
+                    $minDate = DateTime::createFromFormat('d/m/Y', '01/'.$expenseMonth['month'].'/'.$yearExpenseMonth);
+
+                    if($dateExpires >= $minDate && $dateExpires <= $maxDate){
+                        $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);
                     }
 
-                    if(intval($monthPaid['month']) > 0) {
-                        if(intval($monthPaid['month']) === intval($expenseMonth['month']) && intval($monthPaid['year']) === intval($currentYear)){
-                            $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);
-                        }
+                    if(!key_exists($keyMonthPaid + 1, $monthsPaids)){
+                        $dateExpires = new DateTime($spentMonth->expires);
 
-                        if(!$spentMonth->paid_expense){
-                            if(intval($monthYear) === intval($currentYear) && intval($monthExpires) === intval($expenseMonth['month'])){
-                                $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);
-                            }
+                        if($dateExpires >= $minDate && $dateExpires <= $maxDate){
+                            $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);  
                         }
-                        // var_dump($monthsPaids);
-                    }                    
+                    
+                    }                  
                 }
             } 
+
         }
 
         return $expensesMonth;

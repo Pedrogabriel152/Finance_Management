@@ -12,17 +12,15 @@ class ExpenseRepository
     // Save a new Expense in the database
     public static function createExpense(array $args){
         if (!key_exists('months_paid', $args)){
-            $args['months_paid'] = serialize([
+            $args['months_paid'] = serialize([[
                 'month' => 0,
                 'year' => 0,
                 'paid' => 0,
                 'expires' => null
-            ]);
+            ]]);
         } 
         return DB::transaction(function () use($args){
             $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
-
-            // dd($args);
             $newExpense = Expense::create([
                 'description' => $args['description']? $args['description'] : '',
                 'merchandise_purchased' => $args['merchandise_purchased'],
@@ -100,12 +98,13 @@ class ExpenseRepository
                 $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
                 $month = date('m', strtotime($updateExpense->expires));
                 $year = date('Y', strtotime($updateExpense->expires));
-                $updateExpense->expires = $newDateExpires;
                 $months_paid[] = [
                     'month' => $month,
                     'total' => floatval($updateExpense->value_installment),
-                    'year' => $year
+                    'year' => $year,
+                    'expires' => $updateExpense->expires
                 ];
+                $updateExpense->expires = $newDateExpires;
                 $updateExpense->months_paid = serialize($months_paid);
             }
 

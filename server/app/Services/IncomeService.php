@@ -11,21 +11,32 @@ class IncomeService
     // Income creation service
     public static function createIncome(array $args){
 
+        $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
+        $month = $dateExpires->format('m');
+        $year = $dateExpires->format('Y');
+        $maxDateExpires = DateTime::createFromFormat('d/m/Y', "28/$month/$year");
+
+        if($dateExpires > $maxDateExpires) {
+            $dateExpires = $maxDateExpires;
+            $args['expense']['expires'] = "28/$month/$year";
+        }
+
         if($args['income']['installments_received'] >= 1){
-            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
             $months_paid = [];
             
             for($i=$args['income']['installments_received'];$i>=1;$i--){
                 $dateExpires->modify("-{$i} months");
                 $expiresYear = $dateExpires->format('Y');
                 $expireMonth = $dateExpires->format('m');
-                $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
+                
 
                 $months_paid[] = [
                     'month' => intval($expireMonth),
                     'total' => floatval($args['income']['value_installment']),
-                    'year' => $expiresYear
+                    'year' => $expiresYear,
+                    'expires' => $dateExpires->format('d').'/'. $dateExpires->format('m').'/'. $dateExpires->format('Y')
                 ];
+                $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
             }
             $args['income']['months_paid'] = serialize($months_paid);
         }
@@ -267,31 +278,29 @@ class IncomeService
 
     private static function organizeIncome($incomes, $jobs, array $incomesMonths){ 
         foreach ($incomes as $key => $income) {
-            $currentYear = date('Y');
             $monthsPaids = unserialize($income->months_paid);
-            $monthYear = date('Y', strtotime($income->expires));
-            $monthExpires = date('m', strtotime($income->expires));
+            
+            $dateExpires = new DateTime($income->expires);
         
             foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
                 foreach ($incomesMonths as $keyIncomes => $incomeMonth) {
-                    $month = date('m', strtotime($income->expires));
-                    if($monthPaid['month'] === 0 && $monthYear === $currentYear){
-                        if(intval($incomeMonth['month']) === intval($month)){
-                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
-                        }
+                    $yearIncomeMonth = date('Y', strtotime($incomeMonth['year']));
+                    $dateExpires = DateTime::createFromFormat('d/m/Y', $monthPaid['expires']);
+                    $maxDate = DateTime::createFromFormat('d/m/Y', '28/'.$incomeMonth['month'].'/'.$yearIncomeMonth);
+                    $minDate = DateTime::createFromFormat('d/m/Y', '01/'.$incomeMonth['month'].'/'.$yearIncomeMonth);
+
+                    if($dateExpires >= $minDate && $dateExpires <= $maxDate){
+                        $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
                     }
 
-                    if(intval($monthPaid['month']) > 0) {
-                        if(intval($monthPaid['month']) === intval($incomeMonth['month']) && $monthPaid['year'] === $currentYear){
-                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
-                        }
+                    if(!key_exists($keyMonthPaid + 1, $monthsPaids)){
+                        $dateExpires = new DateTime($income->expires);
 
-                        if(!$income->received_income){
-                            if(intval($monthYear) === intval($currentYear) && intval($monthExpires) === intval($incomeMonth['month'])){
-                                $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
-                            }
+                        if($dateExpires >= $minDate && $dateExpires <= $maxDate){
+                            $expensesMonth[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);  
                         }
-                    }                    
+                    
+                    }                     
                 }
             } 
         }

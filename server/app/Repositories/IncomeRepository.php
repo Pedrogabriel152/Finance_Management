@@ -12,6 +12,14 @@ class IncomeRepository
 {
     // Save a new Income in the database
     public static function create(array $args){
+        if (!key_exists('months_paid', $args)){
+            $args['months_paid'] = serialize([[
+                'month' => 0,
+                'year' => 0,
+                'paid' => 0,
+                'expires' => null
+            ]]);
+        }
         return DB::transaction(function () use($args) {
             $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
             $newIncome = Income::create([
@@ -21,7 +29,7 @@ class IncomeRepository
                 'value_installment' => floatval($args['value_installment']),
                 'expires' => $dateExpires,
                 'user_id' => $args['user_id'],
-                'months_paid' => $args['months_paid']? $args['months_paid'] : '',
+                'months_paid' => $args['months_paid'],
                 'installments_received' => $args['installments_received']? $args['installments_received'] : 0
             ]);
 
