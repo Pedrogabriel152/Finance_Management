@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('expenses', function (Blueprint $table) {
-            $table->longText('months_paid')->nullable(false)->default('a:1:{i:0;a:3:{s:5:"month";i:0;s:4:"paid";i:0;s:4:"year";i:0;}}');
+            $table->longText('months_paid')->nullable(false)->default('a:4:{s:5:"month";i:0;s:4:"year";i:0;s:4:"paid";i:0;s:7:"expires";N;}');
         });
     }
 

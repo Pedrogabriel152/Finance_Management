@@ -30,7 +30,7 @@ const Content = ({title, type, options, table, data, chartType, size}: IContent)
                 <Title>{title}</Title>
                 <TableTitleStyle>
                     <div>Nome</div>
-                    {table?.tableBody[0].installments &&
+                    {table?.tableBody[0]?.installments &&
                         <div>Parcelas</div>
                     }
                     <div>Valor</div>
@@ -38,8 +38,8 @@ const Content = ({title, type, options, table, data, chartType, size}: IContent)
                 {table?.tableBody.map((table: ITableBody, index: number) => (
                     <TableBodyStyle key={index}>
                         <div>{table.name}</div>
-                        {table.installments &&
-                            <div>{table.plot_completed}/{table.installments}</div>
+                        {table?.installments &&
+                            <div>{table?.plot_completed}/{table?.installments}</div> 
                         }
                         <div>{table.value_installment.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                     </TableBodyStyle>

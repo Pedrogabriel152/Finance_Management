@@ -11,8 +11,18 @@ class ExpenseRepository
 {
     // Save a new Expense in the database
     public static function createExpense(array $args){
+        if (!key_exists('months_paid', $args)){
+            $args['months_paid'] = serialize([
+                'month' => 0,
+                'year' => 0,
+                'paid' => 0,
+                'expires' => null
+            ]);
+        } 
         return DB::transaction(function () use($args){
             $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
+
+            // dd($args);
             $newExpense = Expense::create([
                 'description' => $args['description']? $args['description'] : '',
                 'merchandise_purchased' => $args['merchandise_purchased'],
@@ -21,8 +31,8 @@ class ExpenseRepository
                 'expires' => $dateExpires,
                 'value_installment' => floatval($args['value_installment']),
                 'user_id' => $args['user_id'],
-                'months_paid' => $args['months_paid']? $args['months_paid'] : '',
-                'installments_paid' => $args['installments_paid']? $args['installments_paid'] : 0
+                'installments_paid' => $args['installments_paid'] > 0? $args['installments_paid'] : 0,
+                'months_paid' => $args['months_paid']
             ]);
             
             return $newExpense;

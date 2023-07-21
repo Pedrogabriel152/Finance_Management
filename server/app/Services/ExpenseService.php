@@ -20,17 +20,18 @@ class ExpenseService
                     $dateExpires->modify("-{$i} months");
                     $expiresYear = $dateExpires->format('Y');
                     $expireMonth = $dateExpires->format('m');
-                    $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
     
                     $months_paid[] = [
                         'month' => intval($expireMonth),
                         'total' => floatval($args['expense']['value_installment']),
-                        'year' => $expiresYear
+                        'year' => $expiresYear,
+                        'expires' => $dateExpires->format('d').'/'. $dateExpires->format('m').'/'. $dateExpires->format('Y')
                     ];
+                    $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
                 }
                 $args['expense']['months_paid'] = serialize($months_paid);
             }
-            
+
             $newExpense = ExpenseRepository::createExpense($args['expense']);
            
             if(!$newExpense){
@@ -51,7 +52,7 @@ class ExpenseService
         } catch (\Throwable $th) {
             return [
                 'code' => 500,
-                'message' => 'Falha ao cadastrar a despesa!'
+                'message' => $th->getMessage()//'Falha ao cadastrar a despesa!'
             ];
         }
     }
@@ -274,11 +275,27 @@ class ExpenseService
     }
 
     public static function organizeExpense($spentsMonth, array $expensesMonth){ 
+        // 300 é total que deve dar
+        // $dateExpires->modify("-{$i} months");
+        // $expiresYear = $dateExpires->format('Y');
+        // $expireMonth = $dateExpires->format('m');
+        // $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
         foreach ($spentsMonth as $key => $spentMonth) {
             $currentYear = date('Y');
             $monthsPaids = unserialize($spentMonth->months_paid);
             $monthYear = date('Y', strtotime($spentMonth->expires));
             $monthExpires = date('m', strtotime($spentMonth->expires));
+            
+            $dateExpires = new DateTime($spentMonth->expires);
+            $i =5;
+            // dd($dateExpires->modify("-{$i} months"));
+            $default = serialize([
+                'month' => 0,
+                'year' => 0,
+                'paid' => 0,
+                'expires' => null
+            ]);
+            dd($default);
         
             foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
                 foreach ($expensesMonth as $keyExpenses => $expenseMonth) {
@@ -290,7 +307,7 @@ class ExpenseService
                     }
 
                     if(intval($monthPaid['month']) > 0) {
-                        if(intval($monthPaid['month']) === intval($expenseMonth['month']) && $monthPaid['year'] === $currentYear){
+                        if(intval($monthPaid['month']) === intval($expenseMonth['month']) && intval($monthPaid['year']) === intval($currentYear)){
                             $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);
                         }
 
@@ -299,6 +316,7 @@ class ExpenseService
                                 $expensesMonth[$keyExpenses]['total'] = floatval($expenseMonth['total']) + floatval($spentMonth->value_installment);
                             }
                         }
+                        // var_dump($monthsPaids);
                     }                    
                 }
             } 
@@ -306,6 +324,7 @@ class ExpenseService
 
         return $expensesMonth;
     }
+    
 
     public static function getActiveExpenses(int $user_id){
         $activeExpense = ExpenseRepository::getActiveExpense($user_id);

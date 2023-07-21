@@ -111,37 +111,56 @@ const Home = () => {
         }
 
         if(content){
-            content.expenses.map((expense: any) => {
-                const table: ITableBody = {
-                    installments: expense.installments,
-                    name: expense.merchandise_purchased,
-                    plot_completed: expense.installments_paid,
-                    value_installment: expense.value_installment
-                }
-                tableBodyExpense.push(table);
-                tableFooterExpense.total += table.value_installment;
-            });
+            console.log(content)
+            if(content.expenses){
+                content.expenses.map((expense: any) => {
+                    const table: ITableBody = {
+                        installments: expense.installments,
+                        name: expense.merchandise_purchased,
+                        plot_completed: expense.installments_paid,
+                        value_installment: expense.value_installment
+                    }
+                    tableBodyExpense.push(table);
+                    tableFooterExpense.total += table.value_installment;
+                });
 
-            setTableExpense({
-                tableBody: tableBodyExpense,
-                tableFooter: tableFooterExpense
-            });
+                setTableExpense({
+                    tableBody: tableBodyExpense,
+                    tableFooter: tableFooterExpense
+                });
+            }else {
+                setTableExpense({
+                    tableBody: [],
+                    tableFooter: {
+                        total: 0
+                    }
+                });
+            }
 
-            content.incomes.map((income: any) => {
-                const table: ITableBody = {
-                    installments: income.installments,
-                    name: income.merchandise_purchased,
-                    plot_completed: income.installments_received,
-                    value_installment: income.value_installment
-                }
-                tableBodyIncome.push(table);
-                tableFooterIncome.total += table.value_installment;
-            });
+            if(content.incomes){
+                content.incomes.map((income: any) => {
+                    const table: ITableBody = {
+                        installments: income.installments,
+                        name: income.merchandise_purchased,
+                        plot_completed: income.installments_received,
+                        value_installment: income.value_installment
+                    }
+                    tableBodyIncome.push(table);
+                    tableFooterIncome.total += table.value_installment;
+                });
 
-            setTableIncomes({
-                tableBody: tableBodyIncome,
-                tableFooter: tableFooterIncome
-            });
+                setTableIncomes({
+                    tableBody: tableBodyIncome,
+                    tableFooter: tableFooterIncome
+                });
+            }else {
+                setTableIncomes({
+                    tableBody: [],
+                    tableFooter: {
+                        total: 0
+                    }
+                })
+            }
         }
 
         if(jobs) {

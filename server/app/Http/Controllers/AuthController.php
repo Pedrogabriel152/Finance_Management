@@ -32,19 +32,18 @@ class AuthController extends Controller
 
     public function register(Request $request) {
         try {
-
             if(strlen($request->phone) !== 11){
-                return [
+                return response()->json([
                     "code" => 402,
                     "message" => "O campo celular tem que tem 11 digitos",
-                ];
+                ], 402);
             }
 
             if(strlen($request->cpf) !== 11){
-                return [
+                return response()->json([
                     "code" => 402,
                     "message" => "O campo CPF tem que tem 11 digitos",
-                ];
+                ], 402);
             }
 
             $newUser = UserRepository::create($request);
