@@ -39,7 +39,6 @@ const AllJob = () => {
     }, [jobsPaginate]);
 
     if(error) {
-        console.log(error)
         if(localStorage.getItem('@auth')){
             localStorage.removeItem('@auth');
         }

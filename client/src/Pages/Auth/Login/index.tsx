@@ -34,7 +34,7 @@ const Login = () => {
         if(localStorage.getItem('@auth')){
             localStorage.removeItem('@auth');
         }
-        console.log("User => ", user)
+        
         api.get('/sanctum/csrf-cookie').then(response => {
             api.post('/api/login', {
                 email: user.email,

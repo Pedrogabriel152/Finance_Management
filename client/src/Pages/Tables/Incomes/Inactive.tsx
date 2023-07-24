@@ -35,7 +35,6 @@ const InactiveIncomes = () => {
             setIncomes(inactieIncomes.data)
         }
         if(error) {
-            console.log(error)
             localStorage.removeItem('@auth');
             navigate('/login');
             toast.error('Faça o login primeiro');

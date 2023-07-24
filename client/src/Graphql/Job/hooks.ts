@@ -104,7 +104,6 @@ export const useCreateJob = () => {
     return useMutation<{createJob: IResponse}>(CREATEJOB, {
         onCompleted(data) {
             if(data){
-                console.log(data)
                 createJobVar(data?.createJob)
             }
         },

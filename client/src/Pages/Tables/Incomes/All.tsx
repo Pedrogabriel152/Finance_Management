@@ -37,7 +37,6 @@ const AllIncomes = () => {
     }, [allIncomes]);
 
     if(error) {
-        console.log(error)
         if(localStorage.getItem('@auth')){
             localStorage.removeItem('@auth');
         }

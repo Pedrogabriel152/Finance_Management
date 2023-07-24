@@ -111,7 +111,6 @@ const Home = () => {
         }
 
         if(content){
-            console.log(content)
             if(content.expenses){
                 content.expenses.map((expense: any) => {
                     const table: ITableBody = {

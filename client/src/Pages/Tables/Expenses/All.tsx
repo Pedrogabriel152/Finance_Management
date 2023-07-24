@@ -37,7 +37,6 @@ const AllExpenses = () => {
     }, [allExpenses]);
 
     if(error) {
-        console.log(error)
         if(localStorage.getItem('@auth')){
             localStorage.removeItem('@auth');
         }

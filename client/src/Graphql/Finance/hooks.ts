@@ -60,7 +60,6 @@ export const useGetMonthlySummaryVar = () => {
         },
         onCompleted(data){
             if(data){
-                console.log(data)
                 getMonthlySummaryVar({
                     expensesMonth: data.searchExpensesMonth,
                     incomesMonth: data.searchIncomesMonth
