@@ -21,7 +21,6 @@ const CreateJob = () => {
             ...newJob,
             [e.target.name]: e.target.value
         });
-        console.log(e.target.value);
     }
 
     const inputs: IInput[] = [
@@ -49,7 +48,7 @@ const CreateJob = () => {
             placeholder: "Salário",
             svg: "",
             type: "number",
-            value: newJob?.wage? newJob?.wage : 0,
+            value: newJob?.wage,
             onChange: handleOnChange
         },
         {

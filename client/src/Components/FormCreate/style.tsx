@@ -14,6 +14,8 @@ export const FormStyle = styled.form`
 export const LabelInput = styled.div`
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    width: 90%;
     
     label {
         margin-top: 5px;
