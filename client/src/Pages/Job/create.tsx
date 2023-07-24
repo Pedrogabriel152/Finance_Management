@@ -26,14 +26,7 @@ const CreateJob = () => {
 
     const inputs: IInput[] = [
         {
-            name: "description",
-            placeholder: "Descrição",
-            svg: "",
-            type: "text",
-            value: newJob?.description? newJob?.description : "",
-            onChange: handleOnChange
-        },
-        {
+            label: "Estabelecimento:",
             name: "establishment",
             placeholder: "Estabelecimento",
             svg: "",
@@ -42,6 +35,16 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
+            label: "Descrição",
+            name: "description",
+            placeholder: "Descrição",
+            svg: "",
+            type: "text",
+            value: newJob?.description? newJob?.description : "",
+            onChange: handleOnChange
+        },
+        {
+            label: "Salário:",
             name: "wage",
             placeholder: "Salário",
             svg: "",
@@ -50,6 +53,7 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
+            label: "Quando entrou do Trabalho:",
             name: "started",
             placeholder: "Entrou em",
             svg: "",
@@ -58,6 +62,7 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
+            label: "Quando saiu do Trabalho:",
             name: "leave",
             placeholder: "Saiu em",
             svg: "",

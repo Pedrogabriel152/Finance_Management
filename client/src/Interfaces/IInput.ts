@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react"
 
 export interface IInput {
+    label?: string
     svg: string | ""
     placeholder: string
     type: string
