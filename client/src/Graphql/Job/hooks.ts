@@ -1,5 +1,5 @@
 // Graphql
-import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 
 // Queries
 import { CREATEJOB, GETACTIVEJOBS, GETFIVEJOBS, GETIDLEJOBS, GETJOBS } from "./queries";
@@ -13,10 +13,10 @@ import { useUserContext } from "../../Context/UserContext";
 // Interfaces
 import { IJob } from "../../Interfaces/IJob";
 import { IPaginate } from "../../Interfaces/IPaginate";
+import { IResponse } from "../../Interfaces/IResponse";
 
 // Utils
 import { updateLink } from "../../utils/updateLink";
-import { IResponse } from "../../Interfaces/IResponse";
 
 export const useGetFiveJobs = () => {
     const {getAuthentication} = useUserContext();

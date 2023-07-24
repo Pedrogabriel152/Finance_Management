@@ -3,12 +3,12 @@ import { ReactElement, createContext, useContext, useEffect, useState } from "re
 // Interfaces
 import { IUserInput } from "../../Interfaces/IUserInput";
 import { IUserContext } from "../../Interfaces/IUserContext";
+import { IJobCreate } from "../../Interfaces/IJobCreate";
 
 // Graphql
-import { split, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister } from "../../Graphql/User/hooks";
-import { IJobCreate } from "../../Interfaces/IJobCreate";
 import { useCreateJob } from "../../Graphql/Job/hooks";
 
 interface UserProviderProps {
@@ -117,15 +117,8 @@ const UserProvider = ({children}:UserProviderProps) => {
 
     const createJob = (job: IJobCreate) => {
         const auth = getAuthentication();
-        // const [yearStarted, monthStarted, dayStarted] = job.started.split('-');
         job.wage = typeof job.wage === 'string'? parseFloat(job.wage) : job.wage;
-        // job.started = `${dayStarted}/${monthStarted}/${yearStarted}`;
         job.user_id = auth.user_id;
-
-        // if(job.leave){
-        //     const [yearLeave, monthLeave, dayLeave] = job.leave.split('-');
-        //     job.leave = `${dayLeave}/${monthLeave}/${yearLeave}`;
-        // }
 
         addJob({
             variables: {
