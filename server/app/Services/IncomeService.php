@@ -297,7 +297,7 @@ class IncomeService
                         $dateExpires = new DateTime($income->expires);
 
                         if($dateExpires >= $minDate && $dateExpires <= $maxDate){
-                            $expensesMonth[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);  
+                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);  
                         }
                     
                     }                     
