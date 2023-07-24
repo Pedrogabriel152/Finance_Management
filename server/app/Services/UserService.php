@@ -4,10 +4,11 @@ namespace App\Services;
 
 use DateTime;
 use App\Repositories\UserRepository;
+use Illuminate\Http\Request;
 
 class UserService{
     // User creation service
-    public static function createUser(array $args){
+    public static function createUser(Request $args){
         try {
 
             if(strlen($args['user']['phone']) !== 11){

@@ -10,10 +10,10 @@ final class JobQuery
      * @param  null  $_
      * @param  array{}  $args
      */
-    public function __invoke($_, array $args)
-    {
-        // TODO implement the resolver
-    }
+    // public function __invoke($_, array $args)
+    // {
+    //     // TODO implement the resolver
+    // }
 
     // Search for an Jobs
     public function getJobs($_, array $args)

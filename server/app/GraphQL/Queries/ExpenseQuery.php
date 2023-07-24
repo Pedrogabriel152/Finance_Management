@@ -10,10 +10,10 @@ final class ExpenseQuery
      * @param  null  $_
      * @param  array{}  $args
      */
-    public function __invoke($_, array $args)
-    {
-        // TODO implement the resolver
-    }
+    // public function __invoke($_, array $args)
+    // {
+    //     // TODO implement the resolver
+    // }
 
     // Search for an Expense
     public function getExpense($_, array $args)

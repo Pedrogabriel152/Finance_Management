@@ -47,7 +47,6 @@ class AuthController extends Controller
             }
 
             $newUser = UserRepository::create($request);
-            // dd($newUser);
 
             if(!$newUser){
                 return response()->json(["message" => "Falha ao cadastrar usuário"], 500);

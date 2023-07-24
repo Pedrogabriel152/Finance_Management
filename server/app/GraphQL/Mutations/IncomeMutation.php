@@ -10,10 +10,10 @@ final class IncomeMutation
      * @param  null  $_
      * @param  array{}  $args
      */
-    public function __invoke($_, array $args)
-    {
-        // TODO implement the resolver
-    }
+    // public function __invoke($_, array $args)
+    // {
+    //     // TODO implement the resolver
+    // }
 
     // Create Income
     public function createIncome($_, array $args)

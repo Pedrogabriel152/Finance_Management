@@ -10,18 +10,9 @@ final class UserQuery
      * @param  null  $_
      * @param  array{}  $args
      */
-    public function __invoke($_, array $args)
-    {
-        // $user = User::where('email', $request->email)->first();
- 
-        // if (! $user || ! Hash::check($request->password, $user->password)) {
-        //     throw ValidationException::withMessages([
-        //         'email' => ['The provided credentials are incorrect.'],
-        //     ]);
-        // }
-    
-        // return $user->createToken($request->device_name)->plainTextToken;
-    }
+    // public function __invoke($_, array $args)
+    // {
+    // }
 
     // Login for an User
     public function login($_, array $args){
