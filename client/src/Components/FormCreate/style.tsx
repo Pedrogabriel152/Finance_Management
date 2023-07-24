@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FormContainer = styled.main`
-    padding-top: 90px;
+    padding-top: 40%;
 `;
 
 export const FormStyle = styled.form`
@@ -9,6 +9,8 @@ export const FormStyle = styled.form`
     width: 90vw;
     margin-left: 5%;
     border-radius: 8px;
+    font-size: 1.1em;
+    height: 53vh;
 `;
 
 export const LabelInput = styled.div`
@@ -18,10 +20,21 @@ export const LabelInput = styled.div`
     width: 90%;
     
     label {
-        margin-top: 5px;
+        margin-top: 15px;
     }
 `;
 
 export const InputCreateStyle = styled.input`
+    padding: 8px 15px;
+    margin-top: 5px;
+`;
 
+export const ButtonSubmit = styled.button`
+    padding: 8px 35px;
+    margin-top: 15px;
+    margin-left: 30%;
+    background-color: #050038;
+    border: none;
+    color: #FFF;
+    border-radius: 10px;
 `;

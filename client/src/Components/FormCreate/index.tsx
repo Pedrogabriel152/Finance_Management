@@ -1,6 +1,6 @@
 import { IFormCreate } from "../../Interfaces/IFormCreate";
 import { IInput } from "../../Interfaces/IInput";
-import { FormContainer, FormStyle, InputCreateStyle, LabelInput } from "./style";
+import { FormContainer, FormStyle, InputCreateStyle, LabelInput, ButtonSubmit } from "./style";
 
 const FormCreate = ({data}: IFormCreate) => {
     return(
@@ -18,6 +18,7 @@ const FormCreate = ({data}: IFormCreate) => {
                         />
                     </LabelInput>
                 ))}
+                <ButtonSubmit>Cadastrar</ButtonSubmit>
             </FormStyle>
         </FormContainer>
     )
