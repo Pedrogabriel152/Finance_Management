@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react"
 
 export interface IInput {
-    svg: string
+    svg: string | ""
     placeholder: string
     type: string
     name: string
