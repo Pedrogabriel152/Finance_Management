@@ -1,6 +1,6 @@
 export interface IJobCreate {
     description: string
-    wage: number
+    wage: string | number
     establishment: string
     started: string
     leave?: string

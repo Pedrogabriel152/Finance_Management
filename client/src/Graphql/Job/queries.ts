@@ -63,3 +63,12 @@ export const GETIDLEJOBS = gql`
         }
     }
 `;
+
+export const CREATEJOB = gql`
+    mutation CreateJob($job: JobInput!){
+        createJob(job: $job){
+            code
+            message
+        }
+    }
+`;

@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { BodyStyle, CreateStyle } from "./style";
 import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
 import FormCreate from "../../Components/FormCreate";
 import { IInput } from "../../Interfaces/IInput";
 import { IJobCreate } from "../../Interfaces/IJobCreate";
+import { useUserContext } from "../../Context/UserContext";
+import { toast } from "react-toastify";
+import { useReactiveVar } from "@apollo/client";
+import { createJobVar } from "../../Graphql/Job/state";
+import { useNavigate } from "react-router-dom";
 
 const CreateJob = () => {
+    const { createJob, getAuthentication } = useUserContext();
+    const createResponse = useReactiveVar(createJobVar);
+    const navigate = useNavigate();
     const [newJob, setNewJob] = useState<IJobCreate>({
         description: "",
         establishment: "",
         started: "",
         user_id: 0,
-        wage: 0,
+        wage: '',
     });
 
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(e.target.type === 'number') {
+            setNewJob({
+                ...newJob,
+                [e.target.name]: e.target.value.replace(/^0+(?!\.|$)/, '')
+            });
+            return;
+        }
+
         setNewJob({
             ...newJob,
             [e.target.name]: e.target.value
@@ -25,7 +41,7 @@ const CreateJob = () => {
 
     const inputs: IInput[] = [
         {
-            label: "Estabelecimento:",
+            label: "Estabelecimento: *",
             name: "establishment",
             placeholder: "Estabelecimento",
             svg: "",
@@ -34,7 +50,7 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
-            label: "Descrição",
+            label: "Descrição: *",
             name: "description",
             placeholder: "Descrição",
             svg: "",
@@ -43,7 +59,7 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
-            label: "Salário:",
+            label: "Salário: *",
             name: "wage",
             placeholder: "Salário",
             svg: "",
@@ -52,7 +68,7 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
-            label: "Quando entrou do Trabalho:",
+            label: "Quando iniciou: *",
             name: "started",
             placeholder: "Entrou em",
             svg: "",
@@ -61,7 +77,7 @@ const CreateJob = () => {
             onChange: handleOnChange
         },
         {
-            label: "Quando saiu do Trabalho:",
+            label: "Quando saiu:",
             name: "leave",
             placeholder: "Saiu em",
             svg: "",
@@ -72,46 +88,34 @@ const CreateJob = () => {
 
     ];
 
+    const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const auth = getAuthentication();
+
+        if(!newJob.description || !newJob.establishment || !newJob.started || !newJob.wage){
+            toast.error("Todos os campos com * são obrigátorios");
+        }
+
+        createJob(newJob);
+
+        if(createResponse?.code === 200) {
+            toast.success(createResponse.message);
+            navigate('/jobs/all/1')
+            return;
+        }
+
+        toast.error(createResponse?.message);
+    }
+
     return(
         <CreateStyle>
             <NavBar />
             <BodyStyle>
-                <FormCreate data={inputs}/>
+                <FormCreate data={inputs} onSubmit={handleOnSubmit}/>
             </BodyStyle>
             <Footer />
         </CreateStyle>
     );
 }
-
-// "job": {
-//     "description": "",
-//     "wage": 200,
-//     "establishment": "KSI",
-//     "started": "01/02/2023",
-//     "leave": "30/03/2023",
-//     "user_id": 2
-// }
-
-// "expense": {
-//     "description": "",
-//     "merchandise_purchased": "sdas",
-//     "establishment": "KSI",
-//     "installments": 20,
-//     "value_installment": 50,
-//     "installments_paid": 0,
-//     "expires": "30/06/2023",
-//     "user_id": 2
-// }
-
-// "income": {
-//     "description": "",
-//     "establishment": "KSI",
-//     "installments": 20,
-//     "value_installment": 10,
-//     "installments_received": 0,
-//     "expires": "28/06/2023",
-//     "user_id": 2,
-//     "merchandise_purchased":"asd"
-// }
 
 export default CreateJob;

@@ -1,4 +1,5 @@
 import { IAuthentication } from "./IAuthentication"
+import { IJobCreate } from "./IJobCreate"
 import { IUser } from "./IUser"
 import { IUserInput } from "./IUserInput"
 
@@ -14,4 +15,5 @@ export interface IUserContext{
     logout: () => any
     setPage: (page: number) => void
     page?: number
+    createJob: (job: IJobCreate) => void
 }

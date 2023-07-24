@@ -5,9 +5,11 @@ import { IUserInput } from "../../Interfaces/IUserInput";
 import { IUserContext } from "../../Interfaces/IUserContext";
 
 // Graphql
-import { useReactiveVar } from "@apollo/client";
+import { split, useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister } from "../../Graphql/User/hooks";
+import { IJobCreate } from "../../Interfaces/IJobCreate";
+import { useCreateJob } from "../../Graphql/Job/hooks";
 
 interface UserProviderProps {
     children: ReactElement
@@ -20,6 +22,7 @@ export const UserContext = createContext<IUserContext>({
     createUserDatabase: () => null,
     SaveLocalStorage: () => null,
     getAuthentication: () => null,
+    createJob: () => null,
     logout: () => null,
     setPage: () => null,
     page: 1
@@ -32,6 +35,7 @@ const UserProvider = ({children}:UserProviderProps) => {
     const authentication = useReactiveVar(authenticationVar);
     const [auth, setAuth] = useState<any>();
     const [page, setPage] = useState<number>(1);
+    const [addJob] = useCreateJob();
 
     useEffect(() => {
         async function loading(){
@@ -111,6 +115,25 @@ const UserProvider = ({children}:UserProviderProps) => {
         setPage(page);
     }
 
+    const createJob = (job: IJobCreate) => {
+        const auth = getAuthentication();
+        // const [yearStarted, monthStarted, dayStarted] = job.started.split('-');
+        job.wage = typeof job.wage === 'string'? parseFloat(job.wage) : job.wage;
+        // job.started = `${dayStarted}/${monthStarted}/${yearStarted}`;
+        job.user_id = auth.user_id;
+
+        // if(job.leave){
+        //     const [yearLeave, monthLeave, dayLeave] = job.leave.split('-');
+        //     job.leave = `${dayLeave}/${monthLeave}/${yearLeave}`;
+        // }
+
+        addJob({
+            variables: {
+                job: job
+            }
+        })
+    }
+
     return (
         <UserContext.Provider 
             value={{
@@ -122,6 +145,7 @@ const UserProvider = ({children}:UserProviderProps) => {
                 register: register,
                 getAuthentication: getAuthentication,
                 logout: logout,
+                createJob: createJob,
                 setPage: handlePage,
                 page: page
             }} 

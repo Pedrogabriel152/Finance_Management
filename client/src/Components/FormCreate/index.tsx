@@ -2,10 +2,10 @@ import { IFormCreate } from "../../Interfaces/IFormCreate";
 import { IInput } from "../../Interfaces/IInput";
 import { FormContainer, FormStyle, InputCreateStyle, LabelInput, ButtonSubmit } from "./style";
 
-const FormCreate = ({data}: IFormCreate) => {
+const FormCreate = ({data, onSubmit}: IFormCreate) => {
     return(
         <FormContainer>
-            <FormStyle>
+            <FormStyle onSubmit={onSubmit}>
                 {data.map((input: IInput, index: number) => (
                     <LabelInput key={index}>
                         <label htmlFor={input.name}>{input.label}</label>
@@ -18,7 +18,7 @@ const FormCreate = ({data}: IFormCreate) => {
                         />
                     </LabelInput>
                 ))}
-                <ButtonSubmit>Cadastrar</ButtonSubmit>
+                <ButtonSubmit type="submit">Cadastrar</ButtonSubmit>
             </FormStyle>
         </FormContainer>
     )

@@ -21,6 +21,7 @@ export const LabelInput = styled.div`
     
     label {
         margin-top: 15px;
+        font-weight: 500;
     }
 `;
 
