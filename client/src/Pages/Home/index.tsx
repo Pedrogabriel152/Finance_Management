@@ -197,7 +197,9 @@ const Home = () => {
                 curveType: "none",
                 legend: { position: "bottom" },
                 colors: ["#3377FF", "#DD2222"],
-                
+                vAxis: {
+                    format: 'R$ #,##0.00'
+                },
             });
 
             monthlySummary?.incomesMonth.map((income: any) => {

@@ -1,3 +1,4 @@
 export interface IVAxis{
-    title: string
+    // title: string
+    format: string
 }
