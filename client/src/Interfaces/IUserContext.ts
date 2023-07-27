@@ -1,4 +1,5 @@
 import { IAuthentication } from "./IAuthentication"
+import { IExpenseCreate } from "./IExpenseCreate"
 import { IJobCreate } from "./IJobCreate"
 import { IUser } from "./IUser"
 import { IUserInput } from "./IUserInput"
@@ -16,4 +17,5 @@ export interface IUserContext{
     setPage: (page: number) => void
     page?: number
     createJob: (job: IJobCreate) => void
+    createExpense: (expense: IExpenseCreate) => void
 }

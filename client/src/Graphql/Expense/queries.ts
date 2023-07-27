@@ -56,3 +56,12 @@ export const GETIDLEEXPENSES = gql`
         }
     }
 `;
+
+export const CREATEEXPENSE = gql`
+    mutation CreateExpense($expense: ExpenseInput!){
+        createExpense(expense: $expense){
+            code
+            message
+        }
+    }
+`;

@@ -1,6 +1,6 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES } from "./queries";
-import { getActiveExpenseVar, getExpenseVar, getIdleExpenseVar } from "./state";
+import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE } from "./queries";
+import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getIdleExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";
 
 // Context
@@ -8,6 +8,8 @@ import { useUserContext } from "../../Context/UserContext";
 
 // Interfaces
 import { IPaginate } from "../../Interfaces/IPaginate";
+import { IResponse } from "../../Interfaces/IResponse";
+import { GETFINANCE } from "../Finance/queries";
 
 export const useGetExpenses = (page: number) => {
     const {getAuthentication} = useUserContext();
@@ -71,3 +73,32 @@ export const useGetIdleExpenses = (page: number) => {
         fetchPolicy: 'cache-and-network',
     });
 };
+
+export const useCreateExpense = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+    return useMutation<{createExpense: IResponse}>(CREATEEXPENSE, {
+        onCompleted(data) {
+            if(data){
+                createExpenseVar(data?.createExpense)
+            }
+        },
+        refetchQueries: [
+            {query: GETFINANCE, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETACTIVEEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETIDLEEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }}
+        ]
+    })
+}

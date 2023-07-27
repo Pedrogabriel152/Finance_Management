@@ -302,7 +302,7 @@ class IncomeService
                     
                     }                     
                 }
-            } 
+            }
         }
 
         foreach ($jobs as $key => $job) {

@@ -10,6 +10,8 @@ import { useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister } from "../../Graphql/User/hooks";
 import { useCreateJob } from "../../Graphql/Job/hooks";
+import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
+import { useCreateExpense } from "../../Graphql/Expense/hooks";
 
 interface UserProviderProps {
     children: ReactElement
@@ -23,6 +25,7 @@ export const UserContext = createContext<IUserContext>({
     SaveLocalStorage: () => null,
     getAuthentication: () => null,
     createJob: () => null,
+    createExpense: () => null,
     logout: () => null,
     setPage: () => null,
     page: 1
@@ -36,6 +39,7 @@ const UserProvider = ({children}:UserProviderProps) => {
     const [auth, setAuth] = useState<any>();
     const [page, setPage] = useState<number>(1);
     const [addJob] = useCreateJob();
+    const [addExpense] = useCreateExpense();
 
     useEffect(() => {
         async function loading(){
@@ -127,6 +131,18 @@ const UserProvider = ({children}:UserProviderProps) => {
         })
     }
 
+    const createExpense = (expense: IExpenseCreate) => {
+        const auth= getAuthentication();
+        expense.value_installment = typeof expense.value_installment === 'string'? parseFloat(expense.value_installment) : expense.value_installment;
+        expense.user_id = auth.user_id;
+
+        addExpense({
+            variables: {
+                expense: expense
+            }
+        });
+    }
+
     return (
         <UserContext.Provider 
             value={{
@@ -139,6 +155,7 @@ const UserProvider = ({children}:UserProviderProps) => {
                 getAuthentication: getAuthentication,
                 logout: logout,
                 createJob: createJob,
+                createExpense: createExpense,
                 setPage: handlePage,
                 page: page
             }} 
