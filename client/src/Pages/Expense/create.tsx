@@ -11,7 +11,6 @@ import FormCreate from "../../Components/FormCreate";
 
 // Interface
 import { IInput } from "../../Interfaces/IInput";
-import { IJobCreate } from "../../Interfaces/IJobCreate";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";
@@ -22,17 +21,21 @@ import { toast } from "react-toastify";
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
 import { createExpenseVar } from "../../Graphql/Expense/state";
+import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
 
 const CreateExpense = () => {
-    const { createJob, getAuthentication } = useUserContext();
+    const { createExpense, getAuthentication } = useUserContext();
     const createResponse = useReactiveVar(createExpenseVar);
     const navigate = useNavigate();
-    const [newExpense, setNewExpense] = useState<IJobCreate>({
+    const [newExpense, setNewExpense] = useState<IExpenseCreate>({
         description: "",
         establishment: "",
-        started: "",
+        expires: "",
+        installments: 0,
+        installments_paid: 0,
+        merchandise_purchased: "",
+        value_installment: 0,
         user_id: 0,
-        wage: '',
     });
 
 
@@ -55,7 +58,7 @@ const CreateExpense = () => {
         {
             label: "Estabelecimento: *",
             name: "establishment",
-            placeholder: "Estabelecimento",
+            placeholder: "Ex: KSI",
             svg: "",
             type: "text",
             value: newExpense?.establishment? newExpense?.establishment : "",
@@ -64,37 +67,55 @@ const CreateExpense = () => {
         {
             label: "Descrição: *",
             name: "description",
-            placeholder: "Descrição",
+            placeholder: "Ex: teste",
             svg: "",
             type: "text",
             value: newExpense?.description? newExpense?.description : "",
             onChange: handleOnChange
         },
         {
-            label: "Salário: *",
-            name: "wage",
-            placeholder: "Salário",
+            label: "Mercadoria comprada: *",
+            name: "merchandise_purchased",
+            placeholder: "Ex: Tênis",
+            svg: "",
+            type: "text",
+            value: newExpense?.merchandise_purchased,
+            onChange: handleOnChange
+        },
+        {
+            label: "Quantidade de parcela: *",
+            name: "installments",
+            placeholder: "EX: 20",
             svg: "",
             type: "number",
-            value: newExpense?.wage,
+            value: newExpense?.installments? newExpense?.installments : "",
             onChange: handleOnChange
         },
         {
-            label: "Quando iniciou: *",
-            name: "started",
-            placeholder: "Entrou em",
+            label: "Valor da parcela: *",
+            name: "value_installment",
+            placeholder: "Ex: 70,00",
             svg: "",
-            type: "date",
-            value: newExpense?.started? newExpense?.started : "",
+            type: "number",
+            value: newExpense?.value_installment? newExpense?.value_installment : "",
             onChange: handleOnChange
         },
         {
-            label: "Quando saiu:",
-            name: "leave",
-            placeholder: "Saiu em",
+            label: "Quantidade de parcelas pagas: *",
+            name: "installments_paid",
+            placeholder: "Ex: 7",
+            svg: "",
+            type: "number",
+            value: newExpense?.installments_paid? newExpense?.installments_paid : "",
+            onChange: handleOnChange
+        },
+        {
+            label: "Vencimento: *",
+            name: "expires",
+            placeholder: "Ex: 7",
             svg: "",
             type: "date",
-            value: newExpense?.leave? newExpense?.leave : "",
+            value: newExpense?.expires? newExpense?.expires : "",
             onChange: handleOnChange
         },
 
@@ -104,11 +125,11 @@ const CreateExpense = () => {
         e.preventDefault();
         const auth = getAuthentication();
 
-        if(!newExpense.description || !newExpense.establishment || !newExpense.started || !newExpense.wage){
+        if(!newExpense.description || !newExpense.establishment){
             toast.error("Todos os campos com * são obrigátorios");
         }
 
-        createJob(newExpense);
+        createExpense(newExpense);
 
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
@@ -123,7 +144,7 @@ const CreateExpense = () => {
         <CreateStyle>
             <NavBar />
             <BodyStyle>
-                <FormCreate data={inputs} onSubmit={handleOnSubmit}/>
+                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="finance"/>
             </BodyStyle>
             <Footer />
         </CreateStyle>

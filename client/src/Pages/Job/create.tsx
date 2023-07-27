@@ -123,7 +123,7 @@ const CreateJob = () => {
         <CreateStyle>
             <NavBar />
             <BodyStyle>
-                <FormCreate data={inputs} onSubmit={handleOnSubmit}/>
+                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="job"/>
             </BodyStyle>
             <Footer />
         </CreateStyle>

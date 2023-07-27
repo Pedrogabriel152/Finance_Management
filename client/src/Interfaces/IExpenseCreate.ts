@@ -2,7 +2,7 @@ export interface IExpenseCreate {
     description: string
     merchandise_purchased: string
     establishment: string
-    installments: string
+    installments: number
     value_installment: number
     installments_paid: number
     expires: string

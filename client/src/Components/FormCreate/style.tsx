@@ -1,16 +1,29 @@
 import styled from "styled-components";
 
-export const FormContainer = styled.main`
+export const FormContainerJob = styled.main`
     padding-top: 40%;
 `;
 
-export const FormStyle = styled.form`
+export const FormContainerFinance = styled.main`
+    padding-top: 20%;
+`;
+
+export const FormStyleJob = styled.form`
     background-color: #FFF;
     width: 90vw;
     margin-left: 5%;
     border-radius: 8px;
     font-size: 1.1em;
     height: 53vh;
+`;
+
+export const FormStyleFinance = styled.form`
+    background-color: #FFF;
+    width: 90vw;
+    margin-left: 5%;
+    border-radius: 8px;
+    font-size: 1.1em;
+    height: 70vh;
 `;
 
 export const LabelInput = styled.div`
