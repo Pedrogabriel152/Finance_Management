@@ -7,5 +7,6 @@ export interface IInput {
     type: string
     name: string
     value: any
-    onChange(e: ChangeEvent<HTMLInputElement>): void
+    onChange(e: ChangeEvent<HTMLInputElement>, value?: any): void
+    mask: string[]
 }

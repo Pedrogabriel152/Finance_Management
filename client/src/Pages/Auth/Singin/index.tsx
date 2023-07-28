@@ -123,7 +123,8 @@ const Singin = () => {
             name: "name",
             type: "text",
             value: user.name,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
             svg: 'MdEmail',
@@ -131,7 +132,8 @@ const Singin = () => {
             name: "email",
             type: "email",
             value: user.email,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['']
         },
         {
             svg: 'HiIdentification',
@@ -139,7 +141,8 @@ const Singin = () => {
             name: "cpf",
             type: "text",
             value: user.cpf,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['999.999.999-99']
         },
         {
             svg: 'FaMapMarkedAlt',
@@ -147,7 +150,8 @@ const Singin = () => {
             name: "address",
             type: "text",
             value: user.address,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
             svg: 'MdOutlinePhoneIphone',
@@ -155,7 +159,8 @@ const Singin = () => {
             name: "phone",
             type: "tel",
             value: user.phone,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['(99) 9 9999-9999', '(99) 9999-9999']
         },
         {
             svg: 'RiLockPasswordFill',
@@ -163,7 +168,8 @@ const Singin = () => {
             name: "password",
             type: "password",
             value: user.password,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
             svg: 'RiLockPasswordFill',
@@ -171,7 +177,8 @@ const Singin = () => {
             name: "confirmPassword",
             type: "password",
             value: user.confirmPassword,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         }
     ];
 

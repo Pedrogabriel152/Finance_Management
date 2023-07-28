@@ -16,6 +16,7 @@ import { IForm } from "../../Interfaces/IForm";
 
 // Components
 import Button from "../Button";
+import { mask } from "remask";
 
 const Form = ({text, inputs, link, submit}: IForm) => {
     const [size, setSize] = useState<number>(500);
@@ -62,17 +63,31 @@ const Form = ({text, inputs, link, submit}: IForm) => {
             ? (
                 <FormLoginStyle onSubmit={submit}>
                     {inputs.map((input: any, index: number) => (
-                        <InputStyleLogin key={index}>
-                            <input 
-                                type={input.type} 
-                                name={input.name} 
-                                placeholder={input.placeholder} 
-                                value={input.value? input.value : ''}
-                                onChange={input.onChange}
-                                id={input.name}
-                            />
-                            {handleSwitch(input?.svg)}
-                        </InputStyleLogin>
+                        input.name === 'email' || input.name === 'password' || input.name === 'confirmPassword'?
+                            <InputStyleLogin key={index}>
+                                <input 
+                                    type={input.type} 
+                                    name={input.name} 
+                                    placeholder={input.placeholder} 
+                                    value={input.value? input.value : ''}
+                                    onChange={input.onChange}
+                                    id={input.name}
+                                />
+                                {handleSwitch(input?.svg)}
+                            </InputStyleLogin>
+                            : 
+                            <InputStyleLogin key={index}>
+                                <input 
+                                    type={input.type} 
+                                    name={input.name} 
+                                    placeholder={input.placeholder} 
+                                    value={input.value? mask(input.value, input.mask) : ''}
+                                    onChange={input.onChange}
+                                    id={input.name}
+                                />
+                                {handleSwitch(input?.svg)}
+                            </InputStyleLogin>
+                        
                     ))}
 
                     <LinkStyleLogin>

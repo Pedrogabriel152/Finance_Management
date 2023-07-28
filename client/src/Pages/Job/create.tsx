@@ -59,7 +59,8 @@ const CreateJob = () => {
             svg: "",
             type: "text",
             value: newJob?.establishment? newJob?.establishment : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAA']
         },
         {
             label: "Descrição: *",
@@ -68,7 +69,8 @@ const CreateJob = () => {
             svg: "",
             type: "text",
             value: newJob?.description? newJob?.description : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAA']
         },
         {
             label: "Salário: *",
@@ -77,7 +79,8 @@ const CreateJob = () => {
             svg: "",
             type: "number",
             value: newJob?.wage,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAA']
         },
         {
             label: "Quando iniciou: *",
@@ -86,7 +89,8 @@ const CreateJob = () => {
             svg: "",
             type: "date",
             value: newJob?.started? newJob?.started : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAA']
         },
         {
             label: "Quando saiu:",
@@ -95,7 +99,8 @@ const CreateJob = () => {
             svg: "",
             type: "date",
             value: newJob?.leave? newJob?.leave : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAA']
         },
 
     ];

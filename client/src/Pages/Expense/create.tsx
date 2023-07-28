@@ -38,16 +38,33 @@ const CreateExpense = () => {
         user_id: 0,
     });
 
+    const formatMoney = (value: any) => {
+        const numericValue = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        const formattedValue = (Number(numericValue) / 100).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        });
+        return formattedValue.slice(3);
+    };
+
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(e.target.type === 'number') {
+        console.log(e.target.name)
+        if(e.target.name == 'value_installment') {
+            const inputValue = e.target.value;
+            const formattedValue = formatMoney(inputValue);
+            const input = formattedValue.split(',');
+            let value = '';
+            input[0].split('.').map((a:string) => {
+                value = value + a;
+            })
+            const value_installment = parseFloat(value+'.'+input[1]);
             setNewExpense({
                 ...newExpense,
-                [e.target.name]: e.target.value.replace(/^0+(?!\.|$)/, '')
-            });
+                [e.target.name]: value_installment
+            })
             return;
         }
-
         setNewExpense({
             ...newExpense,
             [e.target.name]: e.target.value
@@ -62,7 +79,8 @@ const CreateExpense = () => {
             svg: "",
             type: "text",
             value: newExpense?.establishment? newExpense?.establishment : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAA']
         },
         {
             label: "Descrição: *",
@@ -71,7 +89,8 @@ const CreateExpense = () => {
             svg: "",
             type: "text",
             value: newExpense?.description? newExpense?.description : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
             label: "Mercadoria comprada: *",
@@ -80,7 +99,8 @@ const CreateExpense = () => {
             svg: "",
             type: "text",
             value: newExpense?.merchandise_purchased,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAAAAAAAAAAAAA']
         },
         {
             label: "Quantidade de parcela: *",
@@ -89,7 +109,8 @@ const CreateExpense = () => {
             svg: "",
             type: "number",
             value: newExpense?.installments? newExpense?.installments : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['999999999']
         },
         {
             label: "Valor da parcela: *",
@@ -98,7 +119,8 @@ const CreateExpense = () => {
             svg: "",
             type: "number",
             value: newExpense?.value_installment? newExpense?.value_installment : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['']
         },
         {
             label: "Quantidade de parcelas pagas: *",
@@ -107,7 +129,8 @@ const CreateExpense = () => {
             svg: "",
             type: "number",
             value: newExpense?.installments_paid? newExpense?.installments_paid : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['99999999']
         },
         {
             label: "Vencimento: *",
@@ -116,7 +139,8 @@ const CreateExpense = () => {
             svg: "",
             type: "date",
             value: newExpense?.expires? newExpense?.expires : "",
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['']
         },
 
     ];

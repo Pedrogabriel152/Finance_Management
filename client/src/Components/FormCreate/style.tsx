@@ -36,6 +36,11 @@ export const LabelInput = styled.div`
         margin-top: 15px;
         font-weight: 500;
     }
+
+    input#currency {
+        padding: 8px 15px;
+        margin-top: 5px;
+    }
 `;
 
 export const InputCreateStyle = styled.input`

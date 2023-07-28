@@ -1,6 +1,7 @@
 import { IFormCreate } from "../../Interfaces/IFormCreate";
 import { IInput } from "../../Interfaces/IInput";
 import { FormContainerFinance, FormContainerJob, FormStyleFinance, FormStyleJob, InputCreateStyle, LabelInput, ButtonSubmit } from "./style";
+import { mask, currency } from "remask";
 
 const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
     return(
@@ -13,7 +14,7 @@ const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
                             <label htmlFor={input.name}>{input.label}</label>
                             <InputCreateStyle 
                                 name={input.name} 
-                                value={input.value} 
+                                value={mask(input.value, input.mask)} 
                                 placeholder={input.placeholder}
                                 type={input.type}
                                 onChange={input.onChange}
@@ -29,13 +30,33 @@ const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
                     {data.map((input: IInput, index: number) => (
                         <LabelInput key={index}>
                             <label htmlFor={input.name}>{input.label}</label>
-                            <InputCreateStyle 
-                                name={input.name} 
-                                value={input.value} 
-                                placeholder={input.placeholder}
-                                type={input.type}
-                                onChange={input.onChange}
-                            />
+                            {input.name === 'value_installment' ?
+                                <input
+                                    id="currency"
+                                    name={input.name}
+                                    type={input.type}
+                                    value={input.value}
+                                    onChange={input.onChange}
+                                    placeholder="R$ 0,00"
+                                />
+                            : input.name === 'expires' ? 
+                                <InputCreateStyle 
+                                    name={input.name} 
+                                    value={input.value}  
+                                    placeholder={input.placeholder}
+                                    type={input.type}
+                                    onChange={input.onChange}
+                                />
+                            : 
+                                <InputCreateStyle 
+                                    name={input.name} 
+                                    value={mask(input.value, input.mask)}  
+                                    placeholder={input.placeholder}
+                                    type={input.type}
+                                    onChange={input.onChange}
+                                />
+                            }
+                            
                         </LabelInput>
                     ))}
                     <ButtonSubmit type="submit">Cadastrar</ButtonSubmit>

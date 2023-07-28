@@ -62,7 +62,8 @@ const Login = () => {
             name: "email",
             type: "email",
             value: user.email,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['AAA']
         },
         {
             svg: 'RiLockPasswordFill',
@@ -70,7 +71,8 @@ const Login = () => {
             name: "password",
             type: "password",
             value: user.password,
-            onChange: handleOnChange
+            onChange: handleOnChange,
+            mask: ['']
         }
     ];
 
