@@ -1,7 +1,7 @@
 import { IFormCreate } from "../../Interfaces/IFormCreate";
 import { IInput } from "../../Interfaces/IInput";
 import { FormContainerFinance, FormContainerJob, FormStyleFinance, FormStyleJob, InputCreateStyle, LabelInput, ButtonSubmit } from "./style";
-import { mask, currency } from "remask";
+import { mask } from "remask";
 
 const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
     return(
@@ -30,23 +30,14 @@ const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
                     {data.map((input: IInput, index: number) => (
                         <LabelInput key={index}>
                             <label htmlFor={input.name}>{input.label}</label>
-                            {input.name === 'value_installment' ?
-                                <input
-                                    id="currency"
-                                    name={input.name}
-                                    type={input.type}
-                                    value={input.value}
-                                    onChange={input.onChange}
-                                    placeholder="R$ 0,00"
-                                />
-                            : input.name === 'expires' ? 
+                            {input.name === 'value_installment' || input.name === 'expires' ?
                                 <InputCreateStyle 
-                                    name={input.name} 
-                                    value={input.value}  
-                                    placeholder={input.placeholder}
-                                    type={input.type}
-                                    onChange={input.onChange}
-                                />
+                                name={input.name} 
+                                value={input.value}  
+                                placeholder={input.placeholder}
+                                type={input.type}
+                                onChange={input.onChange}
+                            />
                             : 
                                 <InputCreateStyle 
                                     name={input.name} 

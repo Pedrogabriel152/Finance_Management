@@ -8,6 +8,7 @@ import Expenses from "../Pages/Tables/Expenses";
 import Job from "../Pages/Job";
 import CreateJob from "../Pages/Job/create";
 import CreateExpense from "../Pages/Expense/create";
+import CreateIncome from "../Pages/Income/create";
 
 const Rotas = () => {
     return(
@@ -20,6 +21,7 @@ const Rotas = () => {
             <Route path="/job/:id" element={<Job />}/>
             <Route path="/create/job" element={<CreateJob />}/>
             <Route path="/create/expense" element={<CreateExpense />}/>
+            <Route path="/create/income" element={<CreateIncome />}/>
             <Route path="/" element={<Home />}/>
         </Routes>
     );

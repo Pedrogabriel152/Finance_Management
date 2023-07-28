@@ -56,3 +56,12 @@ export const GETIDLEINCOMES = gql`
         }
     }
 `;
+
+export const CREATEINCOME = gql`
+    mutation CreateIncome($income: IncomeInput!){
+        createIncome(income: $income){
+            code
+            message
+        }
+    }
+`;

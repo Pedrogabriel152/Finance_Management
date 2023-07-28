@@ -11,7 +11,7 @@ import FormCreate from "../../Components/FormCreate";
 
 // Interface
 import { IInput } from "../../Interfaces/IInput";
-import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
+import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";
@@ -21,18 +21,18 @@ import { toast } from "react-toastify";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { createExpenseVar } from "../../Graphql/Expense/state";
+import { createIncomeVar } from "../../Graphql/Incomes/state";
 
-const CreateExpense = () => {
-    const { createExpense, getAuthentication } = useUserContext();
-    const createResponse = useReactiveVar(createExpenseVar);
+const CreateIncome = () => {
+    const { createIncome, getAuthentication } = useUserContext();
+    const createResponse = useReactiveVar(createIncomeVar);
     const navigate = useNavigate();
-    const [newExpense, setNewExpense] = useState<IExpenseCreate>({
+    const [newIncome, setNewIncome] = useState<IIncomeCreate>({
         description: "",
         establishment: "",
         expires: "",
         installments: 0,
-        installments_paid: 0,
+        installments_received: 0,
         merchandise_purchased: "",
         value_installment: 0,
         user_id: 0,
@@ -46,22 +46,14 @@ const CreateExpense = () => {
         }
     }, [auth]);
 
-    const formatMoney = (value: string) => {
-        const numericValue = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-        console.log(value);
-        if(value.length == 2){
-            const floatValue = parseFloat(value+'.00');
-            console.log("AQUIIIII",floatValue)
-            return floatValue;
-        }
-        if(value.length == 3){
-            const floatValue = parseFloat(value.slice(0, -1)+'.00');
-            console.log("AQUIIIII",floatValue)
-            return floatValue;
-        }
-        const floatValue = parseFloat(numericValue.slice(0, -2)+'.'+numericValue.slice(-2));
-        // console.log("AQUIIII",parseFloat(numericValue.slice(0, -2)+'.'+numericValue.slice(-2)));
-        return floatValue;
+
+    const formatMoney = (value: any) => {
+        const numericValue = value.replace(/\D/g, '');
+        const formattedValue = (Number(numericValue) / 100).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        });
+        return formattedValue.slice(3);
     };
 
 
@@ -69,22 +61,20 @@ const CreateExpense = () => {
         if(e.target.name == 'value_installment') {
             const inputValue = e.target.value;
             const formattedValue = formatMoney(inputValue);
-            console.log(formattedValue)
-            // const input = formattedValue.split(',');
-            // console.log(formattedValue)
-            // let value = '';
-            // input[0].split('.').map((a:string) => {
-            //     value = value + a;
-            // })
-            // const value_installment = parseFloat(value+'.'+input[1]);
-            setNewExpense({
-                ...newExpense,
-                [e.target.name]: formattedValue
+            const input = formattedValue.split(',');
+            let value = '';
+            input[0].split('.').map((a:string) => {
+                value = value + a;
+            })
+            const value_installment = parseFloat(value+'.'+input[1]);
+            setNewIncome({
+                ...newIncome,
+                [e.target.name]: value_installment
             })
             return;
         }
-        setNewExpense({
-            ...newExpense,
+        setNewIncome({
+            ...newIncome,
             [e.target.name]: e.target.value
         });
     }
@@ -96,7 +86,7 @@ const CreateExpense = () => {
             placeholder: "Ex: KSI",
             svg: "",
             type: "text",
-            value: newExpense?.establishment? newExpense?.establishment : "",
+            value: newIncome?.establishment? newIncome?.establishment : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
         },
@@ -106,7 +96,7 @@ const CreateExpense = () => {
             placeholder: "Ex: teste",
             svg: "",
             type: "text",
-            value: newExpense?.description? newExpense?.description : "",
+            value: newIncome?.description? newIncome?.description : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
@@ -116,7 +106,7 @@ const CreateExpense = () => {
             placeholder: "Ex: Tênis",
             svg: "",
             type: "text",
-            value: newExpense?.merchandise_purchased,
+            value: newIncome?.merchandise_purchased,
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
         },
@@ -126,7 +116,7 @@ const CreateExpense = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
-            value: newExpense?.installments? newExpense?.installments : "",
+            value: newIncome?.installments? newIncome?.installments : "",
             onChange: handleOnChange,
             mask: ['999999999']
         },
@@ -136,17 +126,17 @@ const CreateExpense = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
-            value: newExpense?.value_installment? newExpense?.value_installment : "",
+            value: newIncome?.value_installment? newIncome?.value_installment : "",
             onChange: handleOnChange,
             mask: ['']
         },
         {
-            label: "Quantidade de parcelas pagas: *",
-            name: "installments_paid",
+            label: "Quantidade de parcelas recebidas:",
+            name: "installments_received",
             placeholder: "Ex: 7",
             svg: "",
             type: "number",
-            value: newExpense?.installments_paid? newExpense?.installments_paid : "",
+            value: newIncome?.installments_received? newIncome?.installments_received : "",
             onChange: handleOnChange,
             mask: ['99999999']
         },
@@ -156,7 +146,7 @@ const CreateExpense = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "date",
-            value: newExpense?.expires? newExpense?.expires : "",
+            value: newIncome?.expires? newIncome?.expires : "",
             onChange: handleOnChange,
             mask: ['']
         },
@@ -172,15 +162,15 @@ const CreateExpense = () => {
             toast.error('Acesso negado!');
         }
 
-        if(!newExpense.description || !newExpense.establishment || !newExpense.merchandise_purchased || !newExpense.value_installment || !newExpense.installments){
+        if(!newIncome.description || !newIncome.establishment || !newIncome.expires || !newIncome.installments || !newIncome.merchandise_purchased){
             toast.error("Todos os campos com * são obrigátorios");
         }
 
-        createExpense(newExpense);
+        createIncome(newIncome);
 
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
-            navigate('/expenses/all/1')
+            navigate('/incomes/all/1')
             return;
         }
 
@@ -198,4 +188,4 @@ const CreateExpense = () => {
     );
 }
 
-export default CreateExpense;
+export default CreateIncome;

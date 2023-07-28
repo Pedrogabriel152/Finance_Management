@@ -1,5 +1,5 @@
 export interface IIncomeCreate {
-    description: number
+    description: string
     establishment: string
     installments: number
     value_installment: number

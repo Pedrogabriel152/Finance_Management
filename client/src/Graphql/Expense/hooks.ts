@@ -1,4 +1,4 @@
-import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE } from "./queries";
 import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getIdleExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";

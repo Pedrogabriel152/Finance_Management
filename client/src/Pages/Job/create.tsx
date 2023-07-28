@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Style
@@ -34,6 +34,14 @@ const CreateJob = () => {
         user_id: 0,
         wage: '',
     });
+    const auth = getAuthentication();
+
+    useEffect(() => {
+        if(!auth || auth.code !== 200){
+            navigate('/login');
+            toast.error('Acesso negado!');
+        }
+    }, [auth])
 
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,6 +116,11 @@ const CreateJob = () => {
     const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         const auth = getAuthentication();
+
+        if(!auth || auth.code !== 200){
+            navigate('/login');
+            toast.error('Acesso negado!');
+        }
 
         if(!newJob.description || !newJob.establishment || !newJob.started || !newJob.wage){
             toast.error("Todos os campos com * são obrigátorios");

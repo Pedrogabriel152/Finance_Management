@@ -12,6 +12,8 @@ import { useLogin, useRegister } from "../../Graphql/User/hooks";
 import { useCreateJob } from "../../Graphql/Job/hooks";
 import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
 import { useCreateExpense } from "../../Graphql/Expense/hooks";
+import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
+import { useCreateIncome } from "../../Graphql/Incomes/hooks";
 
 interface UserProviderProps {
     children: ReactElement
@@ -26,6 +28,7 @@ export const UserContext = createContext<IUserContext>({
     getAuthentication: () => null,
     createJob: () => null,
     createExpense: () => null,
+    createIncome: () => null,
     logout: () => null,
     setPage: () => null,
     page: 1
@@ -40,6 +43,7 @@ const UserProvider = ({children}:UserProviderProps) => {
     const [page, setPage] = useState<number>(1);
     const [addJob] = useCreateJob();
     const [addExpense] = useCreateExpense();
+    const [addIncome] = useCreateIncome();
 
     useEffect(() => {
         async function loading(){
@@ -143,6 +147,18 @@ const UserProvider = ({children}:UserProviderProps) => {
         });
     }
 
+    const createIncome = (income: IIncomeCreate) => {
+        const auth= getAuthentication();
+        income.value_installment = typeof income.value_installment === 'string'? parseFloat(income.value_installment) : income.value_installment;
+        income.user_id = auth.user_id;
+
+        addIncome({
+            variables: {
+                income: income
+            }
+        });
+    }
+
     return (
         <UserContext.Provider 
             value={{
@@ -156,6 +172,7 @@ const UserProvider = ({children}:UserProviderProps) => {
                 logout: logout,
                 createJob: createJob,
                 createExpense: createExpense,
+                createIncome: createIncome,
                 setPage: handlePage,
                 page: page
             }} 
