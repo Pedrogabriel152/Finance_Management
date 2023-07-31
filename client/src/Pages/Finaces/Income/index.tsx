@@ -149,16 +149,6 @@ const Income = () => {
             toast.error("O valor de parcelas não pode ser menor que o valor de parcelas pagas.");
             return;
         }
-
-        // createIncome(income);
-
-        // if(createResponse?.code === 200) {
-        //     toast.success(createResponse.message);
-        //     navigate('/incomes/all/1')
-        //     return;
-        // }
-
-        // toast.error(createResponse?.message);
     }
 
     return (
