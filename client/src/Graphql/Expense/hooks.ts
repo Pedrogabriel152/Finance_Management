@@ -1,5 +1,6 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE, GETEXPENSE } from "./queries";
+import { GETFINANCE } from "../Finance/queries";
 import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getExpensesVar, getIdleExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";
 
@@ -9,7 +10,6 @@ import { useUserContext } from "../../Context/UserContext";
 // Interfaces
 import { IPaginate } from "../../Interfaces/IPaginate";
 import { IResponse } from "../../Interfaces/IResponse";
-import { GETFINANCE } from "../Finance/queries";
 import { IExpense } from "../../Interfaces/IExpense";
 
 export const useGetExpenses = (page: number) => {
