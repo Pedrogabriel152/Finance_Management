@@ -70,25 +70,10 @@ class ExpenseService
     public static function getExpense(array $args){
         try {
             $expense = ExpenseRepository::getExpense($args);
-
-            if(!$expense){
-                return [
-                    'code' => 404,
-                    'message' => 'Despesa não encontrada!'
-                ];
-            }
-
-            return [
-                'code' => 200,
-                'message' => 'Despesa encontrada',
-                'expense' => $expense
-            ];
+            return $expense;
 
         } catch (\Throwable $th) {
-            return [
-                'code' => 500,
-                'message' => 'Despesa não encontrada!'
-            ];
+            return;
         }
     }
 

@@ -2,37 +2,37 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Style
-import { BodyStyle, CreateStyle } from "./style";
+import { BodyStyle, CreateStyle } from "../style";
 
 // Component
-import NavBar from "../../Components/NavBar";
-import Footer from "../../Components/Footer";
-import FormCreate from "../../Components/FormCreate";
+import NavBar from "../../../Components/NavBar";
+import Footer from "../../../Components/Footer";
+import FormCreate from "../../../Components/FormCreate";
 
 // Interface
-import { IInput } from "../../Interfaces/IInput";
-import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
+import { IInput } from "../../../Interfaces/IInput";
+import { IIncomeCreate } from "../../../Interfaces/IIncomeCreate";
 
 // Context
-import { useUserContext } from "../../Context/UserContext";
+import { useUserContext } from "../../../Context/UserContext";
 
 // Toastify
 import { toast } from "react-toastify";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { createExpenseVar } from "../../Graphql/Expense/state";
+import { createIncomeVar } from "../../../Graphql/Incomes/state";
 
-const CreateExpense = () => {
-    const { createExpense, getAuthentication } = useUserContext();
-    const createResponse = useReactiveVar(createExpenseVar);
+const CreateIncome = () => {
+    const { createIncome, getAuthentication } = useUserContext();
+    const createResponse = useReactiveVar(createIncomeVar);
     const navigate = useNavigate();
-    const [newExpense, setNewExpense] = useState<IExpenseCreate>({
+    const [newIncome, setNewIncome] = useState<IIncomeCreate>({
         description: "",
         establishment: "",
         expires: "",
         installments: 0,
-        installments_paid: 0,
+        installments_received: 0,
         merchandise_purchased: "",
         value_installment: 0,
         user_id: 0,
@@ -48,14 +48,14 @@ const CreateExpense = () => {
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.type === 'number') {
-            setNewExpense({
-                ...newExpense,
-                [e.target.name]: parseFloat(e.target.value.replace(/^0+(?!\.|$)/, ''))
+            setNewIncome({
+                ...newIncome,
+                [e.target.name]: e.target.value.replace(/^0+(?!\.|$)/, '')
             });
             return;
         }
-        setNewExpense({
-            ...newExpense,
+        setNewIncome({
+            ...newIncome,
             [e.target.name]: e.target.value
         });
     }
@@ -67,7 +67,7 @@ const CreateExpense = () => {
             placeholder: "Ex: KSI",
             svg: "",
             type: "text",
-            value: newExpense?.establishment? newExpense?.establishment : "",
+            value: newIncome?.establishment? newIncome?.establishment : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
         },
@@ -77,7 +77,7 @@ const CreateExpense = () => {
             placeholder: "Ex: teste",
             svg: "",
             type: "text",
-            value: newExpense?.description? newExpense?.description : "",
+            value: newIncome?.description? newIncome?.description : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
@@ -87,7 +87,7 @@ const CreateExpense = () => {
             placeholder: "Ex: Tênis",
             svg: "",
             type: "text",
-            value: newExpense?.merchandise_purchased,
+            value: newIncome?.merchandise_purchased,
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
         },
@@ -97,7 +97,7 @@ const CreateExpense = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
-            value: newExpense?.installments? newExpense?.installments : "",
+            value: newIncome?.installments? newIncome?.installments : "",
             onChange: handleOnChange,
             mask: ['999999999']
         },
@@ -107,17 +107,17 @@ const CreateExpense = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
-            value: newExpense?.value_installment? newExpense?.value_installment : "",
+            value: newIncome?.value_installment? newIncome?.value_installment : "",
             onChange: handleOnChange,
             mask: ['']
         },
         {
-            label: "Quantidade de parcelas pagas: *",
-            name: "installments_paid",
+            label: "Quantidade de parcelas recebidas:",
+            name: "installments_received",
             placeholder: "Ex: 7",
             svg: "",
             type: "number",
-            value: newExpense?.installments_paid? newExpense?.installments_paid : "",
+            value: newIncome?.installments_received? newIncome?.installments_received : "",
             onChange: handleOnChange,
             mask: ['99999999']
         },
@@ -127,7 +127,7 @@ const CreateExpense = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "date",
-            value: newExpense?.expires? newExpense?.expires : "",
+            value: newIncome?.expires? newIncome?.expires : "",
             onChange: handleOnChange,
             mask: ['']
         },
@@ -143,15 +143,15 @@ const CreateExpense = () => {
             toast.error('Acesso negado!');
         }
 
-        if(!newExpense.description || !newExpense.establishment || !newExpense.merchandise_purchased || !newExpense.value_installment || !newExpense.installments){
+        if(!newIncome.description || !newIncome.establishment || !newIncome.expires || !newIncome.installments || !newIncome.merchandise_purchased){
             toast.error("Todos os campos com * são obrigátorios");
         }
 
-        createExpense(newExpense);
+        createIncome(newIncome);
 
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
-            navigate('/expenses/all/1')
+            navigate('/incomes/all/1')
             return;
         }
 
@@ -169,4 +169,4 @@ const CreateExpense = () => {
     );
 }
 
-export default CreateExpense;
+export default CreateIncome;

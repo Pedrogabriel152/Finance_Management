@@ -29,7 +29,7 @@ extend type Query{
 }
 
 extend type Mutation{
-    createUser(user: UserInput!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@createUser")
+    # createUser(user: UserInput!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@createUser")
     login(email: String!, password: String!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@login")
 }
 

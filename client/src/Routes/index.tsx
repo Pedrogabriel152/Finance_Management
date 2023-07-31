@@ -5,10 +5,12 @@ import Home from "../Pages/Home";
 import Jobs from "../Pages/Tables/Jobs";
 import Incomes from "../Pages/Tables/Incomes";
 import Expenses from "../Pages/Tables/Expenses";
-import Job from "../Pages/Job";
-import CreateJob from "../Pages/Job/create";
-import CreateExpense from "../Pages/Expense/create";
-import CreateIncome from "../Pages/Income/create";
+import Job from "../Pages/Finaces/Job";
+import CreateJob from "../Pages/Finaces/Job/create";
+import CreateExpense from "../Pages/Finaces/Expense/create";
+import CreateIncome from "../Pages/Finaces/Income/create";
+import Income from "../Pages/Finaces/Income";
+import Expense from "../Pages/Finaces/Expense";
 
 const Rotas = () => {
     return(
@@ -19,6 +21,8 @@ const Rotas = () => {
             <Route path="/incomes/:status/:page" element={<Incomes />}/>
             <Route path="/expenses/:status/:page" element={<Expenses />}/>
             <Route path="/job/:id" element={<Job />}/>
+            <Route path="/income/:id" element={<Income />}/>
+            <Route path="/expense/:id" element={<Expense />}/>
             <Route path="/create/job" element={<CreateJob />}/>
             <Route path="/create/expense" element={<CreateExpense />}/>
             <Route path="/create/income" element={<CreateIncome />}/>

@@ -2,26 +2,26 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Style
-import { BodyStyle, CreateStyle } from "./style";
+import { BodyStyle, CreateStyle } from "../style";
 
 // Component
-import NavBar from "../../Components/NavBar";
-import Footer from "../../Components/Footer";
-import FormCreate from "../../Components/FormCreate";
+import NavBar from "../../../Components/NavBar";
+import Footer from "../../../Components/Footer";
+import FormCreate from "../../../Components/FormCreate";
 
 // Interface
-import { IInput } from "../../Interfaces/IInput";
-import { IJobCreate } from "../../Interfaces/IJobCreate";
+import { IInput } from "../../../Interfaces/IInput";
+import { IJobCreate } from "../../../Interfaces/IJobCreate";
 
 // Context
-import { useUserContext } from "../../Context/UserContext";
+import { useUserContext } from "../../../Context/UserContext";
 
 // Toastify
 import { toast } from "react-toastify";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { createJobVar } from "../../Graphql/Job/state";
+import { createJobVar } from "../../../Graphql/Job/state";
 
 const CreateJob = () => {
     const { createJob, getAuthentication } = useUserContext();

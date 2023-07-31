@@ -64,19 +64,7 @@ class IncomeService
     // Search service an income
     public static function getIncome(array $args){
         $income = IncomeRepository::getIncome($args);
-        
-        if(!$income){
-            return [
-                'code' => 404,
-                'message' => 'Renda não encontrada'
-            ];
-        }
-
-        return [
-            'code' => 200,
-            'message' => 'Renda encontrada',
-            'income' => $income
-        ];
+        return $income;
     }
 
     // Search service an last five incomes

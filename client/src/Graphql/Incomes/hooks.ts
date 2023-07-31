@@ -1,11 +1,11 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
 
 // Queries
-import { CREATEINCOME, GETACTIVEINCOMES, GETIDLEINCOMES, GETINCOMES } from "./queries";
+import { CREATEINCOME, GETACTIVEINCOMES, GETIDLEINCOMES, GETINCOME, GETINCOMES } from "./queries";
 import { GETFINANCE } from "../Finance/queries";
 
 // States
-import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar, createIncomeVar } from "./state";
+import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar, createIncomeVar, getIncomeVar } from "./state";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";
@@ -16,6 +16,7 @@ import { updateLink } from "../../utils/updateLink";
 // Interface
 import { IPaginate } from "../../Interfaces/IPaginate";
 import { IResponse } from "../../Interfaces/IResponse";
+import { IIncome } from "../../Interfaces/IIncome";
 
 export const useGetIncomes = (page: number) => {
     const {getAuthentication} = useUserContext();
@@ -107,4 +108,22 @@ export const useCreateIncome = () => {
             }}
         ]
     })
+}
+
+export const useGetIncome = (id: number) => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+    return useQuery<{ income: IIncome }>(GETINCOME, {
+        variables: {
+            user_id: auth?.user_id ? auth.user_id : 0,
+            id: id,
+        },
+        onCompleted(data) {
+            if (data) {
+                console.log(data)
+                getIncomeVar(data.income);
+            }
+        },
+        fetchPolicy: 'cache-and-network',
+    });
 }

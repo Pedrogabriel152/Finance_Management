@@ -52,7 +52,7 @@ type TotalIncomesMonth{
 }
 
 extend type Query @guard{
-    income(id: ID!, user_id: ID!): MessageResponseIncome! @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncome")
+    income(id: ID!, user_id: ID!): Income @field(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncome")
     incomes(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomes")
     incomesOpen(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesOpen")
     incomesClose(user_id:ID!): [Income]! @paginate(resolver: "App\\GraphQL\\Queries\\IncomeQuery@getIncomesclose")

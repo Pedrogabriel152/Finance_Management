@@ -65,3 +65,18 @@ export const CREATEEXPENSE = gql`
         }
     }
 `;
+
+export const GETEXPENSE = gql`
+    query GetExpense($id: ID!, $user_id: ID!){
+        expense(id: $id, user_id: $user_id){
+            id
+            description
+            establishment
+            installments
+            expires
+            installments_paid
+            paid_expense
+            months_paid
+        }
+    }
+`;

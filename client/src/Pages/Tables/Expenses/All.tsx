@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { getExpenseVar } from "../../../Graphql/Expense/state";
+import { getExpensesVar } from "../../../Graphql/Expense/state";
 import { useGetExpenses } from "../../../Graphql/Expense/hooks";
 
 // Interfaces
@@ -24,7 +24,7 @@ import NewButton from "../../../Components/NewButton";
 const AllExpenses = () => {
     const { page } = useParams();
     const { loading, error } = useGetExpenses(parseInt(page? page : '1'));
-    const allExpenses = useReactiveVar(getExpenseVar);
+    const allExpenses = useReactiveVar(getExpensesVar);
     const [paginateInfo, setPaginateInfo] = useState<IPaginateInfo | null>(null);
     const [expenses, setExpenses] = useState<any>(null);
     const navigate = useNavigate();

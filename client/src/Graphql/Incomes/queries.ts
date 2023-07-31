@@ -65,3 +65,20 @@ export const CREATEINCOME = gql`
         }
     }
 `;
+
+export const GETINCOME = gql`
+    query GetIncome($id: ID!, $user_id: ID!){
+        income(id: $id, user_id: $user_id){
+            id
+            description
+            establishment 
+            merchandise_purchased
+            installments
+            value_installment
+            expires
+            installments_received
+            received_income
+            user_id  
+        }
+    }
+`;
