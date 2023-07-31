@@ -4,4 +4,5 @@ export interface IFormCreate {
     data: IInput[]
     onSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void
     text: "finance" | "job"
+    button: "Salvar" | "Cadastrar"
 }

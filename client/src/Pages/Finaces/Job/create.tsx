@@ -124,6 +124,7 @@ const CreateJob = () => {
 
         if(!newJob.description || !newJob.establishment || !newJob.started || !newJob.wage){
             toast.error("Todos os campos com * são obrigátorios");
+            return;
         }
 
         createJob(newJob);
@@ -141,7 +142,7 @@ const CreateJob = () => {
         <CreateStyle>
             <NavBar />
             <BodyStyle>
-                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="job"/>
+                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="job" button="Cadastrar"/>
             </BodyStyle>
             <Footer />
         </CreateStyle>

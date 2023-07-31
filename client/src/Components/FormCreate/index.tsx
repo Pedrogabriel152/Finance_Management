@@ -3,7 +3,7 @@ import { IInput } from "../../Interfaces/IInput";
 import { FormContainerFinance, FormContainerJob, FormStyleFinance, FormStyleJob, InputCreateStyle, LabelInput, ButtonSubmit } from "./style";
 import { mask } from "remask";
 
-const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
+const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
     return(
         <>
         {text === "job"? (
@@ -21,7 +21,7 @@ const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
                             />
                         </LabelInput>
                     ))}
-                    <ButtonSubmit type="submit">Cadastrar</ButtonSubmit>
+                    <ButtonSubmit type="submit">{button}</ButtonSubmit>
                 </FormStyleJob>
             </FormContainerJob>
         ):(
@@ -52,7 +52,7 @@ const FormCreate = ({data, onSubmit, text}: IFormCreate) => {
                             
                         </LabelInput>
                     ))}
-                    <ButtonSubmit type="submit">Cadastrar</ButtonSubmit>
+                    <ButtonSubmit type="submit">{button}</ButtonSubmit>
                 </FormStyleFinance>
             </FormContainerFinance>
         )}

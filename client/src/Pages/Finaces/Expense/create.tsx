@@ -145,6 +145,12 @@ const CreateExpense = () => {
 
         if(!newExpense.description || !newExpense.establishment || !newExpense.merchandise_purchased || !newExpense.value_installment || !newExpense.installments){
             toast.error("Todos os campos com * são obrigátorios");
+            return;
+        }
+
+        if(newExpense.installments_paid > newExpense.installments) {
+            toast.error("A quantidade de parcelas pagas tem que se ser menor ou igual ao total de parcelas");
+            return;
         }
 
         createExpense(newExpense);
@@ -162,7 +168,7 @@ const CreateExpense = () => {
         <CreateStyle>
             <NavBar />
             <BodyStyle>
-                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="finance"/>
+                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="finance" button="Cadastrar"/>
             </BodyStyle>
             <Footer />
         </CreateStyle>

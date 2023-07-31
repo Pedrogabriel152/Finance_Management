@@ -110,12 +110,10 @@ export const useCreateIncome = () => {
     })
 }
 
-export const useGetIncome = (id: number) => {
-    const {getAuthentication} = useUserContext();
-    const auth = getAuthentication();
+export const useGetIncome = (id: number, user_id: number) => {
     return useQuery<{ income: IIncome }>(GETINCOME, {
         variables: {
-            user_id: auth?.user_id ? auth.user_id : 0,
+            user_id: user_id ? user_id : 0,
             id: id,
         },
         onCompleted(data) {

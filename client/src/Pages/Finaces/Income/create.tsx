@@ -145,6 +145,12 @@ const CreateIncome = () => {
 
         if(!newIncome.description || !newIncome.establishment || !newIncome.expires || !newIncome.installments || !newIncome.merchandise_purchased){
             toast.error("Todos os campos com * são obrigátorios");
+            return;
+        }
+
+        if(newIncome.installments_received > newIncome.installments) {
+            toast.error("A quantidade de parcelas recebidas tem que se ser menor ou igual ao total de parcelas");
+            return;
         }
 
         createIncome(newIncome);
@@ -162,7 +168,7 @@ const CreateIncome = () => {
         <CreateStyle>
             <NavBar />
             <BodyStyle>
-                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="finance"/>
+                <FormCreate data={inputs} onSubmit={handleOnSubmit} text="finance" button="Cadastrar"/>
             </BodyStyle>
             <Footer />
         </CreateStyle>
