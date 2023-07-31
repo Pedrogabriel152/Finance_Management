@@ -46,31 +46,12 @@ const CreateIncome = () => {
         }
     }, [auth]);
 
-
-    const formatMoney = (value: any) => {
-        const numericValue = value.replace(/\D/g, '');
-        const formattedValue = (Number(numericValue) / 100).toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-        });
-        return formattedValue.slice(3);
-    };
-
-
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(e.target.name == 'value_installment') {
-            const inputValue = e.target.value;
-            const formattedValue = formatMoney(inputValue);
-            const input = formattedValue.split(',');
-            let value = '';
-            input[0].split('.').map((a:string) => {
-                value = value + a;
-            })
-            const value_installment = parseFloat(value+'.'+input[1]);
+        if(e.target.type === 'number') {
             setNewIncome({
                 ...newIncome,
-                [e.target.name]: value_installment
-            })
+                [e.target.name]: e.target.value.replace(/^0+(?!\.|$)/, '')
+            });
             return;
         }
         setNewIncome({

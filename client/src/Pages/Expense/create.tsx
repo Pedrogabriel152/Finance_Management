@@ -46,41 +46,12 @@ const CreateExpense = () => {
         }
     }, [auth]);
 
-    const formatMoney = (value: string) => {
-        const numericValue = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-        console.log(value);
-        if(value.length == 2){
-            const floatValue = parseFloat(value+'.00');
-            console.log("AQUIIIII",floatValue)
-            return floatValue;
-        }
-        if(value.length == 3){
-            const floatValue = parseFloat(value.slice(0, -1)+'.00');
-            console.log("AQUIIIII",floatValue)
-            return floatValue;
-        }
-        const floatValue = parseFloat(numericValue.slice(0, -2)+'.'+numericValue.slice(-2));
-        // console.log("AQUIIII",parseFloat(numericValue.slice(0, -2)+'.'+numericValue.slice(-2)));
-        return floatValue;
-    };
-
-
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if(e.target.name == 'value_installment') {
-            const inputValue = e.target.value;
-            const formattedValue = formatMoney(inputValue);
-            console.log(formattedValue)
-            // const input = formattedValue.split(',');
-            // console.log(formattedValue)
-            // let value = '';
-            // input[0].split('.').map((a:string) => {
-            //     value = value + a;
-            // })
-            // const value_installment = parseFloat(value+'.'+input[1]);
+        if(e.target.type === 'number') {
             setNewExpense({
                 ...newExpense,
-                [e.target.name]: formattedValue
-            })
+                [e.target.name]: parseFloat(e.target.value.replace(/^0+(?!\.|$)/, ''))
+            });
             return;
         }
         setNewExpense({
