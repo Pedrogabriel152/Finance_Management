@@ -67,6 +67,7 @@ const CreateIncome = () => {
             placeholder: "Ex: KSI",
             svg: "",
             type: "text",
+            min: 1,
             value: newIncome?.establishment? newIncome?.establishment : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
@@ -77,6 +78,7 @@ const CreateIncome = () => {
             placeholder: "Ex: teste",
             svg: "",
             type: "text",
+            min: 1,
             value: newIncome?.description? newIncome?.description : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
@@ -87,6 +89,7 @@ const CreateIncome = () => {
             placeholder: "Ex: Tênis",
             svg: "",
             type: "text",
+            min: 1,
             value: newIncome?.merchandise_purchased,
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
@@ -97,6 +100,7 @@ const CreateIncome = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
+            min: 1,
             value: newIncome?.installments? newIncome?.installments : "",
             onChange: handleOnChange,
             mask: ['999999999']
@@ -107,6 +111,7 @@ const CreateIncome = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
+            min: 0.01,
             value: newIncome?.value_installment? newIncome?.value_installment : "",
             onChange: handleOnChange,
             mask: ['']
@@ -117,6 +122,7 @@ const CreateIncome = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "number",
+            min: 0,
             value: newIncome?.installments_received? newIncome?.installments_received : "",
             onChange: handleOnChange,
             mask: ['99999999']
@@ -127,6 +133,7 @@ const CreateIncome = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "date",
+            min: 1,
             value: newIncome?.expires? newIncome?.expires : "",
             onChange: handleOnChange,
             mask: ['']

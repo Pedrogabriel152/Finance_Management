@@ -9,4 +9,5 @@ export interface IInput {
     value: any
     onChange(e: ChangeEvent<HTMLInputElement>, value?: any): void
     mask: string[]
+    min: number
 }

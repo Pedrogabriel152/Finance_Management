@@ -57,6 +57,7 @@ const Income = () => {
             placeholder: "Ex: KSI",
             svg: "",
             type: "text",
+            min: 1,
             value: income?.establishment? income?.establishment : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
@@ -67,6 +68,7 @@ const Income = () => {
             placeholder: "Ex: teste",
             svg: "",
             type: "text",
+            min: 1,
             value: income?.description? income?.description : "",
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
@@ -77,6 +79,7 @@ const Income = () => {
             placeholder: "Ex: Tênis",
             svg: "",
             type: "text",
+            min: 1,
             value: income?.merchandise_purchased,
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAA']
@@ -87,6 +90,7 @@ const Income = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
+            min: 1,
             value: income?.installments? income?.installments : "",
             onChange: handleOnChange,
             mask: ['999999999']
@@ -97,6 +101,7 @@ const Income = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
+            min: 1,
             value: income?.value_installment? income?.value_installment : "",
             onChange: handleOnChange,
             mask: ['']
@@ -107,6 +112,7 @@ const Income = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "number",
+            min: 1,
             value: income?.installments_received? income?.installments_received : "",
             onChange: handleOnChange,
             mask: ['99999999']
@@ -117,6 +123,7 @@ const Income = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "date",
+            min: 1,
             value: income?.expires? income?.expires : "",
             onChange: handleOnChange,
             mask: ['']

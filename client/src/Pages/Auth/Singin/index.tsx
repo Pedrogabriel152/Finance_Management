@@ -123,6 +123,7 @@ const Singin = () => {
             name: "name",
             type: "text",
             value: user.name,
+            min: 1,
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
@@ -132,6 +133,7 @@ const Singin = () => {
             name: "email",
             type: "email",
             value: user.email,
+            min: 1,
             onChange: handleOnChange,
             mask: ['']
         },
@@ -141,6 +143,7 @@ const Singin = () => {
             name: "cpf",
             type: "text",
             value: user.cpf,
+            min: 1,
             onChange: handleOnChange,
             mask: ['999.999.999-99']
         },
@@ -151,6 +154,7 @@ const Singin = () => {
             type: "text",
             value: user.address,
             onChange: handleOnChange,
+            min: 1,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
@@ -160,6 +164,7 @@ const Singin = () => {
             type: "tel",
             value: user.phone,
             onChange: handleOnChange,
+            min: 1,
             mask: ['(99) 9 9999-9999', '(99) 9999-9999']
         },
         {
@@ -169,6 +174,7 @@ const Singin = () => {
             type: "password",
             value: user.password,
             onChange: handleOnChange,
+            min: 1,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
@@ -177,6 +183,7 @@ const Singin = () => {
             name: "confirmPassword",
             type: "password",
             value: user.confirmPassword,
+            min: 1,
             onChange: handleOnChange,
             mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         }

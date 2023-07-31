@@ -37,6 +37,7 @@ const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
                                 placeholder={input.placeholder}
                                 type={input.type}
                                 onChange={input.onChange}
+                                min={input.min}
                             />
                             : 
                                 <InputCreateStyle 
@@ -46,7 +47,7 @@ const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
                                     type={input.type}
                                     onChange={input.onChange}
                                     step="0.01" 
-                                    min="0.01"
+                                    min={input.min}
                                 />
                             }
                             
