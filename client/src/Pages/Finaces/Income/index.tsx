@@ -1,16 +1,28 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import Footer from "../../../Components/Footer";
-import NavBar from "../../../Components/NavBar";
-import { BodyStyle } from "../style";
-import { IIncome } from "../../../Interfaces/IIncome";
-import { useGetIncome } from "../../../Graphql/Incomes/hooks";
 import { useNavigate, useParams } from "react-router-dom";
+
+// Styled
+import { BodyStyle } from "../style";
+
+// Toastify
+import { toast } from "react-toastify";
+
+// Context
+import { useUserContext } from "../../../Context/UserContext";
+
+// GraphQL
 import { useReactiveVar } from "@apollo/client";
 import { getIncomeVar } from "../../../Graphql/Incomes/state";
+import { useGetIncome } from "../../../Graphql/Incomes/hooks";
+
+// Components
+import Footer from "../../../Components/Footer";
+import NavBar from "../../../Components/NavBar";
 import FormCreate from "../../../Components/FormCreate";
+
+// Interfaces
 import { IInput } from "../../../Interfaces/IInput";
-import { useUserContext } from "../../../Context/UserContext";
-import { toast } from "react-toastify";
+import { IIncome } from "../../../Interfaces/IIncome";
 
 const Income = () => {
     const [income, setIncome] = useState<IIncome>();
