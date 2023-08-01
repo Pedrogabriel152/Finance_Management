@@ -21,7 +21,7 @@ class IncomeRepository
             ]]);
         }
         return DB::transaction(function () use($args) {
-            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
+            $dateExpires = new DateTime($args['expires']);
             $newIncome = Income::create([
                 'description' => $args['description']? $args['description'] : '',
                 'establishment' => $args['establishment'],
@@ -87,7 +87,7 @@ class IncomeRepository
     // Save an updated Income to the database
     public static function updateIncome(object $income, array $args){
         return DB::transaction(function () use($income, $args){
-            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
+            $dateExpires = new DateTime($args['expires']);
             $updateIncome = $income;
             $updateIncome->description = $args['description']? $args['description'] : '';
             $updateIncome->establishment = $args['establishment'];

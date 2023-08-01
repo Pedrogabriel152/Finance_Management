@@ -20,7 +20,7 @@ class ExpenseRepository
             ]]);
         } 
         return DB::transaction(function () use($args){
-            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expires']);
+            $dateExpires = new DateTime($args['expires']);
             $newExpense = Expense::create([
                 'description' => $args['description']? $args['description'] : '',
                 'merchandise_purchased' => $args['merchandise_purchased'],

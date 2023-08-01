@@ -82,3 +82,12 @@ export const GETINCOME = gql`
         }
     }
 `;
+
+export const UPDATEINCOME = gql`
+    mutation EditIncome($id: ID!, $user_id: ID!, $income: IncomeInput!){
+        editIncome(id: $id, user_id: $user_id, income: $income){
+            code
+            message
+        }
+    }
+`;

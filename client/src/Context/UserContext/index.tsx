@@ -159,6 +159,10 @@ const UserProvider = ({children}:UserProviderProps) => {
         });
     }
 
+    const updateIncome = () => {
+        
+    }
+
     return (
         <UserContext.Provider 
             value={{

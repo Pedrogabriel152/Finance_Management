@@ -22,9 +22,11 @@ import { toast } from "react-toastify";
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
 import { createIncomeVar } from "../../../Graphql/Incomes/state";
+import { useFinancesContext } from "../../../Context/Finances";
 
 const CreateIncome = () => {
-    const { createIncome, getAuthentication } = useUserContext();
+    const { getAuthentication } = useUserContext();
+    const { createIncome } = useFinancesContext();
     const createResponse = useReactiveVar(createIncomeVar);
     const navigate = useNavigate();
     const [newIncome, setNewIncome] = useState<IIncomeCreate>({
@@ -47,10 +49,11 @@ const CreateIncome = () => {
     }, [auth]);
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value)
         if(e.target.type === 'number') {
             setNewIncome({
                 ...newIncome,
-                [e.target.name]: e.target.value.replace(/^0+(?!\.|$)/, '')
+                [e.target.name]: parseFloat(e.target.value)
             });
             return;
         }
@@ -111,7 +114,7 @@ const CreateIncome = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
-            min: 0.01,
+            min: 0.00,
             value: newIncome?.value_installment? newIncome?.value_installment : "",
             onChange: handleOnChange,
             mask: ['']
@@ -144,6 +147,7 @@ const CreateIncome = () => {
     const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         const auth = getAuthentication();
+        console.log(newIncome);
 
         if(!auth || auth.code !== 200){
             navigate('/login');

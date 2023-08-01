@@ -6,15 +6,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import UserProvider from './Context/UserContext';
+import FinancesProvider from './Context/Finances';
 
 function App() {
   return (
     <ABApolloClient>
         <UserProvider>
-          <BrowserRouter>
-            <ToastContainer autoClose={3000} />
-            <Rotas />
-          </BrowserRouter>
+          <FinancesProvider>
+            <BrowserRouter>
+              <ToastContainer autoClose={3000} />
+              <Rotas />
+            </BrowserRouter>
+          </FinancesProvider>
         </UserProvider>
     </ABApolloClient>
   );

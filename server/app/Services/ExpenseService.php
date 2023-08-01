@@ -12,7 +12,7 @@ class ExpenseService
     // Expense creation service
     public static function createExpense(array $args){
         try {
-            $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
+            $dateExpires = new DateTime($args['expense']['expires']);
             $month = $dateExpires->format('m');
             $year = $dateExpires->format('Y');
             $maxDateExpires = DateTime::createFromFormat('d/m/Y', "28/$month/$year");
@@ -36,7 +36,7 @@ class ExpenseService
                         'year' => $expiresYear,
                         'expires' => $dateExpires->format('d').'/'. $dateExpires->format('m').'/'. $dateExpires->format('Y')
                     ];
-                    $dateExpires = DateTime::createFromFormat('d/m/Y', $args['expense']['expires']);
+                    $dateExpires =  new DateTime($args['expense']['expires']);
                 }
                 $args['expense']['months_paid'] = serialize($months_paid);
             }

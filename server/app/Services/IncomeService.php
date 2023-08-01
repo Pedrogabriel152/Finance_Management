@@ -10,15 +10,14 @@ class IncomeService
 {
     // Income creation service
     public static function createIncome(array $args){
-
-        $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
+        $dateExpires = new DateTime($args['income']['expires']);
         $month = $dateExpires->format('m');
         $year = $dateExpires->format('Y');
         $maxDateExpires = DateTime::createFromFormat('d/m/Y', "28/$month/$year");
 
         if($dateExpires > $maxDateExpires) {
             $dateExpires = $maxDateExpires;
-            $args['expense']['expires'] = "28/$month/$year";
+            $args['income']['expires'] = "28/$month/$year";
         }
 
         if($args['income']['installments_received'] >= 1){
@@ -36,7 +35,7 @@ class IncomeService
                     'year' => $expiresYear,
                     'expires' => $dateExpires->format('d').'/'. $dateExpires->format('m').'/'. $dateExpires->format('Y')
                 ];
-                $dateExpires = DateTime::createFromFormat('d/m/Y', $args['income']['expires']);
+                $dateExpires = new DateTime($args['income']['expires']);
             }
             $args['income']['months_paid'] = serialize($months_paid);
         }
