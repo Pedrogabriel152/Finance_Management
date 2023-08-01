@@ -266,7 +266,6 @@ class IncomeService
     private static function organizeIncome($incomes, $jobs, array $incomesMonths){ 
         foreach ($incomes as $key => $income) {
             $monthsPaids = unserialize($income->months_paid);
-            
             $dateExpires = new DateTime($income->expires);
         
             foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {

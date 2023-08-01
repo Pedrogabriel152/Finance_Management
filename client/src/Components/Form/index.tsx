@@ -81,7 +81,7 @@ const Form = ({text, inputs, link, submit}: IForm) => {
                                     type={input.type} 
                                     name={input.name} 
                                     placeholder={input.placeholder} 
-                                    value={input.value? mask(input.value, input.mask) : ''}
+                                    value={input.value? input.value : ''}
                                     onChange={input.onChange}
                                     id={input.name}
                                 />

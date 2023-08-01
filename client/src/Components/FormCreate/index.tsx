@@ -14,7 +14,7 @@ const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
                             <label htmlFor={input.name}>{input.label}</label>
                             <InputCreateStyle 
                                 name={input.name} 
-                                value={mask(input.value, input.mask)} 
+                                value={input.value} 
                                 placeholder={input.placeholder}
                                 type={input.type}
                                 onChange={input.onChange}
@@ -30,27 +30,13 @@ const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
                     {data.map((input: IInput, index: number) => (
                         <LabelInput key={index}>
                             <label htmlFor={input.name}>{input.label}</label>
-                            {input.name === 'value_installment' || input.name === 'expires' ?
-                                <InputCreateStyle 
-                                name={input.name} 
-                                value={input.value}  
-                                placeholder={input.placeholder}
-                                type={input.type}
-                                onChange={input.onChange}
-                                // min={input.min}
-                            />
-                            : 
-                                <InputCreateStyle 
-                                    name={input.name} 
-                                    value={mask(input.value, input.mask)}  
-                                    placeholder={input.placeholder}
-                                    type={input.type}
-                                    onChange={input.onChange}
-                                    step="0.01" 
-                                    min={input.min}
-                                />
-                            }
-                            
+                            <InputCreateStyle 
+                            name={input.name} 
+                            value={input.value}  
+                            placeholder={input.placeholder}
+                            type={input.type}
+                            onChange={input.onChange}
+                            />                     
                         </LabelInput>
                     ))}
                     <ButtonSubmit type="submit">{button}</ButtonSubmit>

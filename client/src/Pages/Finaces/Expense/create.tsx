@@ -67,10 +67,8 @@ const CreateExpense = () => {
             placeholder: "Ex: KSI",
             svg: "",
             type: "text",
-            min: 1,
             value: newExpense?.establishment? newExpense?.establishment : "",
             onChange: handleOnChange,
-            mask: ['AAAAAAAAAAAAAA']
         },
         {
             label: "Descrição: *",
@@ -78,10 +76,8 @@ const CreateExpense = () => {
             placeholder: "Ex: teste",
             svg: "",
             type: "text",
-            min: 1,
             value: newExpense?.description? newExpense?.description : "",
             onChange: handleOnChange,
-            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
             label: "Mercadoria comprada: *",
@@ -89,10 +85,8 @@ const CreateExpense = () => {
             placeholder: "Ex: Tênis",
             svg: "",
             type: "text",
-            min: 1,
             value: newExpense?.merchandise_purchased,
             onChange: handleOnChange,
-            mask: ['AAAAAAAAAAAAAA']
         },
         {
             label: "Quantidade de parcela: *",
@@ -100,10 +94,8 @@ const CreateExpense = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
-            min: 1,
             value: newExpense?.installments? newExpense?.installments : "",
             onChange: handleOnChange,
-            mask: ['999999999']
         },
         {
             label: "Valor da parcela: *",
@@ -111,10 +103,8 @@ const CreateExpense = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
-            min: 1,
             value: newExpense?.value_installment? newExpense?.value_installment : "",
             onChange: handleOnChange,
-            mask: ['']
         },
         {
             label: "Quantidade de parcelas pagas: *",
@@ -122,10 +112,8 @@ const CreateExpense = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "number",
-            min: 1,
             value: newExpense?.installments_paid? newExpense?.installments_paid : "",
             onChange: handleOnChange,
-            mask: ['99999999']
         },
         {
             label: "Vencimento: *",
@@ -133,10 +121,8 @@ const CreateExpense = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "date",
-            min: 1,
             value: newExpense?.expires? newExpense?.expires : "",
             onChange: handleOnChange,
-            mask: ['']
         },
 
     ];

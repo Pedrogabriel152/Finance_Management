@@ -66,10 +66,8 @@ const CreateJob = () => {
             placeholder: "Estabelecimento",
             svg: "",
             type: "text",
-            min: 1,
             value: newJob?.establishment? newJob?.establishment : "",
             onChange: handleOnChange,
-            mask: ['AAA']
         },
         {
             label: "Descrição: *",
@@ -77,10 +75,8 @@ const CreateJob = () => {
             placeholder: "Descrição",
             svg: "",
             type: "text",
-            min: 1,
             value: newJob?.description? newJob?.description : "",
-            onChange: handleOnChange,
-            mask: ['AAA']
+            onChange: handleOnChange
         },
         {
             label: "Salário: *",
@@ -88,10 +84,8 @@ const CreateJob = () => {
             placeholder: "Salário",
             svg: "",
             type: "number",
-            min: 1,
             value: newJob?.wage,
             onChange: handleOnChange,
-            mask: ['AAA']
         },
         {
             label: "Quando iniciou: *",
@@ -99,10 +93,8 @@ const CreateJob = () => {
             placeholder: "Entrou em",
             svg: "",
             type: "date",
-            min: 1,
             value: newJob?.started? newJob?.started : "",
             onChange: handleOnChange,
-            mask: ['AAA']
         },
         {
             label: "Quando saiu:",
@@ -110,10 +102,8 @@ const CreateJob = () => {
             placeholder: "Saiu em",
             svg: "",
             type: "date",
-            min: 1,
             value: newJob?.leave? newJob?.leave : "",
             onChange: handleOnChange,
-            mask: ['AAA']
         },
 
     ];

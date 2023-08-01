@@ -8,6 +8,4 @@ export interface IInput {
     name: string
     value: any
     onChange(e: ChangeEvent<HTMLInputElement>, value?: any): void
-    mask: string[]
-    min: number
 }

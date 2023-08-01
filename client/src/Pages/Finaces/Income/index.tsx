@@ -36,8 +36,9 @@ const Income = () => {
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.type === 'number') {
-
-            
+            if(e.target.name === "installments_received") {
+                setInstallmentsReceived(parseInt(e.target.value));
+            }     
             setIncome({
                 ...income,
                 [e.target.name]: e.target.value.replace(/^0+(?!\.|$)/, '')
@@ -57,10 +58,8 @@ const Income = () => {
             placeholder: "Ex: KSI",
             svg: "",
             type: "text",
-            min: 1,
             value: income?.establishment? income?.establishment : "",
-            onChange: handleOnChange,
-            mask: ['AAAAAAAAAAAAAA']
+            onChange: handleOnChange
         },
         {
             label: "Descrição: *",
@@ -68,10 +67,8 @@ const Income = () => {
             placeholder: "Ex: teste",
             svg: "",
             type: "text",
-            min: 1,
             value: income?.description? income?.description : "",
             onChange: handleOnChange,
-            mask: ['AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
         },
         {
             label: "Mercadoria comprada: *",
@@ -79,10 +76,8 @@ const Income = () => {
             placeholder: "Ex: Tênis",
             svg: "",
             type: "text",
-            min: 1,
             value: income?.merchandise_purchased,
             onChange: handleOnChange,
-            mask: ['AAAAAAAAAAAAAA']
         },
         {
             label: "Quantidade de parcela: *",
@@ -90,10 +85,8 @@ const Income = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
-            min: 1,
             value: income?.installments? income?.installments : "",
             onChange: handleOnChange,
-            mask: ['999999999']
         },
         {
             label: "Valor da parcela: *",
@@ -101,21 +94,8 @@ const Income = () => {
             placeholder: "Ex: 70,00",
             svg: "",
             type: "number",
-            min: 1,
             value: income?.value_installment? income?.value_installment : "",
             onChange: handleOnChange,
-            mask: ['']
-        },
-        {
-            label: "Quantidade de parcelas recebidas:",
-            name: "installments_received",
-            placeholder: "Ex: 7",
-            svg: "",
-            type: "number",
-            min: 1,
-            value: income?.installments_received? income?.installments_received : "",
-            onChange: handleOnChange,
-            mask: ['99999999']
         },
         {
             label: "Vencimento: *",
@@ -123,10 +103,8 @@ const Income = () => {
             placeholder: "Ex: 7",
             svg: "",
             type: "date",
-            min: 1,
             value: income?.expires? income?.expires : "",
             onChange: handleOnChange,
-            mask: ['']
         },
     ];
 
@@ -145,10 +123,11 @@ const Income = () => {
             return;
         }
 
-        if(installmentsReceived < income.installments){
+        if(installmentsReceived > income.installments){
             toast.error("O valor de parcelas não pode ser menor que o valor de parcelas pagas.");
             return;
         }
+        console.log(income);
     }
 
     return (
