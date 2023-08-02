@@ -36,6 +36,7 @@ const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
                             placeholder={input.placeholder}
                             type={input.type}
                             onChange={input.onChange}
+                            disabled={input.disabled? true : false}
                             />                     
                         </LabelInput>
                     ))}

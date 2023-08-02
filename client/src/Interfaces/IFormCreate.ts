@@ -3,6 +3,6 @@ import { IInput } from "./IInput";
 export interface IFormCreate {
     data: IInput[]
     onSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void
-    text: "finance" | "job"
-    button: "Salvar" | "Cadastrar"
+    text: "finance" | "job" | "editFinance"
+    button: "Salvar" | "Cadastrar" 
 }

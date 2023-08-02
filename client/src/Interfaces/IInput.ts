@@ -7,5 +7,6 @@ export interface IInput {
     type: string
     name: string
     value: any
+    disabled?: boolean
     onChange(e: ChangeEvent<HTMLInputElement>, value?: any): void
 }

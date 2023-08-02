@@ -12,7 +12,7 @@ import { useUserContext } from "../../../Context/UserContext";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { getIncomeVar } from "../../../Graphql/Incomes/state";
+import { getIncomeVar, updateIncomeVar } from "../../../Graphql/Incomes/state";
 import { useGetIncome } from "../../../Graphql/Incomes/hooks";
 
 // Components
@@ -23,16 +23,19 @@ import FormCreate from "../../../Components/FormCreate";
 // Interfaces
 import { IInput } from "../../../Interfaces/IInput";
 import { IIncome } from "../../../Interfaces/IIncome";
+import { useFinancesContext } from "../../../Context/Finances";
 
 const Income = () => {
     const [income, setIncome] = useState<IIncome>();
     const [installmentsReceived, setInstallmentsReceived] = useState<number>(0);
-    const { createIncome, getAuthentication } = useUserContext();
+    const { getAuthentication } = useUserContext();
+    const { updateIncome } = useFinancesContext();
     const navigate = useNavigate();
     const auth = getAuthentication();
     const {id} = useParams();
     useGetIncome(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
     const getIncome = useReactiveVar(getIncomeVar);
+    const updateResponse = useReactiveVar(updateIncomeVar);
 
     useEffect(() => {
 
@@ -110,6 +113,16 @@ const Income = () => {
             onChange: handleOnChange,
         },
         {
+            label: "Quantidade de parcelas recebidas:",
+            name: "installments_received",
+            placeholder: "Ex: 7",
+            svg: "",
+            type: "number",
+            value: income?.installments_received? income?.installments_received : "",
+            disabled: true,
+            onChange: handleOnChange,
+        },
+        {
             label: "Vencimento: *",
             name: "expires",
             placeholder: "Ex: 7",
@@ -140,13 +153,23 @@ const Income = () => {
             return;
         }
         console.log(income);
+
+        updateIncome(income.id, income);
+
+        if(updateResponse?.code === 200) {
+            toast.success(updateResponse.message);
+            navigate('/incomes/all/1')
+            return;
+        }
+
+        toast.error(updateResponse?.message);
     }
 
     return (
         <>
         <NavBar />
         <BodyStyle>
-            <FormCreate data={inputs} onSubmit={handleOnSubmit} text="finance" button="Salvar"/>
+            <FormCreate data={inputs} onSubmit={handleOnSubmit} text="editFinance" button="Salvar"/>
         </BodyStyle>
         <Footer />
         </>

@@ -13,7 +13,7 @@ import { useCreateJob } from "../../Graphql/Job/hooks";
 import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
 import { useCreateExpense } from "../../Graphql/Expense/hooks";
 import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
-import { useCreateIncome } from "../../Graphql/Incomes/hooks";
+import { useCreateIncome, useUpdateIncome } from "../../Graphql/Incomes/hooks";
 import { IFinancesContext } from "../../Interfaces/IFinancesContext";
 import { useUserContext } from "../UserContext";
 
@@ -25,6 +25,7 @@ export const FinancesContext = createContext<IFinancesContext>({
     createJob: () => null,
     createExpense: () => null,
     createIncome: () => null,
+    updateIncome: () => null
 });
 
 const FinancesProvider = ({children}: FinancesProviderProps) => {
@@ -32,9 +33,10 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     const [addJob] = useCreateJob();
     const [addExpense] = useCreateExpense();
     const [addIncome] = useCreateIncome();
+    const [editIncome] = useUpdateIncome();
+    const auth = getAuthentication();
 
     const createJob = (job: IJobCreate) => {
-        const auth = getAuthentication();
         job.wage = typeof job.wage === 'string'? parseFloat(job.wage) : job.wage;
         job.user_id = auth.user_id;
 
@@ -46,7 +48,6 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     }
 
     const createExpense = (expense: IExpenseCreate) => {
-        const auth= getAuthentication();
         expense.value_installment = typeof expense.value_installment === 'string'? parseFloat(expense.value_installment) : expense.value_installment;
         expense.user_id = auth.user_id;
 
@@ -58,7 +59,6 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     }
 
     const createIncome = (income: IIncomeCreate) => {
-        const auth= getAuthentication();
         income.value_installment = typeof income.value_installment === 'string'? parseFloat(income.value_installment) : income.value_installment;
         income.user_id = auth.user_id;
 
@@ -69,8 +69,17 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
         });
     }
 
-    const updateIncome = () => {
-        
+    const updateIncome = (id: number, income: IIncomeCreate) => {
+        income.value_installment = typeof income.value_installment === 'string'? parseFloat(income.value_installment) : income.value_installment;
+        income.user_id = auth.user_id? auth.user_id : 0;
+
+        editIncome({
+            variables: {
+                id: id,
+                user_id: auth.user_id,
+                income: income
+            }
+        })
     }
 
     return (
@@ -78,7 +87,8 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
             value={{
                 createExpense,
                 createIncome,
-                createJob
+                createJob,
+                updateIncome
             }} 
         >
             {children}
