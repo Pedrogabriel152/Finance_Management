@@ -22,11 +22,11 @@ const TableAll = ({data, text} : ITableAll) => {
                     <div>Status</div>
                     <div>Parcela</div>
                 </TableHead>
-                {data.map((job: any, index: number) => (
+                {data.map((finance: any, index: number) => (
                     <TableBoddy key={index}>
-                        <div><Link to={`/${text}/${job.id}`}>{job.establishment}</Link></div>
-                        <div>{job.active? 'Inativo' : 'Ativo'}</div>
-                        <div>{parseFloat(job.value_installment).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
+                        <div><Link to={`/${text}/${finance.id}`}>{finance.establishment}</Link></div>
+                        <div>{finance.received_income || finance.paid_expense? 'Inativo' : 'Ativo'}</div>
+                        <div>{parseFloat(finance.value_installment).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                     </TableBoddy> 
                 ))}
                 

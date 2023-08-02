@@ -46,14 +46,14 @@ export const useGetActiveIncomes = (page: number) => {
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ getActiveIncomes: IPaginate }>(GETACTIVEINCOMES, {
+    return useQuery<{ incomesOpen: IPaginate }>(GETACTIVEINCOMES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,
         },
         onCompleted(data) {
             if (data) {
-                getActiveIcomesVar(data.getActiveIncomes);
+                getActiveIcomesVar(data.incomesOpen);
             }
         },
         fetchPolicy: 'cache-and-network',
@@ -67,14 +67,14 @@ export const useGetIdleIcomes = (page: number) => {
 
     updateLink(`http://localhost/graphql?page=${page}`, auth, client);
 
-    return useQuery<{ getIdleJobs: IPaginate }>(GETIDLEINCOMES, {
+    return useQuery<{ incomesClose: IPaginate }>(GETIDLEINCOMES, {
         variables: {
             user_id: auth?.user_id ? auth.user_id : 0,
             first: page,
         },
         onCompleted(data) {
             if (data) {
-                getIdleIcomesVar(data.getIdleJobs);
+                getIdleIcomesVar(data.incomesClose);
             }
         },
         fetchPolicy: 'cache-and-network',

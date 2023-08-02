@@ -21,7 +21,7 @@ export const GETINCOMES = gql`
 
 export const GETACTIVEINCOMES = gql`
     query ActiveIncomes($user_id: ID!, $first: Int!) {
-        getActiveIncomes(user_id: $user_id, first: $first){
+        incomesOpen(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
@@ -40,7 +40,7 @@ export const GETACTIVEINCOMES = gql`
 
 export const GETIDLEINCOMES = gql`
     query IdleIncomes($user_id: ID!, $first: Int!) {
-        getIdleIncomes(user_id: $user_id, first: $first){
+        incomesClose(user_id: $user_id, first: $first){
             data{
                 id
                 establishment
