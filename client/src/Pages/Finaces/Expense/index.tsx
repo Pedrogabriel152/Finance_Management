@@ -13,8 +13,8 @@ import { useFinancesContext } from "../../../Context/Finances";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { getIncomeVar, updateIncomeVar } from "../../../Graphql/Incomes/state";
-import { useGetIncome } from "../../../Graphql/Incomes/hooks";
+import { useGetExpense } from "../../../Graphql/Expense/hooks";
+import { getExpenseVar, updateExpenseVar } from "../../../Graphql/Expense/state";
 
 // Components
 import Footer from "../../../Components/Footer";
@@ -23,10 +23,7 @@ import FormCreate from "../../../Components/FormCreate";
 
 // Interfaces
 import { IInput } from "../../../Interfaces/IInput";
-import { IIncome } from "../../../Interfaces/IIncome";
 import { IExpense } from "../../../Interfaces/IExpense";
-import { useGetExpense } from "../../../Graphql/Expense/hooks";
-import { getExpenseVar, updateExpenseVar } from "../../../Graphql/Expense/state";
 
 const Expense = () => {
     const [expense, setExpense] = useState<IExpense>();

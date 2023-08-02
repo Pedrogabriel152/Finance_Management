@@ -1,20 +1,17 @@
-import { ReactElement, createContext, useContext, useEffect, useState } from "react";
+import { ReactElement, createContext, useContext } from "react";
 
 // Interfaces
-import { IUserInput } from "../../Interfaces/IUserInput";
-import { IUserContext } from "../../Interfaces/IUserContext";
 import { IJobCreate } from "../../Interfaces/IJobCreate";
+import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
+import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
+import { IFinancesContext } from "../../Interfaces/IFinancesContext";
 
 // Graphql
-import { useReactiveVar } from "@apollo/client";
-import { authenticationVar } from "../../Graphql/User/state";
-import { useLogin, useRegister } from "../../Graphql/User/hooks";
 import { useCreateJob } from "../../Graphql/Job/hooks";
-import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
 import { useCreateExpense, useUpdateExpense } from "../../Graphql/Expense/hooks";
-import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
 import { useCreateIncome, useUpdateIncome } from "../../Graphql/Incomes/hooks";
-import { IFinancesContext } from "../../Interfaces/IFinancesContext";
+
+// Context
 import { useUserContext } from "../UserContext";
 
 interface FinancesProviderProps {
