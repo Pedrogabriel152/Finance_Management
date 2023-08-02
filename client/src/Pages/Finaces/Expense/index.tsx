@@ -20,6 +20,7 @@ import { getExpenseVar, updateExpenseVar } from "../../../Graphql/Expense/state"
 import Footer from "../../../Components/Footer";
 import NavBar from "../../../Components/NavBar";
 import FormCreate from "../../../Components/FormCreate";
+import ModalLoading from "../../../Components/ModalLoading";
 
 // Interfaces
 import { IInput } from "../../../Interfaces/IInput";
@@ -46,7 +47,13 @@ const Expense = () => {
     }, [getExpense])
 
     if(!expense) {
-        return <div></div>
+        return (
+            <>
+            <NavBar />
+            <ModalLoading/>
+            <Footer />
+            </>
+        )
     }
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {

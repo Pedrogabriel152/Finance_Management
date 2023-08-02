@@ -19,6 +19,7 @@ import { useGetIncome } from "../../../Graphql/Incomes/hooks";
 import Footer from "../../../Components/Footer";
 import NavBar from "../../../Components/NavBar";
 import FormCreate from "../../../Components/FormCreate";
+import ModalLoading from "../../../Components/ModalLoading";
 
 // Interfaces
 import { IInput } from "../../../Interfaces/IInput";
@@ -46,7 +47,13 @@ const Income = () => {
     }, [getIncome])
 
     if(!income) {
-        return <div></div>
+        return (
+            <>
+            <NavBar />
+            <ModalLoading/>
+            <Footer />
+            </>
+        )
     }
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +159,6 @@ const Income = () => {
             toast.error("O valor de parcelas não pode ser menor que o valor de parcelas pagas.");
             return;
         }
-        console.log(income);
 
         updateIncome(income.id, income);
 
@@ -161,7 +167,6 @@ const Income = () => {
             navigate('/incomes/all/1')
             return;
         }
-
         toast.error(updateResponse?.message);
     }
 
