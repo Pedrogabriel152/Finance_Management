@@ -71,13 +71,28 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
 
     const updateIncome = (id: number, income: IIncomeCreate) => {
         income.value_installment = typeof income.value_installment === 'string'? parseFloat(income.value_installment) : income.value_installment;
+        income.installments = typeof income.installments === 'string'? parseInt(income.installments) : income.installments;
         income.user_id = auth.user_id? auth.user_id : 0;
+
+        if(!income.received_income) {
+            income.received_income = income.installments === income.installments_received;
+        }
 
         editIncome({
             variables: {
                 id: id,
                 user_id: auth.user_id,
-                income: income
+                income: {
+                    description: income.description,
+                    establishment: income.establishment,
+                    expires: income.expires,
+                    installments: income.installments,
+                    installments_received: income.installments_received,
+                    merchandise_purchased: income.merchandise_purchased,
+                    user_id: income.user_id,
+                    value_installment: income.value_installment,
+                    received_income: income.received_income
+                }
             }
         })
     }

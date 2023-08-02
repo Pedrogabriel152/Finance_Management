@@ -129,7 +129,7 @@ class IncomeService
         } catch (\Throwable $th) {
             return [
                 'code' => 500,
-                'message' => 'Falha ao atualizar a renda, tente novamente'
+                'message' => $th->getMessage()//'Falha ao atualizar a renda, tente novamente'
             ];
         }
         

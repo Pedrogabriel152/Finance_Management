@@ -7,4 +7,5 @@ export interface IIncomeCreate {
     expires: string
     user_id: number
     merchandise_purchased: string
+    received_income?: boolean
 }
