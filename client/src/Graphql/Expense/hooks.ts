@@ -1,7 +1,7 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE, GETEXPENSE } from "./queries";
+import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE, GETEXPENSE, UPDATEEXPENSE } from "./queries";
 import { GETFINANCE } from "../Finance/queries";
-import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getExpensesVar, getIdleExpenseVar } from "./state";
+import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getExpensesVar, getIdleExpenseVar, updateExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";
 
 // Context
@@ -104,12 +104,10 @@ export const useCreateExpense = () => {
     })
 }
 
-export const useGetExpense = (id: number) => {
-    const {getAuthentication} = useUserContext();
-    const auth = getAuthentication();
+export const useGetExpense = (id: number, user_id: number) => {
     return useQuery<{ expense: IExpense }>(GETEXPENSE, {
         variables: {
-            user_id: auth?.user_id ? auth.user_id : 0,
+            user_id: user_id,
             id: id,
         },
         onCompleted(data) {
@@ -119,4 +117,33 @@ export const useGetExpense = (id: number) => {
         },
         fetchPolicy: 'cache-and-network',
     });
+}
+
+export const useUpdateExpense = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+    return useMutation<{editExpense: IResponse}>(UPDATEEXPENSE, {
+        onCompleted(data) {
+            if(data) {
+                updateExpenseVar(data.editExpense);
+            }
+        },
+        refetchQueries: [
+            {query: GETFINANCE, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETACTIVEEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETIDLEEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }}
+        ]
+    })
 }

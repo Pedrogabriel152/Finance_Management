@@ -11,7 +11,7 @@ import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister } from "../../Graphql/User/hooks";
 import { useCreateJob } from "../../Graphql/Job/hooks";
 import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
-import { useCreateExpense } from "../../Graphql/Expense/hooks";
+import { useCreateExpense, useUpdateExpense } from "../../Graphql/Expense/hooks";
 import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
 import { useCreateIncome, useUpdateIncome } from "../../Graphql/Incomes/hooks";
 import { IFinancesContext } from "../../Interfaces/IFinancesContext";
@@ -25,7 +25,8 @@ export const FinancesContext = createContext<IFinancesContext>({
     createJob: () => null,
     createExpense: () => null,
     createIncome: () => null,
-    updateIncome: () => null
+    updateIncome: () => null,
+    updateExpense: () => null
 });
 
 const FinancesProvider = ({children}: FinancesProviderProps) => {
@@ -34,6 +35,7 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     const [addExpense] = useCreateExpense();
     const [addIncome] = useCreateIncome();
     const [editIncome] = useUpdateIncome();
+    const [editExpense] = useUpdateExpense();
     const auth = getAuthentication();
 
     const createJob = (job: IJobCreate) => {
@@ -73,10 +75,7 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
         income.value_installment = typeof income.value_installment === 'string'? parseFloat(income.value_installment) : income.value_installment;
         income.installments = typeof income.installments === 'string'? parseInt(income.installments) : income.installments;
         income.user_id = auth.user_id? auth.user_id : 0;
-
-        if(!income.received_income) {
-            income.received_income = income.installments === income.installments_received;
-        }
+        income.received_income = income.installments === income.installments_received;
 
         editIncome({
             variables: {
@@ -97,13 +96,39 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
         })
     }
 
+    const updateExpense = (id: number, expense: IExpenseCreate) => {
+        expense.value_installment = typeof expense.value_installment === 'string'? parseFloat(expense.value_installment) : expense.value_installment;
+        expense.installments = typeof expense.installments === 'string'? parseInt(expense.installments) : expense.installments;
+        expense.user_id = auth.user_id? auth.user_id : 0;
+        expense.paid_expense = expense.installments === expense.installments_paid;
+
+        editExpense({
+            variables: {
+                id: id,
+                user_id: auth.user_id,
+                expense: {
+                    description: expense.description,
+                    establishment: expense.establishment,
+                    expires: expense.expires,
+                    installments: expense.installments,
+                    installments_paid: expense.installments_paid,
+                    merchandise_purchased: expense.merchandise_purchased,
+                    user_id: expense.user_id,
+                    value_installment: expense.value_installment,
+                    paid_expense: expense.paid_expense
+                }
+            }
+        })
+    }
+
     return (
         <FinancesContext.Provider 
             value={{
                 createExpense,
                 createIncome,
                 createJob,
-                updateIncome
+                updateIncome,
+                updateExpense
             }} 
         >
             {children}

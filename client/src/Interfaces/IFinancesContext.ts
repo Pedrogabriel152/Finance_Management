@@ -7,4 +7,5 @@ export interface IFinancesContext {
     createExpense: (expense: IExpenseCreate) => void
     createIncome: (income: IIncomeCreate) => void
     updateIncome: (id: number, income: IIncomeCreate) => void
+    updateExpense: (id: number, expense: IExpenseCreate) => void
 }

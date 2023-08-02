@@ -7,4 +7,5 @@ export interface IExpenseCreate {
     installments_paid: number
     expires: string
     user_id: number
+    paid_expense?: boolean
 }

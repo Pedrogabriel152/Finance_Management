@@ -75,8 +75,18 @@ export const GETEXPENSE = gql`
             installments
             expires
             installments_paid
+            value_installment
             paid_expense
-            months_paid
+            merchandise_purchased
+        }
+    }
+`;
+
+export const UPDATEEXPENSE = gql`
+    mutation EditExpense($id:ID!, $user_id:ID!, $expense: ExpenseInput!){
+        editExpense(id: $id, user_id: $user_id, expense: $expense){
+            code
+            message
         }
     }
 `;
