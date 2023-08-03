@@ -72,3 +72,17 @@ export const CREATEJOB = gql`
         }
     }
 `;
+
+export const GETJOB = gql`
+    query GetJob($id: ID!, $user_id: ID!){
+        job(id: $id, user_id: $user_id){
+            id
+            wage
+            establishment
+            active
+            description
+            leave
+            started
+        }
+    }
+`;

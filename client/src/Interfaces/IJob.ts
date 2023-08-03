@@ -3,6 +3,9 @@ export interface IJob {
     description?: string
     wage: number
     establishment: string
+    active?: boolean
+    leave?: string
+    started?: string
     user_id?: number
     created_at?: any
     updated_at?: any

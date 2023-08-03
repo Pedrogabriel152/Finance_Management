@@ -2,10 +2,10 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 
 // Queries
-import { CREATEJOB, GETACTIVEJOBS, GETFIVEJOBS, GETIDLEJOBS, GETJOBS } from "./queries";
+import { CREATEJOB, GETACTIVEJOBS, GETFIVEJOBS, GETIDLEJOBS, GETJOB, GETJOBS } from "./queries";
 
 // Reactive Vars
-import { createJobVar, getActiveJobsVar, getFiveJobsVar, getIdleJobsVar, getJobsVar } from "./state";
+import { createJobVar, getActiveJobsVar, getFiveJobsVar, getIdleJobsVar, getJobVar, getJobsVar } from "./state";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";
@@ -125,4 +125,19 @@ export const useCreateJob = () => {
             }}
         ]
     })
+}
+
+export const useGetJob = (id: number, user_id: number) => {
+    return useQuery<{ job: IJob }>(GETJOB, {
+        variables: {
+            user_id: user_id ? user_id : 0,
+            id: id,
+        },
+        onCompleted(data) {
+            if (data) {
+                getJobVar(data.job);
+            }
+        },
+        fetchPolicy: 'cache-and-network',
+    });
 }

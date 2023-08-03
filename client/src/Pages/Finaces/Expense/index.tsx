@@ -39,12 +39,11 @@ const Expense = () => {
     const updateResponse = useReactiveVar(updateExpenseVar);
 
     useEffect(() => {
-
         if(getExpense) {
             setExpense(getExpense);
             setInstallmentsPaids(getExpense.installments_paid);
         }
-    }, [getExpense])
+    }, [getExpense]);
 
     if(!expense) {
         return (
@@ -53,7 +52,7 @@ const Expense = () => {
             <ModalLoading/>
             <Footer />
             </>
-        )
+        );
     }
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +106,7 @@ const Expense = () => {
             placeholder: "EX: 20",
             svg: "",
             type: "number",
-            value: expense?.installments? expense?.installments : "",
+            value: expense?.installments? expense?.installments : 0,
             onChange: handleOnChange,
         },
         {
@@ -136,7 +135,7 @@ const Expense = () => {
             svg: "",
             type: "date",
             value: expense?.expires? expense?.expires : "",
-            onChange: handleOnChange,
+            onChange: handleOnChange, 
         },
     ];
 
@@ -164,7 +163,7 @@ const Expense = () => {
 
         if(updateResponse?.code === 200) {
             toast.success(updateResponse.message);
-            navigate('/expenses/all/1')
+            navigate('/expenses/all/1');
             return;
         }
 
