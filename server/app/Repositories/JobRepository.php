@@ -67,6 +67,7 @@ class JobRepository
                 $jobExist->active = false;
                 $jobExist->save();
             }
+            
             $jobExist->save();
             return $jobExist;
         });
