@@ -12,8 +12,6 @@ import { useUserContext } from "../../../Context/UserContext";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
-import { getIncomeVar, updateIncomeVar } from "../../../Graphql/Incomes/state";
-import { useGetIncome } from "../../../Graphql/Incomes/hooks";
 
 // Components
 import Footer from "../../../Components/Footer";
@@ -23,7 +21,6 @@ import ModalLoading from "../../../Components/ModalLoading";
 
 // Interfaces
 import { IInput } from "../../../Interfaces/IInput";
-import { IIncome } from "../../../Interfaces/IIncome";
 import { useFinancesContext } from "../../../Context/Finances";
 import { IJob } from "../../../Interfaces/IJob";
 import { useGetJob } from "../../../Graphql/Job/hooks";
