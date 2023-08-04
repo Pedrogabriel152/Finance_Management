@@ -27,7 +27,7 @@ import { IIncome } from "../../../Interfaces/IIncome";
 import { useFinancesContext } from "../../../Context/Finances";
 import { IJob } from "../../../Interfaces/IJob";
 import { useGetJob } from "../../../Graphql/Job/hooks";
-import { getJobVar } from "../../../Graphql/Job/state";
+import { getJobVar, updateJobVar } from "../../../Graphql/Job/state";
 
 const Job = () => {
     const [job, setJob] = useState<IJob>();
@@ -38,7 +38,7 @@ const Job = () => {
     const {id} = useParams();
     useGetJob(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
     const getJob = useReactiveVar(getJobVar);
-    const updateResponse = useReactiveVar(updateIncomeVar);
+    const updateResponse = useReactiveVar(updateJobVar);
 
     useEffect(() => {
 
@@ -134,7 +134,7 @@ const Job = () => {
             return;
         }
 
-        // updatejob(job.id, job);
+        updateJob(job.id? job.id : 0, job);
 
         if(updateResponse?.code === 200) {
             toast.success(updateResponse.message);
