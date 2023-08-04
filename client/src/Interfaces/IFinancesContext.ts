@@ -1,5 +1,6 @@
 import { IExpenseCreate } from "./IExpenseCreate"
 import { IIncomeCreate } from "./IIncomeCreate"
+import { IJob } from "./IJob"
 import { IJobCreate } from "./IJobCreate"
 
 export interface IFinancesContext {
@@ -8,4 +9,5 @@ export interface IFinancesContext {
     createIncome: (income: IIncomeCreate) => void
     updateIncome: (id: number, income: IIncomeCreate) => void
     updateExpense: (id: number, expense: IExpenseCreate) => void
+    updateJob: (id: number, job: IJob) => void
 }

@@ -86,3 +86,12 @@ export const GETJOB = gql`
         }
     }
 `;
+
+export const UPDATEJOB = gql`
+    mutation UpdateJob($id: ID!,$user_id: ID!, $job: JobInput!){
+        updateJob(id: $id, user_id: $user_id, job: $job){
+            code
+            message
+        }
+    }
+`;

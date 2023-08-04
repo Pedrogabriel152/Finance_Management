@@ -2,10 +2,10 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 
 // Queries
-import { CREATEJOB, GETACTIVEJOBS, GETFIVEJOBS, GETIDLEJOBS, GETJOB, GETJOBS } from "./queries";
+import { CREATEJOB, GETACTIVEJOBS, GETFIVEJOBS, GETIDLEJOBS, GETJOB, GETJOBS, UPDATEJOB } from "./queries";
 
 // Reactive Vars
-import { createJobVar, getActiveJobsVar, getFiveJobsVar, getIdleJobsVar, getJobVar, getJobsVar } from "./state";
+import { createJobVar, getActiveJobsVar, getFiveJobsVar, getIdleJobsVar, getJobVar, getJobsVar, updateJobVar } from "./state";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";
@@ -140,4 +140,33 @@ export const useGetJob = (id: number, user_id: number) => {
         },
         fetchPolicy: 'cache-and-network',
     });
+}
+
+export const useUpdateJob = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+    return useMutation<{updateJob: IResponse}>(UPDATEJOB, {
+        onCompleted(data) {
+            if(data) {
+                updateJobVar(data.updateJob);
+            }
+        },
+        refetchQueries: [
+            {query: GETFIVEJOBS, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETJOBS, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETACTIVEJOBS, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETIDLEJOBS, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }}
+        ]
+    })
 }

@@ -11,3 +11,4 @@ export const getJobVar = makeVar<IJob | null>(null);
 export const getActiveJobsVar = makeVar<IPaginate | null>(null);
 export const getIdleJobsVar = makeVar<IPaginate | null>(null);
 export const createJobVar = makeVar<IResponse | null>(null);
+export const updateJobVar = makeVar<IResponse | null>(null);

@@ -7,12 +7,13 @@ import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
 import { IFinancesContext } from "../../Interfaces/IFinancesContext";
 
 // Graphql
-import { useCreateJob } from "../../Graphql/Job/hooks";
+import { useCreateJob, useUpdateJob } from "../../Graphql/Job/hooks";
 import { useCreateExpense, useUpdateExpense } from "../../Graphql/Expense/hooks";
 import { useCreateIncome, useUpdateIncome } from "../../Graphql/Incomes/hooks";
 
 // Context
 import { useUserContext } from "../UserContext";
+import { IJob } from "../../Interfaces/IJob";
 
 interface FinancesProviderProps {
     children: ReactElement
@@ -23,7 +24,8 @@ export const FinancesContext = createContext<IFinancesContext>({
     createExpense: () => null,
     createIncome: () => null,
     updateIncome: () => null,
-    updateExpense: () => null
+    updateExpense: () => null,
+    updateJob: () => null
 });
 
 const FinancesProvider = ({children}: FinancesProviderProps) => {
@@ -33,6 +35,7 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     const [addIncome] = useCreateIncome();
     const [editIncome] = useUpdateIncome();
     const [editExpense] = useUpdateExpense();
+    const [editJob] = useUpdateJob();
     const auth = getAuthentication();
 
     const createJob = (job: IJobCreate) => {
@@ -43,7 +46,7 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
             variables: {
                 job: job
             }
-        })
+        });
     }
 
     const createExpense = (expense: IExpenseCreate) => {
@@ -90,7 +93,7 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
                     received_income: income.received_income
                 }
             }
-        })
+        });
     }
 
     const updateExpense = (id: number, expense: IExpenseCreate) => {
@@ -115,7 +118,21 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
                     paid_expense: expense.paid_expense
                 }
             }
-        })
+        });
+    }
+
+    const updateJob = (id: number, job: IJob) => {
+        job.wage = typeof job.wage === 'string'? parseFloat(job.wage) : job.wage;
+        job.user_id = auth.user_id? auth.user_id : 0;
+        job.active = job.leave? false : true;
+
+        editJob({
+            variables: {
+                id: id,
+                user_id: auth.user_id,
+                job: job
+            }
+        });
     }
 
     return (
@@ -125,7 +142,8 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
                 createIncome,
                 createJob,
                 updateIncome,
-                updateExpense
+                updateExpense,
+                updateJob
             }} 
         >
             {children}

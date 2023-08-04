@@ -32,7 +32,7 @@ import { getJobVar } from "../../../Graphql/Job/state";
 const Job = () => {
     const [job, setJob] = useState<IJob>();
     const { getAuthentication } = useUserContext();
-    const { updateIncome } = useFinancesContext();
+    const { updateJob } = useFinancesContext();
     const navigate = useNavigate();
     const auth = getAuthentication();
     const {id} = useParams();

@@ -62,12 +62,10 @@ class JobRepository
             $jobExist->establishment = $args['establishment'];
 
             if(array_key_exists('active', $args)){
-                $jobLeaved = DateTime::createFromFormat('d/m/Y', date('d-m-Y'));
-                $jobExist->leave = $jobLeaved;
+                $jobExist->leave = $args['leave'];
                 $jobExist->active = false;
-                $jobExist->save();
             }
-            
+
             $jobExist->save();
             return $jobExist;
         });
@@ -75,7 +73,7 @@ class JobRepository
 
     public static function updateActiviJob(object $jobExist) {
         return DB::transaction(function () use ($jobExist) {
-            $jobLeaved = date('d-m-Y');
+            $jobLeaved = DateTime::createFromFormat('d-m-Y', date('d-m-Y'));
             $jobExist->leave = $jobLeaved;
             $jobExist->active = false;
             $jobExist->save();
