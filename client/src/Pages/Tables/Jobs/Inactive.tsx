@@ -34,13 +34,14 @@ const InactiveJob = () => {
             setPaginateInfo(jobsIdlePaginate.paginatorInfo);
             setJobs(jobsIdlePaginate.data)
         }
-        if(error) {
-            localStorage.removeItem('@auth');
-            navigate('/login');
-            toast.error('Faça o login primeiro');
-            return;
-        }
     }, [jobsIdlePaginate]);
+
+    if(error) {
+        localStorage.removeItem('@auth');
+        navigate('/login');
+        toast.error('Faça o login primeiro');
+        return;
+    }
 
     if(loading){
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>

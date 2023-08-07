@@ -32,15 +32,17 @@ const ActiveJob = () => {
             setPaginateInfo(jobsActivePaginate.paginatorInfo);
             setJobs(jobsActivePaginate.data)
         }
-        if(error) {
-            if(localStorage.getItem('@auth')){
-                localStorage.removeItem('@auth');
-            }
-            navigate('/login');
-            toast.error('Faça o login primeiro');
-            return;
-        }
+        
     }, [jobsActivePaginate]);
+
+    if(error) {
+        if(localStorage.getItem('@auth')){
+            localStorage.removeItem('@auth');
+        }
+        navigate('/login');
+        toast.error('Faça o login primeiro');
+        return;
+    }
 
     if(loading){
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>

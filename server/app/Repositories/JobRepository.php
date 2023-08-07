@@ -61,9 +61,12 @@ class JobRepository
             $jobExist->user_id = $args['user_id'];
             $jobExist->establishment = $args['establishment'];
 
-            if(array_key_exists('active', $args)){
+            if(array_key_exists('leave', $args) && $args['leave'] !== null){
                 $jobExist->leave = $args['leave'];
                 $jobExist->active = false;
+            }else {
+                $jobExist->leave = null;
+                $jobExist->active = true;
             }
 
             $jobExist->save();

@@ -34,16 +34,17 @@ const InactiveExpenses = () => {
             setPaginateInfo(inactiveExpenses.paginatorInfo);
             setExpenses(inactiveExpenses.data)
         }
-        if(error) {
-            localStorage.removeItem('@auth');
-            navigate('/login');
-            toast.error('Faça o login primeiro');
-            return;
-        }
     }, [inactiveExpenses]);
 
     if(loading) {
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
+    }
+
+    if(error) {
+        localStorage.removeItem('@auth');
+        navigate('/login');
+        toast.error('Faça o login primeiro');
+        return;
     }
 
     if(!paginateInfo || !expenses){

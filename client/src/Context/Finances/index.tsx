@@ -122,15 +122,18 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     }
 
     const updateJob = (id: number, job: IJob) => {
-        job.wage = typeof job.wage === 'string'? parseFloat(job.wage) : job.wage;
-        job.user_id = auth.user_id? auth.user_id : 0;
-        job.active = job.leave? false : true;
-
         editJob({
             variables: {
                 id: id,
                 user_id: auth.user_id,
-                job: job
+                job: {
+                    wage: typeof job.wage === 'string'? parseFloat(job.wage) : job.wage,
+                    user_id: auth.user_id? auth.user_id : 0,
+                    establishment: job.establishment,
+                    description: job.description,
+                    leave: job.leave,
+                    started: job.started,
+                }
             }
         });
     }

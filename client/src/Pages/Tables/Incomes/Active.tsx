@@ -34,15 +34,16 @@ const ActiveIncomes = () => {
             setPaginateInfo(incomesActive.paginatorInfo);
             setIncomes(incomesActive.data)
         }
-        if(error) {
-            if(localStorage.getItem('@auth')){
-                localStorage.removeItem('@auth');
-            }
-            navigate('/login');
-            toast.error('Faça o login primeiro');
-            return;
-        }
     }, [incomesActive]);
+
+    if(error) {
+        if(localStorage.getItem('@auth')){
+            localStorage.removeItem('@auth');
+        }
+        navigate('/login');
+        toast.error('Faça o login primeiro');
+        return;
+    }
 
     if(loading) {
         return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
