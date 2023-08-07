@@ -253,7 +253,7 @@ class ExpenseService
             $expensesMonth[$i] = [
                 'month' => $beginningMonth,
                 "total" => 0,
-                'year' => $beginningYear
+                'year' => $beginningMonth > 12? $currentYear : $beginningYear
             ];
 
             $beginningMonth++;
