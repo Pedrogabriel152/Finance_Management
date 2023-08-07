@@ -14,4 +14,9 @@ const formatPhone = (phone: string): string => {
     return newPhone;
 }
 
-export {formartCPF, formatPhone};
+const removeNotNumber = (data: string) => {
+    const newData = data.replace(/\D/g, '');
+    return newData;
+}
+
+export {formartCPF, formatPhone, removeNotNumber};

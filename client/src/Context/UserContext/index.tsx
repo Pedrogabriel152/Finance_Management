@@ -15,6 +15,7 @@ import { useCreateExpense } from "../../Graphql/Expense/hooks";
 import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
 import { useCreateIncome } from "../../Graphql/Incomes/hooks";
 import { IUser } from "../../Interfaces/IUser";
+import { removeNotNumber } from "../../utils/formater";
 
 interface UserProviderProps {
     children: ReactElement
@@ -123,10 +124,10 @@ const UserProvider = ({children}:UserProviderProps) => {
     const updateUser = (user: IUser) => {
         const update: IUser = {
             address: user.address,
-            cpf: user.cpf,
+            cpf: removeNotNumber(user.cpf),
             email: user.email,
             name: user.name,
-            phone: user.phone
+            phone: removeNotNumber(user.phone)
         }
 
         if(user.password){

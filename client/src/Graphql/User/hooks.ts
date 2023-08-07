@@ -8,7 +8,6 @@ import { IAuthentication } from "../../Interfaces/IAuthentication";
 
 // Reactive Vars
 import { authenticationVar, editUserVar, getUserVar } from "./state";
-import { useUserContext } from "../../Context/UserContext";
 import { IUser } from "../../Interfaces/IUser";
 import { IResponse } from "../../Interfaces/IResponse";
 
@@ -52,7 +51,7 @@ export const useUpdateUser = () => {
             }
         },
         refetchQueries: [
-            'GETUSER'
+            {query: GETUSER}
         ]
     })
 }
