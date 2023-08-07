@@ -34,3 +34,12 @@ export const GETUSER = gql`
         }
     }
 `;
+
+export const EDITUSER = gql`
+    mutation EditUser($id: ID!, $user: UserInput!){
+        editUser(id: $id, user: $user){
+            code
+            message
+        }
+    }
+`;

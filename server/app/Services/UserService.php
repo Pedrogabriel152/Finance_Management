@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use DateTime;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -80,6 +81,31 @@ class UserService{
             "message" => "Usuário logado com sucesso",
             "token" => $token,
             'user_id' => $userExist->id
+        ];
+    }
+
+    public static function editUser(array $args){
+        $user = UserRepository::getUserById($args['id']);
+
+        if(!$user) {
+            return [
+                'code' => 404,
+                'message' => "Usuário não encontrado"
+            ];
+        }
+
+        $updateUser = UserRepository::editUser($user, $args['user']);
+
+        if(!$updateUser) {
+            return [
+                'code' => 500,
+                'message' => "Erro ao atualizar usuário"
+            ];
+        }
+
+        return [
+            'code' => 200,
+            'message' => 'Usuário atualizado com sucesso'
         ];
     }
 }

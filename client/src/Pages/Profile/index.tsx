@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useGetUser } from "../../Graphql/User/hooks";
 import { IUser } from "../../Interfaces/IUser";
 import { useReactiveVar } from "@apollo/client";
-import { getUserVar } from "../../Graphql/User/state";
+import { editUserVar, getUserVar } from "../../Graphql/User/state";
 import { IInput } from "../../Interfaces/IInput";
 import NavBar from "../../Components/NavBar";
 import { BodyStyle } from "../Home/style";
@@ -10,11 +10,27 @@ import FormCreate from "../../Components/FormCreate";
 import Footer from "../../Components/Footer";
 import { toast } from "react-toastify";
 import { formartCPF, formatPhone } from "../../utils/formater";
+import { useUserContext } from "../../Context/UserContext";
+import { useNavigate } from "react-router-dom";
+import ModalLoading from "../../Components/ModalLoading";
+import { DataBodyStyle } from "../Tables/style";
 
 const Profile = () => {
     const [user, setUser] = useState<IUser>();
     useGetUser();
+    const { getAuthentication, updateUser } = useUserContext();
     const getUser = useReactiveVar(getUserVar);
+    const auth = getAuthentication();
+    const navigate = useNavigate();
+    const updateResponse = useReactiveVar(editUserVar);
+
+    useEffect(() => {
+        if(auth.code !== 200){
+            navigate('/');
+            toast.error('Acesso negado');
+            return;
+        }
+    }, [auth]);
 
     useEffect(() => {
         if(getUser) {
@@ -22,8 +38,16 @@ const Profile = () => {
         }
     }, [getUser]);
 
+    useEffect(() => {
+        if(updateResponse?.code === 200){
+            toast.success(updateResponse.message);
+            return;
+        }
+        toast.error(updateResponse?.message);
+    }, [updateResponse]);
+
     if(!user){
-        return <div></div>
+        return <DataBodyStyle> <ModalLoading/></DataBodyStyle>
     }
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,6 +110,14 @@ const Profile = () => {
                 return;
             }
         }
+
+        updateUser(user);
+
+        if(updateResponse?.code === 200) {
+            toast.success(updateResponse.message);
+            return;
+        }
+        toast.error(updateResponse?.message);
     }
 
     const inputs: IInput[] = [

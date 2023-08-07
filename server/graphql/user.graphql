@@ -16,11 +16,11 @@ type User {
 }
 
 input UserInput {
-    name: String
-    cpf: String
-    email: String
-    address: String
-    phone: String
+    name: String!
+    cpf: String!
+    email: String!
+    address: String!
+    phone: String!
     password: String
 }
 
@@ -28,12 +28,16 @@ extend type Query{
     user: User @guard @auth
 }
 
-extend type Mutation{
-    # createUser(user: UserInput!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@createUser")
-    login(email: String!, password: String!): AuthenticationStatus! @field(resolver: "App\\GraphQL\\Queries\\UserQuery@login")
+extend type Mutation @guard{
+    editUser(id: ID!, user: UserInput!): MessageResponse @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@editUser")
 }
 
 interface Message{
+    code: Int!
+    message: String!
+}
+
+type MessageResponse implements Message {
     code: Int!
     message: String!
 }

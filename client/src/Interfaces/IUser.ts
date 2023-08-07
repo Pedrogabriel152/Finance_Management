@@ -1,7 +1,7 @@
 import { IJob } from "./IJob"
 
 export interface IUser  {
-    id: number
+    id?: number
     name: string
     cpf: string
     email: string

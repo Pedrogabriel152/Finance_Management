@@ -1,15 +1,16 @@
 import { useMutation, useQuery } from "@apollo/client";
 
 // Queries
-import { GETUSER, LOGIN, REGISTER } from "./queries";
+import { EDITUSER, GETUSER, LOGIN, REGISTER } from "./queries";
 
 // Interfaces 
 import { IAuthentication } from "../../Interfaces/IAuthentication";
 
 // Reactive Vars
-import { authenticationVar, getUserVar } from "./state";
+import { authenticationVar, editUserVar, getUserVar } from "./state";
 import { useUserContext } from "../../Context/UserContext";
 import { IUser } from "../../Interfaces/IUser";
+import { IResponse } from "../../Interfaces/IResponse";
 
 export const useLogin = () => {
     return useMutation<{login: IAuthentication}>(LOGIN,{
@@ -41,4 +42,17 @@ export const useGetUser = () => {
             }  
         },
     });
+}
+
+export const useUpdateUser = () => {
+    return useMutation<{editUser: IResponse}>(EDITUSER, {
+        onCompleted(data){
+            if(data){
+                editUserVar(data.editUser);
+            }
+        },
+        refetchQueries: [
+            'GETUSER'
+        ]
+    })
 }

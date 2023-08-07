@@ -15,6 +15,7 @@ import { IJobCreate } from "../../../Interfaces/IJobCreate";
 
 // Context
 import { useUserContext } from "../../../Context/UserContext";
+import { useFinancesContext } from "../../../Context/Finances";
 
 // Toastify
 import { toast } from "react-toastify";
@@ -24,7 +25,8 @@ import { useReactiveVar } from "@apollo/client";
 import { createJobVar } from "../../../Graphql/Job/state";
 
 const CreateJob = () => {
-    const { createJob, getAuthentication } = useUserContext();
+    const { getAuthentication } = useUserContext();
+    const { createJob } = useFinancesContext();
     const createResponse = useReactiveVar(createJobVar);
     const navigate = useNavigate();
     const [newJob, setNewJob] = useState<IJobCreate>({

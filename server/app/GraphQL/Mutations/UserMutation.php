@@ -20,4 +20,10 @@ final class UserMutation
     //     $response = UserService::createUser($args);
     //     return $response;        
     // }
+
+    public function editUser($_, array $args) 
+    {
+        $response = UserService::editUser($args);
+        return $response;
+    }
 }

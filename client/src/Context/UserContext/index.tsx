@@ -8,12 +8,13 @@ import { IJobCreate } from "../../Interfaces/IJobCreate";
 // Graphql
 import { useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
-import { useLogin, useRegister } from "../../Graphql/User/hooks";
+import { useLogin, useRegister, useUpdateUser } from "../../Graphql/User/hooks";
 import { useCreateJob } from "../../Graphql/Job/hooks";
 import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
 import { useCreateExpense } from "../../Graphql/Expense/hooks";
 import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
 import { useCreateIncome } from "../../Graphql/Incomes/hooks";
+import { IUser } from "../../Interfaces/IUser";
 
 interface UserProviderProps {
     children: ReactElement
@@ -26,11 +27,9 @@ export const UserContext = createContext<IUserContext>({
     createUserDatabase: () => null,
     SaveLocalStorage: () => null,
     getAuthentication: () => null,
-    createJob: () => null,
-    createExpense: () => null,
-    createIncome: () => null,
     logout: () => null,
     setPage: () => null,
+    updateUser: () => null,
     page: 1
 });
 
@@ -41,9 +40,7 @@ const UserProvider = ({children}:UserProviderProps) => {
     const authentication = useReactiveVar(authenticationVar);
     const [auth, setAuth] = useState<any>();
     const [page, setPage] = useState<number>(1);
-    const [addJob] = useCreateJob();
-    const [addExpense] = useCreateExpense();
-    const [addIncome] = useCreateIncome();
+    const [editUser] = useUpdateUser();
 
     useEffect(() => {
         async function loading(){
@@ -123,44 +120,25 @@ const UserProvider = ({children}:UserProviderProps) => {
         setPage(page);
     }
 
-    const createJob = (job: IJobCreate) => {
-        const auth = getAuthentication();
-        job.wage = typeof job.wage === 'string'? parseFloat(job.wage) : job.wage;
-        job.user_id = auth.user_id;
+    const updateUser = (user: IUser) => {
+        const update: IUser = {
+            address: user.address,
+            cpf: user.cpf,
+            email: user.email,
+            name: user.name,
+            phone: user.phone
+        }
 
-        addJob({
-            variables: {
-                job: job
+        if(user.password){
+            update.password = user.password;
+        }
+
+        editUser({
+            variables:{
+                id: user.id,
+                user: update
             }
         })
-    }
-
-    const createExpense = (expense: IExpenseCreate) => {
-        const auth= getAuthentication();
-        expense.value_installment = typeof expense.value_installment === 'string'? parseFloat(expense.value_installment) : expense.value_installment;
-        expense.user_id = auth.user_id;
-
-        addExpense({
-            variables: {
-                expense: expense
-            }
-        });
-    }
-
-    const createIncome = (income: IIncomeCreate) => {
-        const auth= getAuthentication();
-        income.value_installment = typeof income.value_installment === 'string'? parseFloat(income.value_installment) : income.value_installment;
-        income.user_id = auth.user_id;
-
-        addIncome({
-            variables: {
-                income: income
-            }
-        });
-    }
-
-    const updateIncome = () => {
-        
     }
 
     return (
@@ -174,10 +152,8 @@ const UserProvider = ({children}:UserProviderProps) => {
                 register: register,
                 getAuthentication: getAuthentication,
                 logout: logout,
-                createJob: createJob,
-                createExpense: createExpense,
-                createIncome: createIncome,
                 setPage: handlePage,
+                updateUser: updateUser,
                 page: page
             }} 
         >

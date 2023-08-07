@@ -15,6 +15,7 @@ import { IExpenseCreate } from "../../../Interfaces/IExpenseCreate";
 
 // Context
 import { useUserContext } from "../../../Context/UserContext";
+import { useFinancesContext } from "../../../Context/Finances";
 
 // Toastify
 import { toast } from "react-toastify";
@@ -24,7 +25,8 @@ import { useReactiveVar } from "@apollo/client";
 import { createExpenseVar } from "../../../Graphql/Expense/state";
 
 const CreateExpense = () => {
-    const { createExpense, getAuthentication } = useUserContext();
+    const { getAuthentication } = useUserContext();
+    const { createExpense } = useFinancesContext();
     const createResponse = useReactiveVar(createExpenseVar);
     const navigate = useNavigate();
     const [newExpense, setNewExpense] = useState<IExpenseCreate>({
