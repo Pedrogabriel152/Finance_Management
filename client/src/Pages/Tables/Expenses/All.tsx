@@ -42,7 +42,6 @@ const AllExpenses = () => {
         }
         navigate('/login');
         toast.error('Faça o login primeiro');
-        
     }
 
     if(loading) {

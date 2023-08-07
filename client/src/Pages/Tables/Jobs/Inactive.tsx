@@ -40,7 +40,6 @@ const InactiveJob = () => {
         localStorage.removeItem('@auth');
         navigate('/login');
         toast.error('Faça o login primeiro');
-        return;
     }
 
     if(loading){

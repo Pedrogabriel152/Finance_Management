@@ -2,7 +2,7 @@ import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/
 
 // Queries
 import { CREATEINCOME, GETACTIVEINCOMES, GETIDLEINCOMES, GETINCOME, GETINCOMES, UPDATEINCOME } from "./queries";
-import { GETFINANCE } from "../Finance/queries";
+import { GETFINANCE, GETFINANCIALSUMMARY, GETMONTHLYSUMMARY } from "../Finance/queries";
 
 // States
 import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar, createIncomeVar, getIncomeVar, updateIncomeVar } from "./state";
@@ -105,6 +105,12 @@ export const useCreateIncome = () => {
             {query: GETIDLEINCOMES, variables: {
                 user_id: auth?.user_id ? auth.user_id : 0,
                 first: 1
+            }},
+            {query: GETFINANCIALSUMMARY, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETMONTHLYSUMMARY, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
             }}
         ]
     })

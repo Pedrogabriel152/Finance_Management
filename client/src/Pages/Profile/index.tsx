@@ -1,36 +1,30 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-// Interfaces
-import { IForm } from "../../../Interfaces/IForm";
-import { IInput } from "../../../Interfaces/IInput";
-
-// Components
-import Logo from "../../../Components/Logo";
-import Form from "../../../Components/Form";
-import IconesRodape from "../../../Components/Icones";
-import AbaLateral from "../../../Components/AbaLateral";
-
-// Styles
-import { Container, ContainerInternoSingin } from "../style";
-
-// Context
-import { useUserContext } from "../../../Context/UserContext";
+import { useGetUser } from "../../Graphql/User/hooks";
+import { IUser } from "../../Interfaces/IUser";
+import { useReactiveVar } from "@apollo/client";
+import { getUserVar } from "../../Graphql/User/state";
+import { IInput } from "../../Interfaces/IInput";
+import NavBar from "../../Components/NavBar";
+import { BodyStyle } from "../Home/style";
+import FormCreate from "../../Components/FormCreate";
+import Footer from "../../Components/Footer";
 import { toast } from "react-toastify";
-import { api } from "../../../utils/api";
-import { formartCPF, formatPhone } from "../../../utils/formater";
+import { formartCPF, formatPhone } from "../../utils/formater";
 
-const Singin = () => {
-    const { authentication } = useUserContext();
-    const navigate = useNavigate();
-    const [user, setUser] = useState<any>({});
+const Profile = () => {
+    const [user, setUser] = useState<IUser>();
+    useGetUser();
+    const getUser = useReactiveVar(getUserVar);
 
     useEffect(() => {
-        if(authentication?.code == 200){
-            navigate('/');
-            toast.success('Bem vindo ao Accounting');
+        if(getUser) {
+            setUser(getUser);
         }
-    }, [authentication])
+    }, [getUser]);
+
+    if(!user){
+        return <div></div>
+    }
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.name === 'phone'){
@@ -43,10 +37,10 @@ const Singin = () => {
         }
 
         if(e.target.name == 'cpf'){
-            const newCPF = formartCPF(e.target.value);
+            const result = formartCPF(e.target.value);
             setUser({
                 ...user,
-                [e.target.name]: newCPF
+                [e.target.name]: result
             })
             return;
         }
@@ -81,38 +75,22 @@ const Singin = () => {
             toast.error("O endereço é obrigatório");
             return;
         }
-        if(!user.password){
-            toast.error("A senha é obrigatória");
-            return;
-        }
-        if(user.password !== user.confirmPassword){
-            toast.error("As senhas precisam ser iguais");
-            return;
-        }
 
-        api.post('/api/register', {
-            email: user.email,
-            name: user.name,
-            cpf: user.cpf.replace(/\D/g, ''),
-            address: user.address,
-            password: user.password,
-            phone: user.phone.replace(/\D/g, '')
-        })
-        .then((res: any) => {
-            if(localStorage.getItem('@auth')){
-                localStorage.removeItem('@auth');
+        if(user.password) {
+            if(!user.confirmPassword){
+                toast.error("A confirmação de senha é obrigátoria");
+                return;
             }
-            localStorage.setItem('@auth', JSON.stringify(res.data));
-            navigate('/');
-            toast.success('Bem vindo ao sistema');
-        })
-        .catch((error: any) => {
-            toast.error(error.response.data.message);
-        })
+            if(user.password !== user.confirmPassword){
+                toast.error("As senhas precisam ser igauis");
+                return;
+            }
+        }
     }
 
     const inputs: IInput[] = [
         {
+            label: "Nome:",
             svg: 'HiUserCircle',
             placeholder: 'Nome',
             name: "name",
@@ -121,6 +99,7 @@ const Singin = () => {
             onChange: handleOnChange,
         },
         {
+            label: "E-mail:",
             svg: 'MdEmail',
             placeholder: 'E-mail',
             name: "email",
@@ -129,14 +108,16 @@ const Singin = () => {
             onChange: handleOnChange,
         },
         {
+            label: "CPF:",
             svg: 'HiIdentification',
             placeholder: 'CPF',
             name: "cpf",
             type: "text",
-            value: user.cpf,
+            value: formartCPF(user.cpf),
             onChange: handleOnChange,
         },
         {
+            label: "Endereço:",
             svg: 'FaMapMarkedAlt',
             placeholder: 'Endereço',
             name: "address",
@@ -145,14 +126,16 @@ const Singin = () => {
             onChange: handleOnChange,
         },
         {
+            label: "Telefone:",
             svg: 'MdOutlinePhoneIphone',
             placeholder: 'Telefone',
             name: "phone",
             type: "tel",
-            value: user.phone,
+            value: formatPhone(user.phone),
             onChange: handleOnChange,
         },
         {
+            label: "Senha:",
             svg: 'RiLockPasswordFill',
             placeholder: 'Senha',
             name: "password",
@@ -161,6 +144,7 @@ const Singin = () => {
             onChange: handleOnChange,
         },
         {
+            label: "Confirme a senha:",
             svg: 'RiLockPasswordFill',
             placeholder: 'Confirme sua senha',
             name: "confirmPassword",
@@ -170,26 +154,16 @@ const Singin = () => {
         }
     ];
 
-    const form: IForm = {
-        inputs: inputs,
-        link: 'Já possui uma conta?',
-        text: 'Register',
-        submit: handleSubmit
-    }
-
-    return(
-        <Container>
-            <AbaLateral text="Register"/>
-            <div>
-                <ContainerInternoSingin>
-                    <Logo tipo="Register"/>
-                    <h1>SING IN</h1>
-                    <Form inputs={form.inputs} link={form.link} text={form.text} submit={handleSubmit}/>
-                </ContainerInternoSingin>
-                <IconesRodape />
-            </div>
-        </Container>
+    return (
+        <>
+        <NavBar />
+        <BodyStyle>
+            <FormCreate data={inputs} text={"editFinance"} onSubmit={handleSubmit} button="Salvar"/>
+        </BodyStyle>
+        <Footer />
+        </>
+        
     );
 }
 
-export default Singin;
+export default Profile;

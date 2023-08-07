@@ -44,7 +44,6 @@ const InactiveExpenses = () => {
         localStorage.removeItem('@auth');
         navigate('/login');
         toast.error('Faça o login primeiro');
-        return;
     }
 
     if(!paginateInfo || !expenses){

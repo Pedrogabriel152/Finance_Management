@@ -17,6 +17,7 @@ import { IResponse } from "../../Interfaces/IResponse";
 
 // Utils
 import { updateLink } from "../../utils/updateLink";
+import { GETFINANCIALSUMMARY } from "../Finance/queries";
 
 export const useGetFiveJobs = () => {
     const {getAuthentication} = useUserContext();
@@ -122,6 +123,9 @@ export const useCreateJob = () => {
             {query: GETIDLEJOBS, variables: {
                 user_id: auth?.user_id ? auth.user_id : 0,
                 first: 1
+            }},
+            {query: GETFINANCIALSUMMARY, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
             }}
         ]
     })

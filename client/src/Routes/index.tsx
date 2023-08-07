@@ -11,6 +11,7 @@ import CreateExpense from "../Pages/Finaces/Expense/create";
 import CreateIncome from "../Pages/Finaces/Income/create";
 import Income from "../Pages/Finaces/Income";
 import Expense from "../Pages/Finaces/Expense";
+import Profile from "../Pages/Profile";
 
 const Rotas = () => {
     return(
@@ -26,6 +27,7 @@ const Rotas = () => {
             <Route path="/create/job" element={<CreateJob />}/>
             <Route path="/create/expense" element={<CreateExpense />}/>
             <Route path="/create/income" element={<CreateIncome />}/>
+            <Route path="/profile" element={<Profile />}/>
             <Route path="/" element={<Home />}/>
         </Routes>
     );

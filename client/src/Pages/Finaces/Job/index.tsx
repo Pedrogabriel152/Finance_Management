@@ -42,7 +42,7 @@ const Job = () => {
         if(getJob) {
             setJob(getJob);
         }
-    }, [getJob])
+    }, [getJob]);
 
     if(!job) {
         return (

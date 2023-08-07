@@ -1,13 +1,15 @@
 import { useMutation, useQuery } from "@apollo/client";
 
 // Queries
-import { LOGIN, REGISTER } from "./queries";
+import { GETUSER, LOGIN, REGISTER } from "./queries";
 
 // Interfaces 
 import { IAuthentication } from "../../Interfaces/IAuthentication";
 
 // Reactive Vars
-import { authenticationVar } from "./state";
+import { authenticationVar, getUserVar } from "./state";
+import { useUserContext } from "../../Context/UserContext";
+import { IUser } from "../../Interfaces/IUser";
 
 export const useLogin = () => {
     return useMutation<{login: IAuthentication}>(LOGIN,{
@@ -30,3 +32,13 @@ export const useRegister = () => {
         
     });
 };
+
+export const useGetUser = () => {
+    return useQuery<{user: IUser}>(GETUSER, {
+        onCompleted(data) {
+            if(data){
+                getUserVar(data.user);
+            }  
+        },
+    });
+}

@@ -48,6 +48,13 @@ const CreateIncome = () => {
         }
     }, [auth]);
 
+    useEffect(() => {
+        if(createResponse?.code === 200) {
+            toast.success(createResponse.message);
+            navigate('/incomes/all/1');
+        }
+    }, [createResponse]);
+
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value)
         if(e.target.type === 'number') {

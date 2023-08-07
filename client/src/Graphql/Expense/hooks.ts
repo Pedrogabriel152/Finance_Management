@@ -1,6 +1,6 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE, GETEXPENSE, UPDATEEXPENSE } from "./queries";
-import { GETFINANCE } from "../Finance/queries";
+import { GETFINANCE, GETFINANCIALSUMMARY, GETMONTHLYSUMMARY } from "../Finance/queries";
 import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getExpensesVar, getIdleExpenseVar, updateExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";
 
@@ -99,6 +99,12 @@ export const useCreateExpense = () => {
             {query: GETIDLEEXPENSES, variables: {
                 user_id: auth?.user_id ? auth.user_id : 0,
                 first: 1
+            }},
+            {query: GETFINANCIALSUMMARY, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETMONTHLYSUMMARY, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
             }}
         ]
     })

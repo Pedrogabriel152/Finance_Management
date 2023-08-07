@@ -21,3 +21,16 @@ export const REGISTER = gql`
         }
     }
 `;
+
+export const GETUSER = gql`
+    query getUser{
+        user{
+            address
+            cpf 
+            email
+            id
+            name
+            phone
+        }
+    }
+`;

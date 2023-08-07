@@ -41,7 +41,6 @@ const ActiveJob = () => {
         }
         navigate('/login');
         toast.error('Faça o login primeiro');
-        return;
     }
 
     if(loading){

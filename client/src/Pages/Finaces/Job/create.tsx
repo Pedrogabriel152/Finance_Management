@@ -43,6 +43,12 @@ const CreateJob = () => {
         }
     }, [auth])
 
+    useEffect(() => {
+        if(createResponse?.code === 200) {
+            toast.success(createResponse.message);
+            navigate('/jobs/all/1');
+        }
+    }, [createResponse])
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.type === 'number') {
