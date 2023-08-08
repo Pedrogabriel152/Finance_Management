@@ -29,12 +29,12 @@ import { IExpense } from "../../../Interfaces/IExpense";
 const Expense = () => {
     const [expense, setExpense] = useState<IExpense>();
     const [installmentsPaids, setInstallmentsPaids] = useState<number>(0);
-    const { getAuthentication } = useUserContext();
+    const { getAuthentication, logout } = useUserContext();
     const { updateExpense } = useFinancesContext();
     const navigate = useNavigate();
     const auth = getAuthentication();
     const {id} = useParams();
-    useGetExpense(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
+    const { error } = useGetExpense(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
     const getExpense = useReactiveVar(getExpenseVar);
     const updateResponse = useReactiveVar(updateExpenseVar);
 
@@ -44,6 +44,14 @@ const Expense = () => {
             setInstallmentsPaids(getExpense.installments_paid);
         }
     }, [getExpense]);
+
+    useEffect(() => {
+        if(error) {
+            navigate('/login');
+            toast.error('Acesso negado!');
+            logout();
+        }
+    }, [error])
 
     if(!expense) {
         return (

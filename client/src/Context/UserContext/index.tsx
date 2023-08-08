@@ -9,11 +9,6 @@ import { IJobCreate } from "../../Interfaces/IJobCreate";
 import { useReactiveVar } from "@apollo/client";
 import { authenticationVar } from "../../Graphql/User/state";
 import { useLogin, useRegister, useUpdateUser } from "../../Graphql/User/hooks";
-import { useCreateJob } from "../../Graphql/Job/hooks";
-import { IExpenseCreate } from "../../Interfaces/IExpenseCreate";
-import { useCreateExpense } from "../../Graphql/Expense/hooks";
-import { IIncomeCreate } from "../../Interfaces/IIncomeCreate";
-import { useCreateIncome } from "../../Graphql/Incomes/hooks";
 import { IUser } from "../../Interfaces/IUser";
 import { removeNotNumber } from "../../utils/formater";
 

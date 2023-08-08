@@ -13,7 +13,6 @@ import { IInput } from "../../../Interfaces/IInput";
 import Form from "../../../Components/Form";
 import IconesRodape from "../../../Components/Icones";
 import AbaLateral from "../../../Components/AbaLateral";
-import { useUserContext } from "../../../Context/UserContext";
 import { toast } from "react-toastify";
 import { api } from "../../../utils/api";
 

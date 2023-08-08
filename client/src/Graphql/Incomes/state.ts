@@ -9,3 +9,4 @@ export const getActiveIcomesVar = makeVar<IPaginate | null>(null);
 export const getIdleIcomesVar = makeVar<IPaginate | null>(null);
 export const createIncomeVar = makeVar<IResponse | null>(null);
 export const updateIncomeVar = makeVar<IResponse | null>(null);
+export const payInstallmentIncomeVar = makeVar<IResponse | null>(null);

@@ -33,6 +33,11 @@ class IncomeRepository
                 'installments_received' => $args['installments_received']? $args['installments_received'] : 0
             ]);
 
+            if($newIncome->installments == $newIncome->installments_received) {
+                $newIncome->received_income = true;
+                $newIncome->save();
+            }
+
             return $newIncome;
         });
     }

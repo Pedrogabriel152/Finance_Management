@@ -49,6 +49,7 @@ const CreateJob = () => {
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
             navigate('/jobs/all/1');
+            createJobVar(null);
         }
     }, [createResponse])
 

@@ -8,8 +8,8 @@ import { IFinancesContext } from "../../Interfaces/IFinancesContext";
 
 // Graphql
 import { useCreateJob, useUpdateJob } from "../../Graphql/Job/hooks";
-import { useCreateExpense, useUpdateExpense } from "../../Graphql/Expense/hooks";
-import { useCreateIncome, useUpdateIncome } from "../../Graphql/Incomes/hooks";
+import { useCreateExpense, usePayInstallmentExpense, useUpdateExpense } from "../../Graphql/Expense/hooks";
+import { useCreateIncome, usePayInstallmentIncome, useUpdateIncome } from "../../Graphql/Incomes/hooks";
 
 // Context
 import { useUserContext } from "../UserContext";
@@ -25,7 +25,9 @@ export const FinancesContext = createContext<IFinancesContext>({
     createIncome: () => null,
     updateIncome: () => null,
     updateExpense: () => null,
-    updateJob: () => null
+    updateJob: () => null,
+    payInstallmentExpense: () => null,
+    payInstallmentIncome: () => null
 });
 
 const FinancesProvider = ({children}: FinancesProviderProps) => {
@@ -36,6 +38,8 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
     const [editIncome] = useUpdateIncome();
     const [editExpense] = useUpdateExpense();
     const [editJob] = useUpdateJob();
+    const [payInstallmentExp] = usePayInstallmentExpense();
+    const [payInstallmentInc] = usePayInstallmentIncome();
     const auth = getAuthentication();
 
     const createJob = (job: IJobCreate) => {
@@ -138,6 +142,24 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
         });
     }
 
+    const payInstallmentExpense = (id: number, user_id: number) => {
+        payInstallmentExp({
+            variables: {
+                id,
+                user_id
+            }
+        });
+    }
+
+    const payInstallmentIncome = (id: number, user_id: number) => {
+        payInstallmentInc({
+            variables: {
+                id,
+                user_id
+            }
+        });
+    }
+
     return (
         <FinancesContext.Provider 
             value={{
@@ -146,7 +168,9 @@ const FinancesProvider = ({children}: FinancesProviderProps) => {
                 createJob,
                 updateIncome,
                 updateExpense,
-                updateJob
+                updateJob,
+                payInstallmentExpense,
+                payInstallmentIncome,
             }} 
         >
             {children}

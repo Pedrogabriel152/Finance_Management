@@ -91,3 +91,12 @@ export const UPDATEINCOME = gql`
         }
     }
 `;
+
+export const PAYINSTALLMENT= gql`
+    mutation PayInstallmentIncome($id: ID!, $user_id: ID!){
+        payInstallmentIncome(id: $id, user_id: $user_id){
+            code
+            message
+        }
+    }
+`;

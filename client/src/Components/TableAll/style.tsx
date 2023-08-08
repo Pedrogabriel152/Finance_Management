@@ -40,6 +40,7 @@ export const TableBoddy = styled.div`
         margin-top: 25px;
         min-width: 23%;
         max-width: 23%;
+        text-align: center;
 
         a {
             color: #000;
@@ -49,13 +50,14 @@ export const TableBoddy = styled.div`
     }
 
     div:first-child {
-        margin-left: 15px;
+        text-align: center;
         max-width: 20%;
     }
 
     div:last-child {
-        margin-right: 20px;
+        margin-right: 4px;
         min-width: 15%;
         max-width: 15%;
+        text-align: center;
     }
 `;

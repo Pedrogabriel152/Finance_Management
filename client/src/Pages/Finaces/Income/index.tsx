@@ -29,12 +29,12 @@ import { useFinancesContext } from "../../../Context/Finances";
 const Income = () => {
     const [income, setIncome] = useState<IIncome>();
     const [installmentsReceived, setInstallmentsReceived] = useState<number>(0);
-    const { getAuthentication } = useUserContext();
+    const { getAuthentication, logout } = useUserContext();
     const { updateIncome } = useFinancesContext();
     const navigate = useNavigate();
     const auth = getAuthentication();
     const {id} = useParams();
-    useGetIncome(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
+    const { error } = useGetIncome(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
     const getIncome = useReactiveVar(getIncomeVar);
     const updateResponse = useReactiveVar(updateIncomeVar);
 
@@ -44,7 +44,15 @@ const Income = () => {
             setIncome(getIncome);
             setInstallmentsReceived(getIncome.installments_received);
         }
-    }, [getIncome])
+    }, [getIncome]);
+
+    useEffect(() => {
+        if(error) {
+            navigate('/login');
+            toast.error('Acesso negado!');
+            logout();
+        }
+    }, [error])
 
     if(!income) {
         return (

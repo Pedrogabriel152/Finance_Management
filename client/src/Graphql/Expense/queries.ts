@@ -90,3 +90,12 @@ export const UPDATEEXPENSE = gql`
         }
     }
 `;
+
+export const PAYINSTALLMENT = gql`
+    mutation PayInstallmentExpense($id: ID!, $user_id: ID!){
+        payInstallmentExpense(id: $id, user_id: $user_id){
+            code
+            message
+        }
+    }
+`;

@@ -20,8 +20,9 @@ import Paginate from "../../../Components/Paginate";
 import ModalLoading from "../../../Components/ModalLoading";
 import TableAll from "../../../Components/TableAll";
 import NewButton from "../../../Components/NewButton";
+import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
-const AllExpenses = () => {
+const AllExpenses = ({payInstallment}: IFinanceTable) => {
     const { page } = useParams();
     const { loading, error } = useGetExpenses(parseInt(page? page : '1'));
     const allExpenses = useReactiveVar(getExpensesVar);
@@ -51,14 +52,14 @@ const AllExpenses = () => {
     if(!paginateInfo || !expenses){
         return <DataBodyStyle> 
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={[]} text="expense"/>
+            <TableAll data={[]} text="expense" payInstallment={payInstallment}/>
         </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={expenses} text="expense"/>
+            <TableAll data={expenses} text="expense" payInstallment={payInstallment}/>
             {paginateInfo.lastPage >= 2 && (
                 <Paginate  
                     lastPage={paginateInfo.lastPage} 

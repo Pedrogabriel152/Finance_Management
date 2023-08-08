@@ -52,6 +52,7 @@ const CreateIncome = () => {
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
             navigate('/incomes/all/1');
+            createIncomeVar(null);
         }
     }, [createResponse]);
 
@@ -161,7 +162,7 @@ const CreateIncome = () => {
 
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
-            navigate('/incomes/all/1')
+            navigate('/incomes/all/1');
             return;
         }
 

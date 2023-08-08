@@ -28,12 +28,12 @@ import { getJobVar, updateJobVar } from "../../../Graphql/Job/state";
 
 const Job = () => {
     const [job, setJob] = useState<IJob>();
-    const { getAuthentication } = useUserContext();
+    const { getAuthentication, logout } = useUserContext();
     const { updateJob } = useFinancesContext();
     const navigate = useNavigate();
     const auth = getAuthentication();
     const {id} = useParams();
-    useGetJob(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
+    const { error } = useGetJob(id? parseInt(id) : 0, auth?.user_id? auth.user_id:0);
     const getJob = useReactiveVar(getJobVar);
     const updateResponse = useReactiveVar(updateJobVar);
 
@@ -43,6 +43,14 @@ const Job = () => {
             setJob(getJob);
         }
     }, [getJob]);
+
+    useEffect(() => {
+        if(error) {
+            navigate('/login');
+            toast.error('Acesso negado!');
+            logout();
+        }
+    }, [error])
 
     if(!job) {
         return (

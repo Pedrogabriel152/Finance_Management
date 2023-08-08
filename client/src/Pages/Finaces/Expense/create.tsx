@@ -52,6 +52,7 @@ const CreateExpense = () => {
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
             navigate('/expenses/all/1');
+            createExpenseVar(null);
         }
     }, [createResponse]);
 
@@ -159,7 +160,7 @@ const CreateExpense = () => {
 
         if(createResponse?.code === 200) {
             toast.success(createResponse.message);
-            navigate('/expenses/all/1')
+            navigate('/expenses/all/1');
             return;
         }
 

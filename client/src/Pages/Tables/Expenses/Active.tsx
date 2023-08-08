@@ -20,8 +20,9 @@ import { toast } from "react-toastify";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
+import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
-const ActiveExpenses = () => {
+const ActiveExpenses = ({payInstallment}: IFinanceTable) => {
     const { page } = useParams();
     const { loading, error } =  useGetActiveExpenses(parseInt(page? page : '1'));
     const expensesActive = useReactiveVar(getActiveExpenseVar);
@@ -51,14 +52,14 @@ const ActiveExpenses = () => {
     if(!paginateInfo || !expenses){
         return <DataBodyStyle> 
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={[]} text="expense"/>
+            <TableAll data={[]} text="expense" payInstallment={payInstallment}/>
         </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={expenses} text="expense"/>
+            <TableAll data={expenses} text="expense" payInstallment={payInstallment}/>
             {paginateInfo.lastPage >= 2 && (
                 <Paginate  
                     lastPage={paginateInfo.lastPage} 

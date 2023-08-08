@@ -172,7 +172,7 @@ const Profile = () => {
             placeholder: 'Senha',
             name: "password",
             type: "password",
-            value: user.password,
+            value: user.password? user.password : '',
             onChange: handleOnChange,
         },
         {
@@ -181,7 +181,7 @@ const Profile = () => {
             placeholder: 'Confirme sua senha',
             name: "confirmPassword",
             type: "password",
-            value: user.confirmPassword,
+            value: user.confirmPassword? user.confirmPassword : '',
             onChange: handleOnChange,
         }
     ];

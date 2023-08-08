@@ -8,6 +8,7 @@ import { getIdleExpenseVar } from "../../../Graphql/Expense/state";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
+import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
 // Styled
 import { DataBodyStyle } from "../style";
@@ -21,7 +22,7 @@ import NewButton from "../../../Components/NewButton";
 // Toastify
 import { toast } from "react-toastify";
 
-const InactiveExpenses = () => {
+const InactiveExpenses = ({payInstallment}: IFinanceTable) => {
     const { page } = useParams();
     const { loading, error } = useGetIdleExpenses(parseInt(page? page : '1'));
     const inactiveExpenses = useReactiveVar(getIdleExpenseVar);
@@ -49,14 +50,14 @@ const InactiveExpenses = () => {
     if(!paginateInfo || !expenses){
         return <DataBodyStyle> 
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={[]} text="expense"/>
+            <TableAll data={[]} text="expense" payInstallment={payInstallment}/>
         </DataBodyStyle>
     }
 
     return (
         <DataBodyStyle>
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={expenses} text="expense"/>
+            <TableAll data={expenses} text="expense" payInstallment={payInstallment}/>
             {paginateInfo.lastPage >= 2 && (
                 <Paginate  
                     lastPage={paginateInfo.lastPage} 

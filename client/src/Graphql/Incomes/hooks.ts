@@ -1,11 +1,11 @@
 import { createHttpLink, useApolloClient, useMutation, useQuery } from "@apollo/client";
 
 // Queries
-import { CREATEINCOME, GETACTIVEINCOMES, GETIDLEINCOMES, GETINCOME, GETINCOMES, UPDATEINCOME } from "./queries";
+import { CREATEINCOME, GETACTIVEINCOMES, GETIDLEINCOMES, GETINCOME, GETINCOMES, PAYINSTALLMENT, UPDATEINCOME } from "./queries";
 import { GETFINANCE, GETFINANCIALSUMMARY, GETMONTHLYSUMMARY } from "../Finance/queries";
 
 // States
-import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar, createIncomeVar, getIncomeVar, updateIncomeVar } from "./state";
+import { getActiveIcomesVar, getIdleIcomesVar, getIcomesVar, createIncomeVar, getIncomeVar, updateIncomeVar, payInstallmentIncomeVar } from "./state";
 
 // Context
 import { useUserContext } from "../../Context/UserContext";
@@ -138,6 +138,35 @@ export const useUpdateIncome = () => {
         onCompleted(data) {
             if(data) {
                 updateIncomeVar(data.editIncome);
+            }
+        },
+        refetchQueries: [
+            {query: GETFINANCE, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETINCOMES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETACTIVEINCOMES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETIDLEINCOMES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }}
+        ]
+    })
+}
+
+export const usePayInstallmentIncome = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+    return useMutation<{payInstallmentIncome: IResponse}>(PAYINSTALLMENT, {
+        onCompleted(data) {
+            if(data) {
+                payInstallmentIncomeVar(data.payInstallmentIncome);
             }
         },
         refetchQueries: [

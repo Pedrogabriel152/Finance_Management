@@ -9,21 +9,23 @@ import InactiveIncomes from "./Inactive";
 
 // Styled
 import { BoddyStyle } from "../style";
+import { useFinancesContext } from "../../../Context/Finances";
 
 const Incomes = () => {
     const { status } = useParams();
+    const { payInstallmentIncome } = useFinancesContext();
 
     return (
         <BoddyStyle>
             <NavBar/>
             {status == 'all' && (
-                <AllIncomes />
+                <AllIncomes payInstallment={payInstallmentIncome}/>
             )}
             {status == 'active' && (
-                <ActiveIncomes />
+                <ActiveIncomes payInstallment={payInstallmentIncome}/>
             )}
             {status == 'inactive' && (
-                <InactiveIncomes />
+                <InactiveIncomes payInstallment={payInstallmentIncome}/>
             )}
             <Footer/>
         </BoddyStyle>

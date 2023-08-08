@@ -32,6 +32,11 @@ class ExpenseRepository
                 'installments_paid' => $args['installments_paid'] > 0? $args['installments_paid'] : 0,
                 'months_paid' => $args['months_paid']
             ]);
+
+            if($newExpense->installments == $newExpense->installments_paid) {
+                $newExpense->paid_expense = true;
+                $newExpense->save();
+            }
             
             return $newExpense;
         });

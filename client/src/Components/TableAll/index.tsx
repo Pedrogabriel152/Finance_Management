@@ -6,12 +6,18 @@ import { ITableAll } from "../../Interfaces/ITableAll";
 // Components
 import BackTable from "../BackTable";
 
+// Icons
+import { BsFillCheckSquareFill } from "react-icons/bs";
+
 // Styled
 import { TableAllStyle, TableHead, TableBoddy,TableAllContainer } from "./style";
+import { useUserContext } from "../../Context/UserContext";
 
-const TableAll = ({data, text} : ITableAll) => {
+const TableAll = ({data, text, payInstallment} : ITableAll) => {
     const {status} = useParams();
+    const { getAuthentication } = useUserContext();
     const active = status == 'active'? 1 : status == 'all'? 0 : 2;
+    const auth = getAuthentication();
     
     return (
         <TableAllContainer>
@@ -19,16 +25,21 @@ const TableAll = ({data, text} : ITableAll) => {
                 <BackTable titles={['Todos', 'Ativos', 'Inativos']} active={active}/>
                 <TableHead>
                     <div>Nome</div>
-                    <div>Status</div>
+                    <div>Vencimento</div>
                     <div>Parcela</div>
+                    <div>#</div>
                 </TableHead>
-                {data.map((finance: any, index: number) => (
-                    <TableBoddy key={index}>
-                        <div><Link to={`/${text}/${finance.id}`}>{finance.establishment}</Link></div>
-                        <div>{finance.received_income || finance.paid_expense? 'Inativo' : 'Ativo'}</div>
-                        <div>{parseFloat(finance.value_installment).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
-                    </TableBoddy> 
-                ))}
+                {data.map((finance: any, index: number) => {
+                    const expires = new Date(finance.expires);
+                    return (
+                        <TableBoddy key={index}>
+                            <div><Link to={`/${text}/${finance.id}`}>{finance.establishment}</Link></div>
+                            <div>{expires.toLocaleString('pt-BR', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric' })}</div>
+                            <div>{parseFloat(finance.value_installment).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
+                            <div onClick={() => payInstallment(finance.id, auth.user_id)}>{finance?.paid_expense || finance.received_income? '' :  <BsFillCheckSquareFill size={15} color="#1E781B"/> }</div>
+                        </TableBoddy> 
+                    )
+                })}
                 
             </TableAllStyle>
         </TableAllContainer>

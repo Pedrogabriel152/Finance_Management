@@ -21,16 +21,17 @@ import { api } from "../../../utils/api";
 import { formartCPF, formatPhone } from "../../../utils/formater";
 
 const Singin = () => {
-    const { authentication } = useUserContext();
+    const { getAuthentication } = useUserContext();
     const navigate = useNavigate();
+    const auth = getAuthentication();
     const [user, setUser] = useState<any>({});
 
     useEffect(() => {
-        if(authentication?.code == 200){
+        if(auth?.code == 200){
             navigate('/');
             toast.success('Bem vindo ao Accounting');
         }
-    }, [authentication])
+    }, [auth]);
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.name === 'phone'){

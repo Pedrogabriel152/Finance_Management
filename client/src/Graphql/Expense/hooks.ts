@@ -1,7 +1,7 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE, GETEXPENSE, UPDATEEXPENSE } from "./queries";
+import { GETEXPENSES, GETACTIVEEXPENSES, GETIDLEEXPENSES, CREATEEXPENSE, GETEXPENSE, UPDATEEXPENSE, PAYINSTALLMENT } from "./queries";
 import { GETFINANCE, GETFINANCIALSUMMARY, GETMONTHLYSUMMARY } from "../Finance/queries";
-import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getExpensesVar, getIdleExpenseVar, updateExpenseVar } from "./state";
+import { createExpenseVar, getActiveExpenseVar, getExpenseVar, getExpensesVar, getIdleExpenseVar, payInstallmentExpenseVar, updateExpenseVar } from "./state";
 import { updateLink } from "../../utils/updateLink";
 
 // Context
@@ -132,6 +132,35 @@ export const useUpdateExpense = () => {
         onCompleted(data) {
             if(data) {
                 updateExpenseVar(data.editExpense);
+            }
+        },
+        refetchQueries: [
+            {query: GETFINANCE, variables: {
+                user_id: auth?.user_id? auth.user_id : 0
+            }},
+            {query: GETEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETACTIVEEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }},
+            {query: GETIDLEEXPENSES, variables: {
+                user_id: auth?.user_id ? auth.user_id : 0,
+                first: 1
+            }}
+        ]
+    })
+}
+
+export const usePayInstallmentExpense = () => {
+    const {getAuthentication} = useUserContext();
+    const auth = getAuthentication();
+    return useMutation<{payInstallmentExpense: IResponse}>(PAYINSTALLMENT, {
+        onCompleted(data) {
+            if(data) {
+                payInstallmentExpenseVar(data.payInstallmentExpense);
             }
         },
         refetchQueries: [
