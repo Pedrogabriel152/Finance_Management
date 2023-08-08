@@ -29,7 +29,6 @@ import { getFinanceVar, getFinancialSummaryVar, getMonthlySummaryVar } from "../
 import { getFiveJobsVar } from "../../Graphql/Job/state";
 
 const Home = () => {
-    const { loading: loadSummary } = useGetFinancialSummary();
     const { loading: loadJobs } = useGetFiveJobs();
     const { loading: loadSummaryMonths } = useGetMonthlySummaryVar();
     const date = new Date();
@@ -52,7 +51,6 @@ const Home = () => {
     const navigate = useNavigate();
     const finace = useGetFinance();   
     const content = useReactiveVar(getFinanceVar);
-    const financialSummary = useReactiveVar(getFinancialSummaryVar);
     const jobs = useReactiveVar(getFiveJobsVar);
     const monthlySummary = useReactiveVar(getMonthlySummaryVar);
 
@@ -180,16 +178,6 @@ const Home = () => {
     }, [finace, jobs]);
 
     useEffect(() => {
-        if(financialSummary?.totalIncomes){
-            setDataBras([
-                ["Element", "Valor", { role: "style" }],
-                ['Rendas', financialSummary?.totalIncomes.total, 'stroke-color: #3377FF; fill-color: #3377FF; fill-opacity: 0.7'],
-                ['Despensas', financialSummary?.totalExpenses.total, 'stroke-color: #DD2222; fill-color: #DD2222; fill-opacity: 0.7']
-            ]);
-        }
-    }, [financialSummary]);
-
-    useEffect(() => {
         if(months){
             const data: any[][] = [["Mes", "Rendas", "Despesas"]];
             setOptionsLine({
@@ -212,10 +200,15 @@ const Home = () => {
             });
 
             setDataLine(data); 
+            setDataBras([
+                ["Element", "Valor", { role: "style" }],
+                ['Rendas', data[data.length -1][1], 'stroke-color: #3377FF; fill-color: #3377FF; fill-opacity: 0.7'],
+                ['Despensas', data[data.length -1][2], 'stroke-color: #DD2222; fill-color: #DD2222; fill-opacity: 0.7']
+            ]);
         }
     }, [monthlySummary]);
 
-    if(loadJobs || loadSummary || loadSummaryMonths || !optionsLine){
+    if(loadJobs || loadSummaryMonths || !optionsLine){
         return (
             <>
             <NavBar />

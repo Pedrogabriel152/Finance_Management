@@ -103,11 +103,12 @@ class ExpenseRepository
                 $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
                 $month = date('m', strtotime($updateExpense->expires));
                 $year = date('Y', strtotime($updateExpense->expires));
+                $day = date('d',strtotime($updateExpense->expires));
                 $months_paid[] = [
                     'month' => $month,
                     'total' => floatval($updateExpense->value_installment),
                     'year' => $year,
-                    'expires' => $updateExpense->expires
+                    'expires' => "$day/$month/$year"
                 ];
                 $updateExpense->expires = $newDateExpires;
                 $updateExpense->months_paid = serialize($months_paid);

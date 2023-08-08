@@ -57,7 +57,6 @@ const CreateIncome = () => {
     }, [createResponse]);
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value)
         if(e.target.type === 'number') {
             setNewIncome({
                 ...newIncome,
@@ -141,7 +140,6 @@ const CreateIncome = () => {
     const handleOnSubmit = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         const auth = getAuthentication();
-        console.log(newIncome);
 
         if(!auth || auth.code !== 200){
             navigate('/login');

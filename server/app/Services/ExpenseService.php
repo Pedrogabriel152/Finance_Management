@@ -82,7 +82,6 @@ class ExpenseService
         try {
             $expenses = ExpenseRepository::getExpenses($args);
             return $expenses? $expenses : [];
-
         } catch (\Throwable $th) {
             return [];
         }
@@ -93,7 +92,6 @@ class ExpenseService
         try {
             $expenses = ExpenseRepository::getFiveExpenses($user_id);
             return $expenses? $expenses : [];
-
         } catch (\Throwable $th) {
             return [];
         }
