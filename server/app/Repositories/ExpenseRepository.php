@@ -57,9 +57,7 @@ class ExpenseRepository
     // Search the database for an expenses
     public static function getExpenses(array $args){
         return DB::transaction(function () use($args){
-            $expenses = Expense::where([
-                ['user_id', '=', $args['user_id']]
-            ])->orderBy('created_at', 'desc')->paginate(6);
+            $expenses = DB::table('expenses')->where('user_id', $args['user_id'])->orderBy('expires', 'asc')->paginate(6);
             
             return $expenses;
         });
@@ -68,10 +66,10 @@ class ExpenseRepository
     // Search the database for an expenses open
     public static function getExpensesOpen(array $args){
         return DB::transaction(function () use($args) {
-            $incomes = Expense::where([
+            $incomes = DB::table('expenses')->where([
                 ['user_id', '=', $args['user_id']],
                 ['paid_expense', '=', false]
-            ])->orderBy('created_at', 'desc')->paginate(6);
+            ])->orderBy('expires', 'asc')->paginate(6);
 
             return $incomes;
         });
@@ -80,10 +78,10 @@ class ExpenseRepository
     // Search the database for an expenses close
     public static function getExpensesClose(array $args){
         return DB::transaction(function () use($args) {
-            $incomes = Expense::where([
+            $incomes = DB::table('expenses')->where([
                 ['user_id', '=', $args['user_id']],
                 ['paid_expense', '=', true]
-            ])->orderBy('created_at', 'desc')->paginate(6);
+            ])->orderBy('expires', 'asc')->paginate(6);
 
             return $incomes;
         });
