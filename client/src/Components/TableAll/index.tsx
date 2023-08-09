@@ -31,7 +31,6 @@ const TableAll = ({data, text, payInstallment} : ITableAll) => {
                 </TableHead>
                 {data.map((finance: any, index: number) => {
                     const expires = new Date(finance.expires);
-                    console.log(finance)
                     return (
                         <TableBoddy key={index}>
                             <div><Link to={`/${text}/${finance.id}`}>{finance.establishment}</Link></div>

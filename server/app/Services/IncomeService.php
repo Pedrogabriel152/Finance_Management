@@ -253,6 +253,7 @@ class IncomeService
         }
 
         $incomes = IncomeRepository::getIncomesMonth($user_id, $minDate, $maxDate);
+        
         $jobs = JobRepository::getJobs($user_id);
         $incomesMonths = IncomeService::organizeIncome($incomes, $jobs, $incomesMonths);
 

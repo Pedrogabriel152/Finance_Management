@@ -59,7 +59,7 @@ const ActiveExpenses = ({payInstallment}: IFinanceTable) => {
     return (
         <DataBodyStyle>
             <NewButton path="expense" text="Despesa"/>
-            <TableAll data={expenses} text="expense" payInstallment={payInstallment}/>
+            <TableAll data={expenses.slice().sort((a:any, b:any) => a.expires.localeCompare(b.expires))} text="expense" payInstallment={payInstallment}/>
             {paginateInfo.lastPage >= 2 && (
                 <Paginate  
                     lastPage={paginateInfo.lastPage} 

@@ -121,13 +121,14 @@ class IncomeRepository
                 $newDateExpires = IncomeService::updateDateExpire($updateIncome);
                 $month = date('m', strtotime($updateIncome->expires));
                 $year = date('Y', strtotime($updateIncome->expires));
-                $updateIncome->expires = $newDateExpires;
+                $day = date('d',strtotime($updateIncome->expires));
                 $months_paid[] = [
                     'month' => intval($month),
                     'total' => floatval($updateIncome->value_installment),
-                    'year' => $year
+                    'year' => $year,
+                    'expires' => "$day/$month/$year"
                 ];
-
+                $updateIncome->expires = $newDateExpires;
                 $updateIncome->months_paid = serialize($months_paid);
             }
 
@@ -201,7 +202,7 @@ class IncomeRepository
             $incomes = Income::where([
                 ['user_id', '=', $user_id],
                 ['received_income', '=', false]
-            ])->orderBy('value_installment', 'desc')->paginate(6);
+            ])->orderBy('expires', 'asc')->paginate(6);
             return $incomes;
         });
     }
@@ -211,7 +212,7 @@ class IncomeRepository
             $incomes = Income::where([
                 ['user_id', '=', $user_id],
                 ['received_income', '=', true]
-            ])->orderBy('value_installment', 'desc')->paginate(6);
+            ])->orderBy('expires', 'asc')->paginate(6);
             return $incomes;
         });
     }
@@ -220,7 +221,7 @@ class IncomeRepository
         return DB::transaction(function () use($user_id) {
             $incomes = Income::where([
                 ['user_id', '=', $user_id],
-            ])->orderBy('value_installment', 'desc')->paginate(6);
+            ])->orderBy('expires', 'asc')->paginate(6);
             return $incomes;
         });
     }
