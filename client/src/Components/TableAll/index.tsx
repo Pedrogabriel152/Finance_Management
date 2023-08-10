@@ -12,7 +12,7 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 // Styled
 import { TableAllStyle, TableHead, TableBoddy,TableAllContainer } from "./style";
 import { useUserContext } from "../../Context/UserContext";
-import { formartDateBr } from "../../utils/formater";
+import { formartDateBr, formatMoney } from "../../utils/formater";
 
 const TableAll = ({data, text, payInstallment} : ITableAll) => {
     const {status} = useParams();
@@ -34,7 +34,7 @@ const TableAll = ({data, text, payInstallment} : ITableAll) => {
                     <TableBoddy key={index}>
                         <div><Link to={`/${text}/${finance.id}`}>{finance.establishment}</Link></div>
                         <div>{formartDateBr(finance.expires)}</div>
-                        <div>{parseFloat(finance.value_installment).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
+                        <div>{formatMoney(finance.value_installment)}</div>
                         <div onClick={() => payInstallment(finance.id, auth.user_id)}>{finance?.paid_expense || finance.received_income? '' :  <BsFillCheckSquareFill size={15} color="#1E781B"/> }</div>
                     </TableBoddy> 
                 ))}

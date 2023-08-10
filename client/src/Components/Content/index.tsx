@@ -9,6 +9,7 @@ import { Chart } from "react-google-charts";
 
 // Styled
 import { ContentTableStyle, ContentContainer, Title, TableTitleStyle, TableBodyStyle, TableFooterStyle } from "./style";
+import { formatMoney } from "../../utils/formater";
 
 
 const Content = ({title, type, options, table, data, chartType, size}: IContent) => {

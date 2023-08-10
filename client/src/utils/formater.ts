@@ -24,4 +24,9 @@ const formartDateBr = (date: string) => {
     return newDate.toLocaleString('pt-BR', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
-export {formartCPF, formatPhone, removeNotNumber, formartDateBr};
+const formatMoney = (value: string) => {
+    const newValue = parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    return newValue;
+}
+
+export {formartCPF, formatPhone, removeNotNumber, formartDateBr, formatMoney};
