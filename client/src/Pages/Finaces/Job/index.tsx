@@ -9,9 +9,12 @@ import { toast } from "react-toastify";
 
 // Context
 import { useUserContext } from "../../../Context/UserContext";
+import { useFinancesContext } from "../../../Context/Finances";
 
 // GraphQL
 import { useReactiveVar } from "@apollo/client";
+import { useGetJob } from "../../../Graphql/Job/hooks";
+import { getJobVar, updateJobVar } from "../../../Graphql/Job/state";
 
 // Components
 import Footer from "../../../Components/Footer";
@@ -21,10 +24,7 @@ import ModalLoading from "../../../Components/ModalLoading";
 
 // Interfaces
 import { IInput } from "../../../Interfaces/IInput";
-import { useFinancesContext } from "../../../Context/Finances";
 import { IJob } from "../../../Interfaces/IJob";
-import { useGetJob } from "../../../Graphql/Job/hooks";
-import { getJobVar, updateJobVar } from "../../../Graphql/Job/state";
 
 const Job = () => {
     const [job, setJob] = useState<IJob>();

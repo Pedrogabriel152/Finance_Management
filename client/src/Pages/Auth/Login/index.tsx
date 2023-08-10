@@ -13,7 +13,11 @@ import { IInput } from "../../../Interfaces/IInput";
 import Form from "../../../Components/Form";
 import IconesRodape from "../../../Components/Icones";
 import AbaLateral from "../../../Components/AbaLateral";
+
+// Toastify
 import { toast } from "react-toastify";
+
+// Utils
 import { api } from "../../../utils/api";
 
 const Login = () => {

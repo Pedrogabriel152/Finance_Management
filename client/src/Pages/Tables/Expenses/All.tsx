@@ -8,6 +8,7 @@ import { useGetExpenses } from "../../../Graphql/Expense/hooks";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
+import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
 // Style
 import { DataBodyStyle } from "../style";
@@ -20,7 +21,6 @@ import Paginate from "../../../Components/Paginate";
 import ModalLoading from "../../../Components/ModalLoading";
 import TableAll from "../../../Components/TableAll";
 import NewButton from "../../../Components/NewButton";
-import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
 const AllExpenses = ({payInstallment}: IFinanceTable) => {
     const { page } = useParams();

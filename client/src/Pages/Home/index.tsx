@@ -25,7 +25,7 @@ import { IJob } from "../../Interfaces/IJob";
 import { useGetFinance, useGetFinancialSummary, useGetMonthlySummaryVar } from "../../Graphql/Finance/hooks";
 import { useGetFiveJobs } from "../../Graphql/Job/hooks";
 import { useReactiveVar } from "@apollo/client";
-import { getFinanceVar, getFinancialSummaryVar, getMonthlySummaryVar } from "../../Graphql/Finance/state";
+import { getFinanceVar, getMonthlySummaryVar } from "../../Graphql/Finance/state";
 import { getFiveJobsVar } from "../../Graphql/Job/state";
 
 const Home = () => {

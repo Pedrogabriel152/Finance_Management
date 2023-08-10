@@ -1,19 +1,33 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// GraphQL
 import { useGetUser } from "../../Graphql/User/hooks";
-import { IUser } from "../../Interfaces/IUser";
 import { useReactiveVar } from "@apollo/client";
 import { editUserVar, getUserVar } from "../../Graphql/User/state";
-import { IInput } from "../../Interfaces/IInput";
-import NavBar from "../../Components/NavBar";
+
+// Toastify
+import { toast } from "react-toastify";
+
+// Utils
+import { formartCPF, formatPhone } from "../../utils/formater";
+
+// Styled
+import { DataBodyStyle } from "../Tables/style";
 import { BodyStyle } from "../Home/style";
+
+// Interfaces
+import { IInput } from "../../Interfaces/IInput";
+import { IUser } from "../../Interfaces/IUser";
+
+// Context
+import { useUserContext } from "../../Context/UserContext";
+
+// Components
+import ModalLoading from "../../Components/ModalLoading";
 import FormCreate from "../../Components/FormCreate";
 import Footer from "../../Components/Footer";
-import { toast } from "react-toastify";
-import { formartCPF, formatPhone } from "../../utils/formater";
-import { useUserContext } from "../../Context/UserContext";
-import { useNavigate } from "react-router-dom";
-import ModalLoading from "../../Components/ModalLoading";
-import { DataBodyStyle } from "../Tables/style";
+import NavBar from "../../Components/NavBar";
 
 const Profile = () => {
     const [user, setUser] = useState<IUser>();

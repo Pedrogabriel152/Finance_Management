@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 // Components
 import Paginate from "../../../Components/Paginate";
 import TableJob from "../../../Components/TableJob";
-import { useReactiveVar } from "@apollo/client";
 import ModalLoading from "../../../Components/ModalLoading";
 import NewButton from "../../../Components/NewButton";
 
@@ -14,6 +13,7 @@ import { DataBodyStyle } from "../style";
 // GraphQL
 import { useGetJobs } from "../../../Graphql/Job/hooks";
 import { getJobsVar } from "../../../Graphql/Job/state";
+import { useReactiveVar } from "@apollo/client";
 
 // Interface
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";

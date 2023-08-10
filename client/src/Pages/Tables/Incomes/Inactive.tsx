@@ -8,6 +8,7 @@ import { getIdleIcomesVar } from "../../../Graphql/Incomes/state";
 
 // Interfaces
 import { IPaginateInfo } from "../../../Interfaces/IPaginateInfo";
+import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
 // Styled
 import { DataBodyStyle } from "../style";
@@ -20,7 +21,6 @@ import NewButton from "../../../Components/NewButton";
 
 // Toastify
 import { toast } from "react-toastify";
-import { IFinanceTable } from "../../../Interfaces/IFinanceTable";
 
 const InactiveIncomes = ({payInstallment}: IFinanceTable) => {
     const { page } = useParams();

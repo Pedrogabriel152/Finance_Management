@@ -16,7 +16,11 @@ import { Container, ContainerInternoSingin } from "../style";
 
 // Context
 import { useUserContext } from "../../../Context/UserContext";
+
+// Toastify
 import { toast } from "react-toastify";
+
+// Utils
 import { api } from "../../../utils/api";
 import { formartCPF, formatPhone } from "../../../utils/formater";
 

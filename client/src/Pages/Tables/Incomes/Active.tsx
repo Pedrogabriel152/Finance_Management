@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Components
@@ -10,7 +11,6 @@ import NewButton from "../../../Components/NewButton";
 import { useGetActiveIncomes } from "../../../Graphql/Incomes/hooks";
 import { useReactiveVar } from "@apollo/client";
 import { getActiveIcomesVar } from "../../../Graphql/Incomes/state";
-import { useEffect, useState } from "react";
 
 // Style
 import { DataBodyStyle } from "../style";
