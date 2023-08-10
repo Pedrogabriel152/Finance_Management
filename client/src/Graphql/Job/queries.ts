@@ -18,6 +18,8 @@ export const GETJOBS = gql`
                 establishment
                 wage
                 active
+                leave
+                started
             }
             paginatorInfo{
                 count
@@ -36,6 +38,8 @@ export const GETACTIVEJOBS = gql`
                 establishment
                 wage
                 active
+                leave
+                started
             }
             paginatorInfo{
                 count
@@ -54,6 +58,8 @@ export const GETIDLEJOBS = gql`
                 establishment
                 wage
                 active
+                leave
+                started
             }
             paginatorInfo{
                 count

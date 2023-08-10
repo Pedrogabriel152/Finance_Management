@@ -16,7 +16,6 @@ import { IForm } from "../../Interfaces/IForm";
 
 // Components
 import Button from "../Button";
-import { mask } from "remask";
 
 const Form = ({text, inputs, link, submit}: IForm) => {
     const [size, setSize] = useState<number>(500);

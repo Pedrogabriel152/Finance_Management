@@ -19,4 +19,9 @@ const removeNotNumber = (data: string) => {
     return newData;
 }
 
-export {formartCPF, formatPhone, removeNotNumber};
+const formartDateBr = (date: string) => {
+    const newDate = new Date(date);
+    return newDate.toLocaleString('pt-BR', { timeZone: 'UTC', day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+export {formartCPF, formatPhone, removeNotNumber, formartDateBr};

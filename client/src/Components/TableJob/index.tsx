@@ -8,6 +8,7 @@ import BackTable from "../BackTable";
 
 // Styled
 import { TableJobStyle, TableHead, TableBoddy,TableJobContainer } from "./style";
+import { formartDateBr } from "../../utils/formater";
 
 const TableJob = ({data} : ITableJobs) => {
     const {status} = useParams();
@@ -19,12 +20,16 @@ const TableJob = ({data} : ITableJobs) => {
                 <TableHead>
                     <div>Nome</div>
                     <div>Status</div>
+                    <div id="date">Início</div>
                     <div>Salário</div>
                 </TableHead>
                 {data.map((job: any, index: number) => (
                     <TableBoddy key={index}>
                         <div><Link to={`/job/${job.id}`}>{job.establishment}</Link></div>
                         <div>{job.active? 'Ativo': 'Inativo'}</div>
+                        {job.started && (
+                            <div id="date">{formartDateBr(job.started)}</div>
+                        )}
                         <div>{parseFloat(job.wage).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
                     </TableBoddy> 
                 ))}

@@ -7,4 +7,8 @@ export const BoddyStyle = styled.section`
 export const DataBodyStyle = styled.main`
     width: 100vw;
     height: 83.9vh;
+
+    @media (min-width: 1280px) {
+        height: 88.45vh;
+    }
 `;

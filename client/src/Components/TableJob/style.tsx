@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const TableJobContainer = styled.div`
     padding-top: 120px;
+
+    @media (min-width: 1280px) {
+        padding-top: 180px;
+    }
 `;
 
 export const TableJobStyle = styled.div`
@@ -10,6 +14,11 @@ export const TableJobStyle = styled.div`
     min-height: 48vh;
     margin-left: 5%;
     border-radius: 8px;
+
+    @media (min-width: 1280px) {
+        width: 80vw;
+        margin: 0 auto;
+    }
 `;
 
 export const TableHead = styled.div`
@@ -27,6 +36,24 @@ export const TableHead = styled.div`
     div:last-child {
         margin-right: 25px;
     }
+
+    div#date {
+        display: none;
+    }
+
+    @media (min-width: 1280px) {
+        div#date {
+            display: flex;
+        }
+        div:first-child {
+            margin-left: 60px;
+            margin-right: 25px;
+        }
+
+        div:last-child {
+            margin-right: 60px;
+        }
+    }
 `;
 
 export const TableBoddy = styled.div`
@@ -40,6 +67,7 @@ export const TableBoddy = styled.div`
         margin-top: 25px;
         min-width: 23%;
         max-width: 23%;
+        text-align: center;
 
         a {
             color: #000;
@@ -51,11 +79,45 @@ export const TableBoddy = styled.div`
     div:first-child {
         margin-left: 15px;
         max-width: 20%;
+
     }
 
     div:last-child {
         margin-right: 20px;
         min-width: 15%;
         max-width: 15%;
+    }
+
+    div#date {
+        display: none;
+    }
+
+    @media (min-width: 1280px) {
+
+        div {
+            font-size: 15px;
+            margin-top: 25px;
+            min-width: 0%;
+            max-width: 0%;
+            text-align: center;
+
+            a {
+                color: #000;
+                font-weight: 500;
+                cursor: pointer;
+            }
+        }
+
+        div#date {
+            display: flex;
+        }
+
+        div:first-child {
+            margin-left: 10px;
+        }
+
+        div:last-child {
+            margin-right: 10px;
+        }
     }
 `;

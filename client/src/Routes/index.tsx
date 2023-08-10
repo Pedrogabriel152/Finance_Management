@@ -5,12 +5,12 @@ import Home from "../Pages/Home";
 import Jobs from "../Pages/Tables/Jobs";
 import Incomes from "../Pages/Tables/Incomes";
 import Expenses from "../Pages/Tables/Expenses";
-import Job from "../Pages/Finaces/Job";
-import CreateJob from "../Pages/Finaces/Job/create";
-import CreateExpense from "../Pages/Finaces/Expense/create";
-import CreateIncome from "../Pages/Finaces/Income/create";
-import Income from "../Pages/Finaces/Income";
-import Expense from "../Pages/Finaces/Expense";
+import Job from "../Pages/Finances/Job";
+import CreateJob from "../Pages/Finances/Job/create";
+import CreateExpense from "../Pages/Finances/Expense/create";
+import CreateIncome from "../Pages/Finances/Income/create";
+import Income from "../Pages/Finances/Income";
+import Expense from "../Pages/Finances/Expense";
 import Profile from "../Pages/Profile";
 
 const Rotas = () => {

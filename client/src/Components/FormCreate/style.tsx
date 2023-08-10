@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const FormContainerJob = styled.main`
     padding-top: 40%;
+
+    @media (min-width: 1280px) {
+        padding-top: 15%;
+    }
 `;
 
 export const FormContainerFinance = styled.main`
@@ -15,6 +19,11 @@ export const FormStyleJob = styled.form`
     border-radius: 8px;
     font-size: 1.1em;
     height: 53vh;
+
+    @media (min-width: 1280px) {
+        margin: 0 auto;
+        width: 50vw;
+    }
 `;
 
 export const FormStyleFinance = styled.form`
@@ -56,4 +65,10 @@ export const ButtonSubmit = styled.button`
     border: none;
     color: #FFF;
     border-radius: 10px;
+
+    @media (min-width: 1280px) {
+        margin-top: 15px;
+        padding: 10px 55px;
+        justify-content: center;
+    }
 `;

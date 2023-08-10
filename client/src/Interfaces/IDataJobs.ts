@@ -3,4 +3,6 @@ export interface IDataJobs {
     wage: number
     active: boolean
     id: number
+    leave?: string
+    started?: string
 }

@@ -23,4 +23,10 @@ export const ButtonStyle = styled.div`
             text-align: center;
         }
     }
+
+    @media (min-width: 1280px) {
+        top: 120px;
+        width: 130px;
+        right: 130px;
+    }
 `;
