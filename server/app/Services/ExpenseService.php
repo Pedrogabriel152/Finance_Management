@@ -100,12 +100,7 @@ class ExpenseService
     // Search service an expense open
     public static function getExpensesOpen(array $args){
         $expense = ExpenseRepository::getExpensesOpen($args);
-        
-        if(!$expense){
-            return [];
-        }
-
-        return $expense;
+        return $expense? $expense : [];
     }
 
     // Search service an expense close

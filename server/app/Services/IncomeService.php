@@ -174,7 +174,7 @@ class IncomeService
     // Expiration date update service
     public static function updateDateExpire(object $updateIncome){
         $dateExpires = explode("-", $updateIncome->expires);
-            $month = intval($dateExpires[1]) + 1;
+        $month = intval($dateExpires[1]) + 1;
 
         if($month > 12) {
             $month = 1;
@@ -192,8 +192,8 @@ class IncomeService
         return $newDateExpires;
     }
 
-     // Total expense search service
-     public static function getTotalIncomes(int $user_id){
+    // Total expense search service
+    public static function getTotalIncomes(int $user_id){
         $incomes = IncomeRepository::getTotalIncomes($user_id);
         return $incomes;
     }

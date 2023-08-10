@@ -52,15 +52,12 @@ class AuthController extends Controller
                 return response()->json(["message" => "Falha ao cadastrar usuário"], 500);
             }
 
-            $futureDate = strtotime("8 hours");
-            $expirationDate = new DateTime(date('Y-m-d H:i',$futureDate));
-
-            $token = $newUser->createToken('Token',["*"], $expirationDate);
+            $token = TokenService::createToken($newUser);
 
             return response()->json([
                 "code" => 200,
                 "message" => "Usuário cadastrado com sucesso",
-                "token" => $token->plainTextToken,
+                "token" => $token,
                 'user_id' => $newUser->id
             ], 200);
 

@@ -27,7 +27,6 @@ class UserService{
             }
 
             $newUser = UserRepository::create($args);
-            // dd($newUser);
 
             if(!$newUser){
                 return [
