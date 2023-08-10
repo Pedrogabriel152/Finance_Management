@@ -1,7 +1,6 @@
 import { IFormCreate } from "../../Interfaces/IFormCreate";
 import { IInput } from "../../Interfaces/IInput";
 import { FormContainerFinance, FormContainerJob, FormStyleFinance, FormStyleJob, InputCreateStyle, LabelInput, ButtonSubmit } from "./style";
-import { mask } from "remask";
 
 const FormCreate = ({data, onSubmit, text, button}: IFormCreate) => {
     return(

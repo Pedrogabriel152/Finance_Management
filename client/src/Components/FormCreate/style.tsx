@@ -10,6 +10,10 @@ export const FormContainerJob = styled.main`
 
 export const FormContainerFinance = styled.main`
     padding-top: 20%;
+
+    @media (min-width: 1280px) {
+        padding-top: 7.5%;
+    }
 `;
 
 export const FormStyleJob = styled.form`
@@ -33,6 +37,11 @@ export const FormStyleFinance = styled.form`
     border-radius: 8px;
     font-size: 1.1em;
     height: 70vh;
+
+    @media (min-width: 1280px) {
+        margin: 0 auto;
+        width: 50vw;
+    }
 `;
 
 export const LabelInput = styled.div`

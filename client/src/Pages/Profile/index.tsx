@@ -28,6 +28,7 @@ import ModalLoading from "../../Components/ModalLoading";
 import FormCreate from "../../Components/FormCreate";
 import Footer from "../../Components/Footer";
 import NavBar from "../../Components/NavBar";
+import { ContainerProfile } from "./style";
 
 const Profile = () => {
     const [user, setUser] = useState<IUser>();
@@ -204,7 +205,9 @@ const Profile = () => {
         <>
         <NavBar />
         <BodyStyle>
-            <FormCreate data={inputs} text={"editFinance"} onSubmit={handleSubmit} button="Salvar"/>
+            <ContainerProfile>
+                <FormCreate data={inputs} text={"editFinance"} onSubmit={handleSubmit} button="Salvar"/>
+            </ContainerProfile>
         </BodyStyle>
         <Footer />
         </>

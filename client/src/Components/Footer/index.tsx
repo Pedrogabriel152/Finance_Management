@@ -33,9 +33,9 @@ const Footer = () => {
             <p>Pedro Gabriel &copy; {date.getFullYear()} - Todos os direitos reservados.</p>
             <IconeFooterStyle>
                 <a href=""><FaFacebook size={size} color="#FFF"/></a>
-                <a href=""><FaInstagram size={size} color="#FFF"/></a>
+                <a href="https://www.instagram.com/pedro_gabriel152"><FaInstagram size={size} color="#FFF"/></a>
                 <a href=""><SiGmail size={size} color="#FFF"/></a>
-                <a href=""><FaGithub size={size} color="#FFF"/></a>
+                <a href="https://github.com/Pedrogabriel152"><FaGithub size={size} color="#FFF"/></a>
             </IconeFooterStyle>
         </FooteStyle>
     );

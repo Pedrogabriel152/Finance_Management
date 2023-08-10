@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const TableAllContainer = styled.div`
     padding-top: 120px;
+
+    @media (min-width: 1280px) {
+        padding-top: 180px;
+    }
 `;
 
 export const TableAllStyle = styled.div`
@@ -10,6 +14,11 @@ export const TableAllStyle = styled.div`
     min-height: 48vh;
     margin-left: 5%;
     border-radius: 8px;
+
+    @media (min-width: 1280px) {
+        width: 80vw;
+        margin: 0 auto;
+    }
 `;
 
 export const TableHead = styled.div`
@@ -26,6 +35,20 @@ export const TableHead = styled.div`
 
     div:last-child {
         margin-right: 25px;
+    }
+
+    @media (min-width: 1280px) {
+        div#date {
+            display: flex;
+        }
+        div:first-child {
+            margin-left: 60px;
+            margin-right: 25px;
+        }
+
+        div:last-child {
+            margin-right: 60px;
+        }
     }
 `;
 
