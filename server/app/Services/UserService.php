@@ -8,8 +8,16 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class UserService{
+
+    private UserRepository $userRepository_;
+
+    public function __construct()
+    {
+        $this->userRepository_ = new UserRepository();
+    }
+
     // User creation service
-    public static function createUser(Request $args){
+    public function createUser(Request $args){
         try {
 
             if(strlen($args['user']['phone']) !== 11){
@@ -26,7 +34,7 @@ class UserService{
                 ];
             }
 
-            $newUser = UserRepository::create($args);
+            $newUser = $this->userRepository_->create($args);
 
             if(!$newUser){
                 return [
@@ -56,8 +64,8 @@ class UserService{
     }
 
     // Login service
-    public static function login(array $args){
-        $userExist = UserRepository::getUser($args['email']);
+    public function login(array $args){
+        $userExist = $this->userRepository_->getUser($args['email']);
         
         if(!$userExist){
             return [
@@ -73,7 +81,7 @@ class UserService{
             ];
         }
         
-        $token = TokenService::createToken($userExist);
+        $token = TokenService::createToken($userExist, 8);
 
         return [
             "code" => 200,
@@ -83,8 +91,8 @@ class UserService{
         ];
     }
 
-    public static function editUser(array $args){
-        $user = UserRepository::getUserById($args['id']);
+    public function editUser(array $args){
+        $user = $this->userRepository_->getUserById($args['id']);
 
         if(!$user) {
             return [
@@ -93,7 +101,7 @@ class UserService{
             ];
         }
 
-        $updateUser = UserRepository::editUser($user, $args['user']);
+        $updateUser = $this->userRepository_->editUser($user, $args['user']);
 
         if(!$updateUser) {
             return [

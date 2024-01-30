@@ -10,8 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class IncomeRepository
 {
+    private IncomeService $incomeService_;
+
+    public function __construct()
+    {
+        $this->incomeService_ = new IncomeService();    
+    }
+
     // Save a new Income in the database
-    public static function create(array $args){
+    public function create(array $args){
         if (!key_exists('months_paid', $args)){
             $args['months_paid'] = serialize([[
                 'month' => 0,
@@ -43,7 +50,7 @@ class IncomeRepository
     }
 
     // Search the database for an income
-    public static function getIncome(array $args){
+    public function getIncome(array $args){
         return DB::transaction(function () use($args) {
             $income = Income::where([
                 ['id', '=', $args['id']],
@@ -55,7 +62,7 @@ class IncomeRepository
     }
 
     // Search the database for an incomes
-    public static function getIncomes(array $args){
+    public function getIncomes(array $args){
         return DB::transaction(function () use($args) {
             $incomes = Income::where([
                 ['user_id', '=', $args['user_id']]
@@ -66,7 +73,7 @@ class IncomeRepository
     }
 
     // Search the database for an incomes open
-    public static function getIncomesOpen(array $args){
+    public function getIncomesOpen(array $args){
         return DB::transaction(function () use($args) {
             $incomes = Income::where([
                 ['user_id', '=', $args['user_id']],
@@ -78,7 +85,7 @@ class IncomeRepository
     }
 
     // Search the database for an incomes close
-    public static function getIncomesClose(array $args){
+    public function getIncomesClose(array $args){
         return DB::transaction(function () use($args) {
             $incomes = Income::where([
                 ['user_id', '=', $args['user_id']],
@@ -90,7 +97,7 @@ class IncomeRepository
     }
 
     // Save an updated Income to the database
-    public static function updateIncome(object $income, array $args){
+    public function updateIncome(object $income, array $args){
         return DB::transaction(function () use($income, $args){
             $dateExpires = new DateTime($args['expires']);
             $updateIncome = $income;
@@ -108,7 +115,7 @@ class IncomeRepository
     }
 
     // Save an updated Income to the database
-    public static function updatePayInstallment(object $income){
+    public function updatePayInstallment(object $income){
         return DB::transaction(function () use($income){
             $updateIncome = $income;
             $months_paid = unserialize($updateIncome->months_paid);
@@ -118,7 +125,7 @@ class IncomeRepository
             $updateIncome->installments_received = $income->installments_received + 1;
 
             if(!$updateIncome->received_income){
-                $newDateExpires = IncomeService::updateDateExpire($updateIncome);
+                $newDateExpires = $this->incomeService_->updateDateExpire($updateIncome);
                 $month = date('m', strtotime($updateIncome->expires));
                 $year = date('Y', strtotime($updateIncome->expires));
                 $day = date('d',strtotime($updateIncome->expires));
@@ -143,7 +150,7 @@ class IncomeRepository
     }
 
     // Search for total Expense amounts
-    public static function getTotalIncomes(int $user_id){
+    public function getTotalIncomes(int $user_id){
         return DB::transaction(function () use($user_id){
             $currentMonth = date('m');
             $currentYear = date('Y');
@@ -180,7 +187,7 @@ class IncomeRepository
         });
     }
 
-    public static function getFiveIncomes(int $user_id){
+    public function getFiveIncomes(int $user_id){
         return DB::transaction(function () use($user_id) {
             $incomes = Income::where([
                 ['user_id', '=', $user_id],
@@ -190,14 +197,14 @@ class IncomeRepository
         });
     }
 
-    public static function getIncomesMonth(int $user_id, string $minDate, string $maxDate) {
+    public function getIncomesMonth(int $user_id, string $minDate, string $maxDate) {
         return DB::transaction(function () use($user_id, $minDate, $maxDate){
             $incomes = Income::where('user_id',$user_id)->whereBetween('created_at', [$minDate, $maxDate])->get();
             return $incomes;
         });
     }
 
-    public static function getActiveIncomes(int $user_id) {
+    public function getActiveIncomes(int $user_id) {
         return DB::transaction(function () use($user_id) {
             $incomes = Income::where([
                 ['user_id', '=', $user_id],
@@ -207,7 +214,7 @@ class IncomeRepository
         });
     }
 
-    public static function getIdleIncomes(int $user_id) {
+    public function getIdleIncomes(int $user_id) {
         return DB::transaction(function () use($user_id) {
             $incomes = Income::where([
                 ['user_id', '=', $user_id],
@@ -217,7 +224,7 @@ class IncomeRepository
         });
     }
     
-    public static function getAllIncomes(int $user_id) {
+    public function getAllIncomes(int $user_id) {
         return DB::transaction(function () use($user_id) {
             $incomes = Income::where([
                 ['user_id', '=', $user_id],

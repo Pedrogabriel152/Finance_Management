@@ -9,8 +9,15 @@ date_default_timezone_set('America/Sao_Paulo');
 
 class ExpenseService
 {
+    private ExpenseRepository $expenseRepository_;
+
+    public function __construct()
+    {
+        $this->expenseRepository_ = new ExpenseRepository();
+    }
+
     // Expense creation service
-    public static function createExpense(array $args){
+    public function createExpense(array $args){
         try {
             $dateExpires = new DateTime($args['expense']['expires']);
             $month = $dateExpires->format('m');
@@ -41,7 +48,7 @@ class ExpenseService
                 $args['expense']['months_paid'] = serialize($months_paid);
             }
 
-            $newExpense = ExpenseRepository::createExpense($args['expense']);
+            $newExpense = $this->expenseRepository_->createExpense($args['expense']);
            
             if(!$newExpense){
                 return [
@@ -67,9 +74,9 @@ class ExpenseService
     }
 
     // Search service an expense
-    public static function getExpense(array $args){
+    public function getExpense(array $args){
         try {
-            $expense = ExpenseRepository::getExpense($args);
+            $expense = $this->expenseRepository_->getExpense($args);
             return $expense;
 
         } catch (\Throwable $th) {
@@ -78,9 +85,9 @@ class ExpenseService
     }
 
     // Search service an expenses
-    public static function getExpenses(array $args){
+    public function getExpenses(array $args){
         try {
-            $expenses = ExpenseRepository::getExpenses($args);
+            $expenses = $this->expenseRepository_->getExpenses($args);
             return $expenses? $expenses : [];
         } catch (\Throwable $th) {
             return [];
@@ -88,9 +95,9 @@ class ExpenseService
     }
 
     // Search service an last five expense
-    public static function getFiveExpenses(int $user_id){
+    public function getFiveExpenses(int $user_id){
         try {
-            $expenses = ExpenseRepository::getFiveExpenses($user_id);
+            $expenses = $this->expenseRepository_->getFiveExpenses($user_id);
             return $expenses? $expenses : [];
         } catch (\Throwable $th) {
             return [];
@@ -98,21 +105,21 @@ class ExpenseService
     }
 
     // Search service an expense open
-    public static function getExpensesOpen(array $args){
-        $expense = ExpenseRepository::getExpensesOpen($args);
+    public function getExpensesOpen(array $args){
+        $expense = $this->expenseRepository_->getExpensesOpen($args);
         return $expense? $expense : [];
     }
 
     // Search service an expense close
-    public static function getExpensesClose(array $args){
-        $expense = ExpenseRepository::getExpensesClose($args);
+    public function getExpensesClose(array $args){
+        $expense = $this->expenseRepository_->getExpensesClose($args);
         return $expense? $expense : [];
     }
 
     // Paid installment upgrade service
-    public static function payInstallment(array $args){
+    public function payInstallment(array $args){
         try {
-            $expense = ExpenseRepository::getExpense($args);
+            $expense = $this->expenseRepository_->getExpense($args);
 
             if(!$expense){
                 return [
@@ -129,7 +136,7 @@ class ExpenseService
                 ];
             }
 
-            $updateExpense = ExpenseRepository::updatePayInstallment($expense);
+            $updateExpense = $this->expenseRepository_->updatePayInstallment($expense);
 
             return [
                 'code' => 200,
@@ -146,8 +153,8 @@ class ExpenseService
     }
 
     // Expense update service
-    public static function editExpense(array $args){
-        $expense = ExpenseRepository::getExpense($args);
+    public function editExpense(array $args){
+        $expense = $this->expenseRepository_->getExpense($args);
 
         if(!$expense) {
             return [
@@ -156,7 +163,7 @@ class ExpenseService
             ];
         }
 
-        $editExpense = ExpenseRepository::editExpense($args['expense'], $expense);
+        $editExpense = $this->expenseRepository_->editExpense($args['expense'], $expense);
         $dateExpires = $editExpense->expires->format("d/m/Y H:i:s");
         $editExpense->expires = $dateExpires;
 
@@ -175,13 +182,13 @@ class ExpenseService
     }
 
     // Total expense search service
-    public static function getTotalExpenses(int $user_id){
-        $expenses = ExpenseRepository::getTotalExpenses($user_id);
+    public function getTotalExpenses(int $user_id){
+        $expenses = $this->expenseRepository_->getTotalExpenses($user_id);
         return $expenses;
     }
 
     // Expiration date update service
-    public static function updateDateExpire(object $updateExpense){
+    public function updateDateExpire(object $updateExpense){
         $dateExpires = explode("-", $updateExpense->expires);
             $month = intval($dateExpires[1]) + 1;
 
@@ -201,7 +208,7 @@ class ExpenseService
         return $newDateExpires;
     }
 
-    public static function getExpensesMonth(int $user_id){
+    public function getExpensesMonth(int $user_id){
         $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
         $expensesMonth = [];
         $currentMonth = date('m');
@@ -257,8 +264,8 @@ class ExpenseService
             }
         }
 
-        $spentMonth = ExpenseRepository::getExpensesMonth($user_id, $minDate, $maxDate);
-        $expensesMonth = ExpenseService::organizeExpense($spentMonth, $expensesMonth);
+        $spentMonth = $this->expenseRepository_->getExpensesMonth($user_id, $minDate, $maxDate);
+        $expensesMonth = $this->organizeExpense($spentMonth, $expensesMonth);
 
         foreach ($expensesMonth as $key => $expenseMonth) {   
             $expensesMonth[$key]['month'] = $months[intval($expenseMonth['month']) - 1];
@@ -267,7 +274,7 @@ class ExpenseService
         return $expensesMonth;
     }
 
-    public static function organizeExpense($spentsMonth, array $expensesMonth){ 
+    public function organizeExpense($spentsMonth, array $expensesMonth){ 
         foreach ($spentsMonth as $key => $spentMonth) {
             $monthsPaids = unserialize($spentMonth->months_paid);
             
@@ -301,18 +308,18 @@ class ExpenseService
     }
     
 
-    public static function getActiveExpenses(int $user_id){
-        $activeExpense = ExpenseRepository::getActiveExpense($user_id);
+    public function getActiveExpenses(int $user_id){
+        $activeExpense = $this->expenseRepository_->getActiveExpense($user_id);
         return $activeExpense? $activeExpense : [];
     }
 
-    public static function getIdleExpenses(int $user_id) {
-        $idleExpense = ExpenseRepository::getIdleExpense($user_id);
+    public function getIdleExpenses(int $user_id) {
+        $idleExpense = $this->expenseRepository_->getIdleExpense($user_id);
         return $idleExpense? $idleExpense : [];
     }
 
-    public static function getAllExpenses(int $user_id) {
-        $expenses = ExpenseRepository::getAllExpense($user_id);
+    public function getAllExpenses(int $user_id) {
+        $expenses = $this->expenseRepository_->getAllExpense($user_id);
         return $expenses;
     }
 }

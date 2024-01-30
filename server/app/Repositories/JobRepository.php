@@ -8,8 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class JobRepository 
 {
+    public function __construct()
+    {
+        
+    }
+
     // Save a new Job in the database
-    public static function create(array $args){
+    public function create(array $args){
         return DB::transaction(function () use($args){
             $newJob = Job::create([
                 'description' => $args['job']['description']? $args['job']['description'] : '',
@@ -30,13 +35,13 @@ class JobRepository
     }
 
     // Search the database for an jobs
-    public static function getJobs(int $id){
+    public function getJobs(int $id){
         $jobs = Job::where('user_id', $id)->orderBy('wage','desc')->paginate(6);
         return $jobs;
     }
 
     // Search the database for an job
-    public static function getJob(int $id, int $user_id){
+    public function getJob(int $id, int $user_id){
         $job = Job::where([
             ['user_id','=', $user_id],
             ['id', '=', $id]
@@ -45,7 +50,7 @@ class JobRepository
     }
 
     // Search the database for an five jobs
-    public static function getFiveJobs(int $user_id) {
+    public function getFiveJobs(int $user_id) {
         $jobs = Job::where([
             ['user_id', '=', $user_id],
             ['active', '=', true]
@@ -54,7 +59,7 @@ class JobRepository
     }
 
     // Save an updated Job to the database
-    public static function updateJob(array $args, object $jobExist){
+    public function updateJob(array $args, object $jobExist){
         return DB::transaction(function () use($args, $jobExist){
             $jobExist->description = $args['description']? $args['description'] : '';
             $jobExist->wage = $args['wage'];
@@ -74,7 +79,7 @@ class JobRepository
         });
     }
 
-    public static function updateActiviJob(object $jobExist) {
+    public function updateActiviJob(object $jobExist) {
         return DB::transaction(function () use ($jobExist) {
             $jobLeaved = DateTime::createFromFormat('d-m-Y', date('d-m-Y'));
             $jobExist->leave = $jobLeaved;
@@ -85,7 +90,7 @@ class JobRepository
         });
     }
 
-    public static function getActiveJobs(int $user_id) {
+    public function getActiveJobs(int $user_id) {
         $activeJobs = Job::where([
             ['user_id', '=', $user_id],
             ['active', '=', true]
@@ -94,7 +99,7 @@ class JobRepository
         return $activeJobs;
     }
 
-    public static function getIdleJobs(int $user_id){
+    public function getIdleJobs(int $user_id){
         $idleJobs = Job::where([
             ['user_id', '=', $user_id],
             ['active', '=', false]

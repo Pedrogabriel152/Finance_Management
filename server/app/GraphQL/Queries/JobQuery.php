@@ -6,33 +6,39 @@ use App\Services\JobService;
 
 final class JobQuery
 {
+    private JobService $jobService_;
     /**
      * @param  null  $_
      * @param  array{}  $args
      */
-    // public function __invoke($_, array $args)
-    // {
-    //     // TODO implement the resolver
-    // }
+    public function __invoke($_, array $args)
+    {
+        // TODO implement the resolver
+    }
+
+    public function __construct()
+    {
+        $this->jobService_ = new JobService();
+    }
 
     // Search for an Jobs
     public function getJobs($_, array $args)
     {
-        $response = JobService::getJobs($args['user_id']);
+        $response = $this->jobService_->getJobs($args['user_id']);
         return $response;
     }
 
     // Search for an Job
     public function getJob($_, array $args)
     {
-        $response = JobService::getJob($args);
+        $response = $this->jobService_->getJob($args);
         return $response;
     }
 
     // Search for an five Jobs
     public function getFiveJobs($_, array $args)
     {
-        $response = JobService::getFiveJobs($args['user_id']);
+        $response = $this->jobService_->getFiveJobs($args['user_id']);
         return $response;
     }
 
@@ -43,13 +49,13 @@ final class JobQuery
 
     public function getActiveJobs($_, array $args)
     {
-        $response = JobService::getActiveJobs($args['user_id']);
+        $response = $this->jobService_->getActiveJobs($args['user_id']);
         return $response;
     }
 
     public function getIdleJobs($_, array $args)
     {
-        $response = JobService::getIdleJobs($args['user_id']);
+        $response = $this->jobService_->getIdleJobs($args['user_id']);
         return $response;
     }
 }

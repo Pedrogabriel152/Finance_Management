@@ -9,25 +9,39 @@ use App\Repositories\UserRepository;
 
 class AuthController extends Controller
 {
+    private UserRepository $userRepository_;
+
+    public function __construct()
+    {
+        $this->userRepository_ = new UserRepository();
+    }
+
+
     public function login(Request $request){
-        $userExist = UserRepository::getUser($request->email);
+        try {
+            $userExist = $this->userRepository_->getUser($request->email);
         
-        if(!$userExist){
-            return response()->json(['message' => "E-mail ou senha incorreto"], 404);
-        }
+            if(!$userExist){
+                return response()->json(['message' => "E-mail ou senha incorreto"], 404);
+            }
 
-        if(!password_verify($request->password, $userExist->password)){
-            return response()->json(['message' => "E-mail ou senha incorreto"], 404);
-        }
-        
-        $token = TokenService::createToken($userExist);
+            if(!password_verify($request->password, $userExist->password)){
+                return response()->json(['message' => "E-mail ou senha incorreto"], 404);
+            }
+            
+            $token = TokenService::createToken($userExist, 8);
 
-        return response()->json([
-            'code' => 200,
-            'message' => "Bem vindo de volta",
-            "token" => $token,
-            'user_id' => $userExist->id
-        ], 200);
+            return response()->json([
+                'code' => 200,
+                'message' => "Bem vindo de volta",
+                "token" => $token,
+                'user_id' => $userExist->id
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], $th->getCode());
+        }
     }
 
     public function register(Request $request) {
@@ -46,13 +60,13 @@ class AuthController extends Controller
                 ], 402);
             }
 
-            $newUser = UserRepository::create($request);
+            $newUser = $this->userRepository_->create($request);
 
             if(!$newUser){
                 return response()->json(["message" => "Falha ao cadastrar usuário"], 500);
             }
 
-            $token = TokenService::createToken($newUser);
+            $token = TokenService::createToken($newUser, 8);
 
             return response()->json([
                 "code" => 200,

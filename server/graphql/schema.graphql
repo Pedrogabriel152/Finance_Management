@@ -1,3 +1,11 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+interface Message{
+    code: Int!
+    message: String! 
+}
+
 #import job.graphql
 #import user.graphql
 #import expense.graphql

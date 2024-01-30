@@ -6,10 +6,17 @@ use App\Repositories\JobRepository;
 
 class JobService
 {
+    private JobRepository $jobRepository_;
+
+    public function __construct()
+    {
+        $this->jobRepository_ = new JobRepository();
+    }
+
     // Job creation service
-    public static function createJob(array $args){
+    public function createJob(array $args){
         try {
-            $newJob = JobRepository::create($args);
+            $newJob = $this->jobRepository_->create($args);
             
             if(!$newJob){
                 return [
@@ -34,27 +41,27 @@ class JobService
     }
 
     // Search service an jobs
-    public static function getJobs(int $id){
-        $jobs = JobRepository::getJobs($id);
+    public function getJobs(int $id){
+        $jobs = $this->jobRepository_->getJobs($id);
         return $jobs? $jobs : [];
     }
 
     // Search service an job
-    public static function getJob(array $args){
-        $job = JobRepository::getJob($args['id'], $args['user_id']);
+    public function getJob(array $args){
+        $job = $this->jobRepository_->getJob($args['id'], $args['user_id']);
         return $job;
     }
 
     // Search service an five Jobs
-    public static function getFiveJobs(int $user_id) {
-        $jobs = JobRepository::getFiveJobs($user_id);
+    public function getFiveJobs(int $user_id) {
+        $jobs = $this->jobRepository_->getFiveJobs($user_id);
         return $jobs? $jobs: [];
     }
 
     // Job update service
-    public static function updateJob(array $args){
+    public function updateJob(array $args){
         try {
-            $jobExist = JobRepository::getJob($args['id'], $args['user_id']);
+            $jobExist = $this->jobRepository_->getJob($args['id'], $args['user_id']);
             
             if(!$jobExist){
                 return [
@@ -63,7 +70,7 @@ class JobService
                 ];
             }
 
-            $jobUpdate = JobRepository::updateJob($args['job'], $jobExist);
+            $jobUpdate = $this->jobRepository_->updateJob($args['job'], $jobExist);
 
             return [
                 'code' => 200,
@@ -80,9 +87,9 @@ class JobService
     }
 
     // Job deletion service
-    public static function deleteJob(int $id, int $user_id){
+    public function deleteJob(int $id, int $user_id){
         try {
-            $jobExist = JobRepository::getJob($id, $user_id);
+            $jobExist = $this->jobRepository_->getJob($id, $user_id);
 
             if(!$jobExist){
                 return [
@@ -91,7 +98,7 @@ class JobService
                 ];
             }
 
-            $jobExist = JobRepository::updateActiviJob($jobExist);
+            $jobExist = $this->jobRepository_->updateActiviJob($jobExist);
 
             return [
                 'code' => 200,
@@ -105,13 +112,13 @@ class JobService
         }
     }
 
-    public static function getActiveJobs(int $user_id){
-        $activeJobs = JobRepository::getActiveJobs($user_id);
+    public function getActiveJobs(int $user_id){
+        $activeJobs = $this->jobRepository_->getActiveJobs($user_id);
         return $activeJobs? $activeJobs : [];
     }
 
-    public static function getIdleJobs(int $user_id) {
-        $idleJobs = JobRepository::getIdleJobs($user_id);
+    public function getIdleJobs(int $user_id) {
+        $idleJobs = $this->jobRepository_->getIdleJobs($user_id);
         return $idleJobs? $idleJobs : [];
     }
 }

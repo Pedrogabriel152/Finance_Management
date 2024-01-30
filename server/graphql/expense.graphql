@@ -29,12 +29,7 @@ input ExpenseInput{
     user_id: Int!
 }
 
-interface MessageExpense{
-    code: Int!
-    message: String! 
-}
-
-type MessageResponseExpense implements MessageExpense{
+type MessageResponseExpense implements Message{
     code: Int!
     message: String!
     expense: Expense

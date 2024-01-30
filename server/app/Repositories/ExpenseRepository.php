@@ -9,8 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class ExpenseRepository
 {
+    private ExpenseService $expenseService_;
+
+    public function __construct()
+    {
+        $this->expenseService_ = new ExpenseService();    
+    }
+
     // Save a new Expense in the database
-    public static function createExpense(array $args){
+    public function createExpense(array $args){
         if (!key_exists('months_paid', $args)){
             $args['months_paid'] = serialize([[
                 'month' => 0,
@@ -43,7 +50,7 @@ class ExpenseRepository
     }
 
     // Search the database for an expense
-    public static function getExpense(array $args){
+    public function getExpense(array $args){
         return DB::transaction(function () use($args){
             $expense = Expense::where([
                 ['id', '=', $args['id']],
@@ -55,7 +62,7 @@ class ExpenseRepository
     }
 
     // Search the database for an expenses
-    public static function getExpenses(array $args){
+    public function getExpenses(array $args){
         return DB::transaction(function () use($args){
             $expenses = Expense::where([
                 ['user_id', '=', $args['user_id']]
@@ -66,7 +73,7 @@ class ExpenseRepository
     }
 
     // Search the database for an expenses open
-    public static function getExpensesOpen(array $args){
+    public function getExpensesOpen(array $args){
         return DB::transaction(function () use($args) {
             $incomes = Expense::where([
                 ['user_id', '=', $args['user_id']],
@@ -78,7 +85,7 @@ class ExpenseRepository
     }
 
     // Search the database for an expenses close
-    public static function getExpensesClose(array $args){
+    public function getExpensesClose(array $args){
         return DB::transaction(function () use($args) {
             $incomes = Expense::where([
                 ['user_id', '=', $args['user_id']],
@@ -90,7 +97,7 @@ class ExpenseRepository
     }
 
     // Save an updated Expense to the database
-    public static function updatePayInstallment(object $expense){
+    public function updatePayInstallment(object $expense){
         return DB::transaction(function () use($expense){
             $updateExpense = $expense;
             $months_paid = unserialize($updateExpense->months_paid);
@@ -100,7 +107,7 @@ class ExpenseRepository
             $updateExpense->installments_paid = $expense->installments_paid + 1;
 
             if(!$updateExpense->paid_expense){
-                $newDateExpires = ExpenseService::updateDateExpire($updateExpense);
+                $newDateExpires = $this->expenseService_->updateDateExpire($updateExpense);
                 $month = date('m', strtotime($updateExpense->expires));
                 $year = date('Y', strtotime($updateExpense->expires));
                 $day = date('d',strtotime($updateExpense->expires));
@@ -125,7 +132,7 @@ class ExpenseRepository
     }
 
     // Save an updated Expense to the database
-    public static function editExpense(array $args, object $expense){
+    public function editExpense(array $args, object $expense){
         return DB::transaction(function () use($args, $expense){
             $dateExpires = new DateTime($args['expires']);
             $editExpense = $expense;
@@ -144,7 +151,7 @@ class ExpenseRepository
     }
 
     // Search for total Expense amounts
-    public static function getTotalExpenses(int $user_id){
+    public function getTotalExpenses(int $user_id){
         return DB::transaction(function () use($user_id){
             $currentMonth = date('m');
             $currentYear = date('Y');
@@ -171,14 +178,14 @@ class ExpenseRepository
         });
     }
 
-    public static function getFiveExpenses(int $user_id){
+    public function getFiveExpenses(int $user_id){
         return DB::transaction(function () use($user_id) {
             $expenses = Expense::where('user_id', $user_id)->orderBy('value_installment', 'desc')->limit(5)->get();
             return $expenses;
         });
     }
 
-    public static function getExpensesMonth(int $user_id, string $minDate, string $maxDate) {
+    public function getExpensesMonth(int $user_id, string $minDate, string $maxDate) {
         return DB::transaction(function () use($user_id, $minDate, $maxDate){
             $spentMonth = Expense::where('user_id',$user_id)->whereBetween('created_at', [$minDate, $maxDate])->get();
 
@@ -186,7 +193,7 @@ class ExpenseRepository
         });
     }
 
-    public static function getActiveExpense(int $user_id) {
+    public function getActiveExpense(int $user_id) {
         return DB::transaction(function () use($user_id) {
             $expenses = Expense::where([
                 ['user_id', '=', $user_id],
@@ -196,7 +203,7 @@ class ExpenseRepository
         });
     }
 
-    public static function getIdleExpense(int $user_id) {
+    public function getIdleExpense(int $user_id) {
         return DB::transaction(function () use($user_id) {
             $expenses = Expense::where([
                 ['user_id', '=', $user_id],
@@ -206,7 +213,7 @@ class ExpenseRepository
         });
     }
 
-    public static function getAllExpense(int $user_id) {
+    public function getAllExpense(int $user_id) {
         return DB::transaction(function () use($user_id) {
             $expenses = Expense::where([
                 ['user_id', '=', $user_id],

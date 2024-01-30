@@ -23,12 +23,7 @@ input JobInput{
     leave: String
 }
 
-interface MessageJob{
-    code: Int!
-    message: String! 
-}
-
-type MessageResponseJob implements MessageJob{
+type MessageResponseJob implements Message{
     code: Int!
     message: String!
     job: Job

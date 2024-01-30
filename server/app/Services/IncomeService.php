@@ -8,8 +8,17 @@ use App\Repositories\IncomeRepository;
 
 class IncomeService
 {
+    private IncomeRepository $incomeRepository_;
+    private JobRepository $jobRepository_;
+
+    public function __construct()
+    {
+        $this->incomeRepository_ = new IncomeRepository();
+        $this->jobRepository_ = new JobRepository();
+    }
+
     // Income creation service
-    public static function createIncome(array $args){
+    public function createIncome(array $args){
         $dateExpires = new DateTime($args['income']['expires']);
         $month = $dateExpires->format('m');
         $year = $dateExpires->format('Y');
@@ -40,7 +49,7 @@ class IncomeService
             $args['income']['months_paid'] = serialize($months_paid);
         }
 
-        $newIncome = IncomeRepository::create($args['income']);
+        $newIncome = $this->incomeRepository_->create($args['income']);
         
         if(!$newIncome){
             return [
@@ -61,15 +70,15 @@ class IncomeService
     }
 
     // Search service an income
-    public static function getIncome(array $args){
-        $income = IncomeRepository::getIncome($args);
+    public function getIncome(array $args){
+        $income = $this->incomeRepository_->getIncome($args);
         return $income;
     }
 
     // Search service an last five incomes
-    public static function getFiveIncomes(int $user_id){
+    public function getFiveIncomes(int $user_id){
         try {
-            $incomes = IncomeRepository::getFiveIncomes($user_id);
+            $incomes = $this->incomeRepository_->getFiveIncomes($user_id);
             return $incomes? $incomes : [];
 
         } catch (\Throwable $th) {
@@ -78,20 +87,20 @@ class IncomeService
     }
 
     // Search service an incomes open
-    public static function getIncomesOpen(array $args){
-        $incomes = IncomeRepository::getIncomesOpen($args);
+    public function getIncomesOpen(array $args){
+        $incomes = $this->incomeRepository_->getIncomesOpen($args);
         return $incomes? $incomes : [];
     }
 
     // Search service an incomes close
-    public static function getIncomesClose(array $args){
-        $incomes = IncomeRepository::getIncomesClose($args);
+    public function getIncomesClose(array $args){
+        $incomes = $this->incomeRepository_->getIncomesClose($args);
         return $incomes? $incomes : [];
     }
 
     // Search service an incomes
-    public static function getIncomes(array $args){
-        $incomes = IncomeRepository::getIncomes($args);
+    public function getIncomes(array $args){
+        $incomes = $this->incomeRepository_->getIncomes($args);
         
         if(!$incomes){
             return [
@@ -105,8 +114,8 @@ class IncomeService
     }
 
     // Income update service
-    public static function editIncome(array $args){
-        $income = IncomeRepository::getIncome($args);
+    public function editIncome(array $args){
+        $income = $this->incomeRepository_->getIncome($args);
         
         if(!$income){
             return [
@@ -116,7 +125,7 @@ class IncomeService
         }
 
         try {
-            $updateIncome = IncomeRepository::updateIncome($income, $args['income']);
+            $updateIncome = $this->incomeRepository_->updateIncome($income, $args['income']);
             $dateExpires = $updateIncome->expires->format("d/m/Y H:i:s");
             $updateIncome->expires = $dateExpires;
 
@@ -136,9 +145,9 @@ class IncomeService
     }
 
     // Recived installment upgrade service
-    public static function payInstallment(array $args){
+    public function payInstallment(array $args){
         try {
-            $income = IncomeRepository::getIncome($args);
+            $income = $this->incomeRepository_->getIncome($args);
 
             if(!$income){
                 return [
@@ -155,7 +164,7 @@ class IncomeService
                 ];
             }
 
-            $updateIncome = IncomeRepository::updatePayInstallment($income);
+            $updateIncome = $this->incomeRepository_->updatePayInstallment($income);
 
             return [
                 'code' => 200,
@@ -172,7 +181,7 @@ class IncomeService
     }
 
     // Expiration date update service
-    public static function updateDateExpire(object $updateIncome){
+    public function updateDateExpire(object $updateIncome){
         $dateExpires = explode("-", $updateIncome->expires);
         $month = intval($dateExpires[1]) + 1;
 
@@ -193,12 +202,12 @@ class IncomeService
     }
 
     // Total expense search service
-    public static function getTotalIncomes(int $user_id){
-        $incomes = IncomeRepository::getTotalIncomes($user_id);
+    public function getTotalIncomes(int $user_id){
+        $incomes = $this->incomeRepository_->getTotalIncomes($user_id);
         return $incomes;
     }
 
-    public static function getIncomesMonth(int $user_id){
+    public function getIncomesMonth(int $user_id){
         $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
         $incomesMonths = [];
         $currentMonth = date('m');
@@ -252,10 +261,10 @@ class IncomeService
             }
         }
 
-        $incomes = IncomeRepository::getIncomesMonth($user_id, $minDate, $maxDate);
+        $incomes = $this->incomeRepository_->getIncomesMonth($user_id, $minDate, $maxDate);
         
-        $jobs = JobRepository::getJobs($user_id);
-        $incomesMonths = IncomeService::organizeIncome($incomes, $jobs, $incomesMonths);
+        $jobs = $this->jobRepository_->getJobs($user_id);
+        $incomesMonths = $this->organizeIncome($incomes, $jobs, $incomesMonths);
 
         foreach ($incomesMonths as $key => $incomeMonth) {   
             $incomesMonths[$key]['month'] = $months[intval($incomeMonth['month']) - 1];
@@ -264,7 +273,7 @@ class IncomeService
         return $incomesMonths;
     }
 
-    private static function organizeIncome($incomes, $jobs, array $incomesMonths){ 
+    private function organizeIncome($incomes, $jobs, array $incomesMonths){ 
         foreach ($incomes as $key => $income) {
             $monthsPaids = unserialize($income->months_paid);
             $dateExpires = new DateTime($income->expires);
@@ -317,18 +326,18 @@ class IncomeService
         return $incomesMonths;
     }
 
-    public static function getActiveIncomes(int $user_id){
-        $activeIncome = IncomeRepository::getActiveIncomes($user_id);
+    public function getActiveIncomes(int $user_id){
+        $activeIncome = $this->incomeRepository_->getActiveIncomes($user_id);
         return $activeIncome? $activeIncome : [];
     }
 
-    public static function getIdleIncomes(int $user_id) {
-        $idleIncome = IncomeRepository::getIdleIncomes($user_id);
+    public function getIdleIncomes(int $user_id) {
+        $idleIncome = $this->incomeRepository_->getIdleIncomes($user_id);
         return $idleIncome? $idleIncome : [];
     }
 
-    public static function getAllIncomes(int $user_id) {
-        $Incomes = IncomeRepository::getAllIncomes($user_id);
+    public function getAllIncomes(int $user_id) {
+        $Incomes = $this->incomeRepository_->getAllIncomes($user_id);
         return $Incomes;
     }
 } 

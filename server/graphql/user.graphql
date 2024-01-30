@@ -1,6 +1,3 @@
-"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
-scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-
 type User {
     id: ID!
     name: String!
@@ -30,11 +27,6 @@ extend type Query{
 
 extend type Mutation @guard{
     editUser(id: ID!, user: UserInput!): MessageResponse @field(resolver: "App\\GraphQL\\Mutations\\UserMutation@editUser")
-}
-
-interface Message{
-    code: Int!
-    message: String!
 }
 
 type MessageResponse implements Message {

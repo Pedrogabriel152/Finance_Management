@@ -29,12 +29,7 @@ input IncomeInput{
     user_id: Int!
 }
 
-interface MessageIncome{
-    code: Int!
-    message: String! 
-}
-
-type MessageResponseIncome implements MessageIncome{
+type MessageResponseIncome implements Message{
     code: Int!
     message: String!
     income: Income
