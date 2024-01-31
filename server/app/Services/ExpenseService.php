@@ -2,14 +2,16 @@
 
 namespace App\Services;
 
-use App\Repositories\ExpenseRepository;
 use DateTime;
+use ErrorException;
+use App\Repositories\ExpenseRepository;
 
 date_default_timezone_set('America/Sao_Paulo');
 
 class ExpenseService
 {
     private ExpenseRepository $expenseRepository_;
+    private array $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
 
     public function __construct()
     {
@@ -121,12 +123,7 @@ class ExpenseService
         try {
             $expense = $this->expenseRepository_->getExpense($args);
 
-            if(!$expense){
-                return [
-                    'code' => 404,
-                    'message' => 'Despesa não encontrada!'
-                ];
-            }
+            if(!$expense) throw new ErrorException('Despesa não encontrada!', 404);
 
             if($expense->paid_expense === true){
                 return [
@@ -136,49 +133,47 @@ class ExpenseService
                 ];
             }
 
-            $updateExpense = $this->expenseRepository_->updatePayInstallment($expense);
+            $this->expenseRepository_->updatePayInstallment($expense);
 
             return [
                 'code' => 200,
                 'message' => 'Despesa atualizada',
-                'expense' => $updateExpense
+                'expense' => $expense
             ];
 
         } catch (\Throwable $th) {
             return [
-                'code' => 500,
-                'message' => 'Despesa não encontrada!'
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
             ];
         }
     }
 
     // Expense update service
     public function editExpense(array $args){
-        $expense = $this->expenseRepository_->getExpense($args);
+        try {
+            $expense = $this->expenseRepository_->getExpense($args);
 
-        if(!$expense) {
+            if(!$expense) throw new ErrorException('Despesa não encontrada!', 404);
+
+            $editExpense = $this->expenseRepository_->editExpense($args['expense'], $expense);
+            $dateExpires = $editExpense->expires->format("d/m/Y H:i:s");
+            $editExpense->expires = $dateExpires;
+
+            if(!$editExpense) throw new ErrorException('Erro ao atualizar a despesa!', 500);
+
             return [
-                'code' => 404,
-                'message' => 'Despesa não encontrada!'
+                'code' => 200,
+                'message' => 'Despesa atualizada com sucesso!',
+                'expense' => $editExpense
+            ];
+
+        } catch (\Throwable $th) {
+            return [
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
             ];
         }
-
-        $editExpense = $this->expenseRepository_->editExpense($args['expense'], $expense);
-        $dateExpires = $editExpense->expires->format("d/m/Y H:i:s");
-        $editExpense->expires = $dateExpires;
-
-        if(!$editExpense) {
-            return [
-                'code' => 500,
-                'message' => 'Erro ao atualizar a despesa!'
-            ];
-        }
-
-        return [
-            'code' => 200,
-            'message' => 'Despesa atualizada com sucesso!',
-            'expense' => $editExpense
-        ];
     }
 
     // Total expense search service
@@ -209,7 +204,6 @@ class ExpenseService
     }
 
     public function getExpensesMonth(int $user_id){
-        $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des'];
         $expensesMonth = [];
         $currentMonth = date('m');
         $beginningMonth = intval($currentMonth) - 5;
@@ -268,7 +262,7 @@ class ExpenseService
         $expensesMonth = $this->organizeExpense($spentMonth, $expensesMonth);
 
         foreach ($expensesMonth as $key => $expenseMonth) {   
-            $expensesMonth[$key]['month'] = $months[intval($expenseMonth['month']) - 1];
+            $expensesMonth[$key]['month'] = $this->months[intval($expenseMonth['month']) - 1];
         }
 
         return $expensesMonth;

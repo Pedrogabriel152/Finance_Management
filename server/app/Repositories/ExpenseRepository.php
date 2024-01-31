@@ -97,14 +97,13 @@ class ExpenseRepository
     }
 
     // Save an updated Expense to the database
-    public function updatePayInstallment(object $expense){
-        return DB::transaction(function () use($expense){
-            $updateExpense = $expense;
+    public function updatePayInstallment(Expense &$updateExpense){
+        return DB::transaction(function () use($updateExpense){
             $months_paid = unserialize($updateExpense->months_paid);
             if($updateExpense->installments_paid === 0) {
                 $months_paid = [];
             }
-            $updateExpense->installments_paid = $expense->installments_paid + 1;
+            $updateExpense->installments_paid += 1;
 
             if(!$updateExpense->paid_expense){
                 $newDateExpires = $this->expenseService_->updateDateExpire($updateExpense);
@@ -126,16 +125,13 @@ class ExpenseRepository
             }
 
             $updateExpense->save();
-    
-            return $updateExpense;
         });
     }
 
     // Save an updated Expense to the database
-    public function editExpense(array $args, object $expense){
-        return DB::transaction(function () use($args, $expense){
+    public function editExpense(array $args, Expense &$editExpense){
+        return DB::transaction(function () use($args, $editExpense){
             $dateExpires = new DateTime($args['expires']);
-            $editExpense = $expense;
             $editExpense->description = $args['description']? $args['description'] : '';
             $editExpense->merchandise_purchased = $args['merchandise_purchased'];
             $editExpense->establishment = $args['establishment'];
