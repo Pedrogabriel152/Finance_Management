@@ -70,12 +70,12 @@ class JobService
                 ];
             }
 
-            $jobUpdate = $this->jobRepository_->updateJob($args['job'], $jobExist);
+            $this->jobRepository_->updateJob($args['job'], $jobExist);
 
             return [
                 'code' => 200,
                 'message' => "Trabalho editado com sucesso!",
-                'job' => $jobUpdate 
+                'job' => $jobExist 
              ];
 
         } catch (\Throwable $th) {
@@ -98,7 +98,7 @@ class JobService
                 ];
             }
 
-            $jobExist = $this->jobRepository_->updateActiviJob($jobExist);
+            $this->jobRepository_->updateActiviJob($jobExist);
 
             return [
                 'code' => 200,

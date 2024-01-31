@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Income;
 use DateTime;
 use App\Repositories\JobRepository;
 use App\Repositories\IncomeRepository;
@@ -125,14 +126,14 @@ class IncomeService
         }
 
         try {
-            $updateIncome = $this->incomeRepository_->updateIncome($income, $args['income']);
-            $dateExpires = $updateIncome->expires->format("d/m/Y H:i:s");
-            $updateIncome->expires = $dateExpires;
+            $this->incomeRepository_->updateIncome($income, $args['income']);
+            $dateExpires = $income->expires->format("d/m/Y H:i:s");
+            $income->expires = $dateExpires;
 
             return [
                 'code' => 200,
                 'message' => 'Renda atualizada com sucesso',
-                'income' => $updateIncome
+                'income' => $income
             ];
 
         } catch (\Throwable $th) {
@@ -164,12 +165,12 @@ class IncomeService
                 ];
             }
 
-            $updateIncome = $this->incomeRepository_->updatePayInstallment($income);
+            $this->incomeRepository_->updatePayInstallment($income);
 
             return [
                 'code' => 200,
                 'message' => 'Renda atualizada',
-                'income' => $updateIncome
+                'income' => $income
             ];
 
         } catch (\Throwable $th) {
@@ -181,7 +182,7 @@ class IncomeService
     }
 
     // Expiration date update service
-    public function updateDateExpire(object $updateIncome){
+    public function updateDateExpire(Income $updateIncome){
         $dateExpires = explode("-", $updateIncome->expires);
         $month = intval($dateExpires[1]) + 1;
 

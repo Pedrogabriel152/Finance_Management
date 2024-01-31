@@ -36,7 +36,7 @@ class UserRepository
         return $user;
     }
 
-    public function editUser(object $user, array $editUser){
+    public function editUser(User &$user, array $editUser){
         return DB::transaction(function () use ($editUser, $user){
             $user->name = $editUser['name'];
             $user->email = $editUser['email'];

@@ -97,32 +97,29 @@ class IncomeRepository
     }
 
     // Save an updated Income to the database
-    public function updateIncome(object $income, array $args){
-        return DB::transaction(function () use($income, $args){
+    public function updateIncome(Income &$updateIncome, array $args){
+        return DB::transaction(function () use($updateIncome, $args){
             $dateExpires = new DateTime($args['expires']);
-            $updateIncome = $income;
             $updateIncome->description = $args['description']? $args['description'] : '';
             $updateIncome->establishment = $args['establishment'];
             $updateIncome->installments = intval($args['installments']);
             $updateIncome->value_installment = floatval($args['value_installment']);
             $updateIncome->expires = $dateExpires;
             $updateIncome->installments_received = intval($args['installments_received']);
-            $updateIncome->received_income = $args['received_income'] ? $args['received_income'] : $income->received_income;
-            $updateIncome->user_id = $income->user_id;
+            $updateIncome->received_income = $args['received_income'] ? $args['received_income'] : $updateIncome->received_income;
             $updateIncome->save();
             return $updateIncome;
         });
     }
 
     // Save an updated Income to the database
-    public function updatePayInstallment(object $income){
-        return DB::transaction(function () use($income){
-            $updateIncome = $income;
+    public function updatePayInstallment(Income &$updateIncome){
+        return DB::transaction(function () use($updateIncome){
             $months_paid = unserialize($updateIncome->months_paid);
             if($updateIncome->installments_received == 0) {
                 $months_paid = [];
             }
-            $updateIncome->installments_received = $income->installments_received + 1;
+            $updateIncome->installments_received += 1;
 
             if(!$updateIncome->received_income){
                 $newDateExpires = $this->incomeService_->updateDateExpire($updateIncome);

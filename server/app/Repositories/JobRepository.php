@@ -59,7 +59,7 @@ class JobRepository
     }
 
     // Save an updated Job to the database
-    public function updateJob(array $args, object $jobExist){
+    public function updateJob(array $args, Job &$jobExist){
         return DB::transaction(function () use($args, $jobExist){
             $jobExist->description = $args['description']? $args['description'] : '';
             $jobExist->wage = $args['wage'];
@@ -79,7 +79,7 @@ class JobRepository
         });
     }
 
-    public function updateActiviJob(object $jobExist) {
+    public function updateActiviJob(Job &$jobExist) {
         return DB::transaction(function () use ($jobExist) {
             $jobLeaved = DateTime::createFromFormat('d-m-Y', date('d-m-Y'));
             $jobExist->leave = $jobLeaved;
