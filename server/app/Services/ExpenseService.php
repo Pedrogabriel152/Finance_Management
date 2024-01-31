@@ -52,12 +52,8 @@ class ExpenseService
 
             $newExpense = $this->expenseRepository_->createExpense($args['expense']);
            
-            if(!$newExpense){
-                return [
-                    'code' => 500,
-                    'message' => 'Falha ao cadastrar a despesa!'
-                ];
-            }
+            if(!$newExpense) throw new ErrorException('Falha ao cadastrar a despesa!', 500);
+            
             $dateExpires = $newExpense->expires->format("d/m/Y H:i:s");
             $newExpense->expires = $dateExpires;
 
@@ -69,8 +65,8 @@ class ExpenseService
 
         } catch (\Throwable $th) {
             return [
-                'code' => 500,
-                'message' => $th->getMessage()//'Falha ao cadastrar a despesa!'
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
             ];
         }
     }

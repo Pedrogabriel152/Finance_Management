@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use ErrorException;
 use App\Repositories\JobRepository;
 
 class JobService
@@ -18,12 +19,7 @@ class JobService
         try {
             $newJob = $this->jobRepository_->create($args);
             
-            if(!$newJob){
-                return [
-                   'code' => 500,
-                   'message' => "Falha ao criar o trablaho!" 
-                ];
-            }
+            if(!$newJob) throw new ErrorException('Falha ao criar o trablaho!', 500);
 
             return [
                 'code' => 200,
@@ -33,9 +29,9 @@ class JobService
 
         } catch (\Throwable $th) {
             return [
-                'code' => 500,
-                'message' => "Falha ao criar o trablaho!" 
-             ];
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
+            ];
         }
         
     }
@@ -63,12 +59,7 @@ class JobService
         try {
             $jobExist = $this->jobRepository_->getJob($args['id'], $args['user_id']);
             
-            if(!$jobExist){
-                return [
-                    'code' => 404,
-                    'message' => 'Trabalho não encontrado!'
-                ];
-            }
+            if(!$jobExist) throw new ErrorException('Trabalho não encontrado!', 404);
 
             $this->jobRepository_->updateJob($args['job'], $jobExist);
 
@@ -80,9 +71,9 @@ class JobService
 
         } catch (\Throwable $th) {
             return [
-                'code' => 500,
-                'message' => "Erro ao atualizar o trabalho!" 
-             ];
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
+            ];
         }
     }
 
@@ -91,12 +82,7 @@ class JobService
         try {
             $jobExist = $this->jobRepository_->getJob($id, $user_id);
 
-            if(!$jobExist){
-                return [
-                    'code' => 404,
-                    'message' => "Trabalho não encontrado!" 
-                ];
-            }
+            if(!$jobExist) throw new ErrorException('Trabalho não encontrado!', 404);
 
             $this->jobRepository_->updateActiviJob($jobExist);
 
@@ -106,9 +92,9 @@ class JobService
             ];
         } catch (\Throwable $th) {
             return [
-                'code' => 500,
-                'message' => "Erro ao deletar o trabalho!" 
-             ];
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
+            ];
         }
     }
 

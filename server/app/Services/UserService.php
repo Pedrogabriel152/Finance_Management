@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use DateTime;
-use App\Repositories\UserRepository;
+use ErrorException;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Repositories\UserRepository;
 
 class UserService{
 
@@ -92,27 +93,24 @@ class UserService{
     }
 
     public function editUser(array $args){
-        $user = $this->userRepository_->getUserById($args['id']);
+        try {
+            $user = $this->userRepository_->getUserById($args['id']);
 
-        if(!$user) {
+            if(!$user) throw new ErrorException('Usuário não encontrado', 404);
+
+            $updateUser = $this->userRepository_->editUser($user, $args['user']);
+
+            if(!$updateUser) throw new ErrorException('Erro ao atualizar usuário', 500);
+
             return [
-                'code' => 404,
-                'message' => "Usuário não encontrado"
+                'code' => 200,
+                'message' => 'Usuário atualizado com sucesso'
+            ];
+        } catch (\Throwable $th) {
+            return [
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
             ];
         }
-
-        $updateUser = $this->userRepository_->editUser($user, $args['user']);
-
-        if(!$updateUser) {
-            return [
-                'code' => 500,
-                'message' => "Erro ao atualizar usuário"
-            ];
-        }
-
-        return [
-            'code' => 200,
-            'message' => 'Usuário atualizado com sucesso'
-        ];
     }
 }

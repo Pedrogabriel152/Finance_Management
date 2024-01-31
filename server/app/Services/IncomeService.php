@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Income;
 use DateTime;
+use ErrorException;
+use App\Models\Income;
 use App\Repositories\JobRepository;
 use App\Repositories\IncomeRepository;
 
@@ -20,53 +21,55 @@ class IncomeService
 
     // Income creation service
     public function createIncome(array $args){
-        $dateExpires = new DateTime($args['income']['expires']);
-        $month = $dateExpires->format('m');
-        $year = $dateExpires->format('Y');
-        $maxDateExpires = DateTime::createFromFormat('d/m/Y', "28/$month/$year");
+        try {
+            $dateExpires = new DateTime($args['income']['expires']);
+            $month = $dateExpires->format('m');
+            $year = $dateExpires->format('Y');
+            $maxDateExpires = DateTime::createFromFormat('d/m/Y', "28/$month/$year");
 
-        if($dateExpires > $maxDateExpires) {
-            $dateExpires = $maxDateExpires;
-            $args['income']['expires'] = "28/$month/$year";
-        }
-
-        if($args['income']['installments_received'] >= 1){
-            $months_paid = [];
-            
-            for($i=$args['income']['installments_received'];$i>=1;$i--){
-                $dateExpires->modify("-{$i} months");
-                $expiresYear = $dateExpires->format('Y');
-                $expireMonth = $dateExpires->format('m');
-                
-
-                $months_paid[] = [
-                    'month' => intval($expireMonth),
-                    'total' => floatval($args['income']['value_installment']),
-                    'year' => $expiresYear,
-                    'expires' => $dateExpires->format('d').'/'. $dateExpires->format('m').'/'. $dateExpires->format('Y')
-                ];
-                $dateExpires = new DateTime($args['income']['expires']);
+            if($dateExpires > $maxDateExpires) {
+                $dateExpires = $maxDateExpires;
+                $args['income']['expires'] = "28/$month/$year";
             }
-            $args['income']['months_paid'] = serialize($months_paid);
-        }
 
-        $newIncome = $this->incomeRepository_->create($args['income']);
-        
-        if(!$newIncome){
+            if($args['income']['installments_received'] >= 1){
+                $months_paid = [];
+                
+                for($i=$args['income']['installments_received'];$i>=1;$i--){
+                    $dateExpires->modify("-{$i} months");
+                    $expiresYear = $dateExpires->format('Y');
+                    $expireMonth = $dateExpires->format('m');
+                    
+
+                    $months_paid[] = [
+                        'month' => intval($expireMonth),
+                        'total' => floatval($args['income']['value_installment']),
+                        'year' => $expiresYear,
+                        'expires' => $dateExpires->format('d').'/'. $dateExpires->format('m').'/'. $dateExpires->format('Y')
+                    ];
+                    $dateExpires = new DateTime($args['income']['expires']);
+                }
+                $args['income']['months_paid'] = serialize($months_paid);
+            }
+
+            $newIncome = $this->incomeRepository_->create($args['income']);
+            
+            if(!$newIncome) throw new ErrorException('Falha ao cadastrar a renda!', 500);
+
+            $dateExpires = $newIncome->expires->format("d/m/Y H:i:s");
+            $newIncome->expires = $dateExpires;
+
             return [
-                'code' => 500,
-                'message' => 'Falha ao cadastrar a renda!'
+                'code' => 200,
+                'message' => 'Renda cadastrada com sucesso',
+                'income' => $newIncome
+            ];
+        } catch (\Throwable $th) {
+            return [
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
             ];
         }
-
-        $dateExpires = $newIncome->expires->format("d/m/Y H:i:s");
-        $newIncome->expires = $dateExpires;
-
-        return [
-            'code' => 200,
-            'message' => 'Renda cadastrada com sucesso',
-            'income' => $newIncome
-        ];
 
     }
 
@@ -101,31 +104,29 @@ class IncomeService
 
     // Search service an incomes
     public function getIncomes(array $args){
-        $incomes = $this->incomeRepository_->getIncomes($args);
+        try {
+            $incomes = $this->incomeRepository_->getIncomes($args);
         
-        if(!$incomes){
+            if(!$incomes) throw new ErrorException('Renda não encontrada', 404);
+
+            return $incomes;
+            
+        } catch (\Throwable $th) {
             return [
-                'code' => 404,
-                'message' => 'Renda não encontrada',
+                'code' => $th->getCode(),
+                'message' => $th->getMessage(),
                 'incomes' => []
             ];
         }
-
-        return $incomes;
     }
 
     // Income update service
     public function editIncome(array $args){
-        $income = $this->incomeRepository_->getIncome($args);
-        
-        if(!$income){
-            return [
-                'code' => 404,
-                'message' => 'Renda não encontrada'
-            ];
-        }
-
         try {
+            $income = $this->incomeRepository_->getIncome($args);
+            
+            if(!$income) throw new ErrorException('Renda não encontrada', 404);
+        
             $this->incomeRepository_->updateIncome($income, $args['income']);
             $dateExpires = $income->expires->format("d/m/Y H:i:s");
             $income->expires = $dateExpires;
@@ -138,8 +139,8 @@ class IncomeService
 
         } catch (\Throwable $th) {
             return [
-                'code' => 500,
-                'message' => 'Falha ao atualizar a renda, tente novamente'
+                'code' => $th->getCode(),
+                'message' => $th->getMessage()
             ];
         }
         
@@ -150,12 +151,7 @@ class IncomeService
         try {
             $income = $this->incomeRepository_->getIncome($args);
 
-            if(!$income){
-                return [
-                    'code' => 404,
-                    'message' => 'Renda não encontrada!'
-                ];
-            }
+            if(!$income) throw new ErrorException('Renda não encontrada', 404);
 
             if($income->received_income === true){
                 return [
