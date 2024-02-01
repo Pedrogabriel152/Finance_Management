@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helpers;
 use DateTime;
 use ErrorException;
 use App\Models\Income;
@@ -261,7 +262,7 @@ class IncomeService
         $incomes = $this->incomeRepository_->getIncomesMonth($user_id, $minDate, $maxDate);
         
         $jobs = $this->jobRepository_->getJobs($user_id);
-        $incomesMonths = $this->organizeIncome($incomes, $jobs, $incomesMonths);
+        $incomesMonths = Helpers::organizeFinance($incomes,$incomesMonths, $jobs);
 
         foreach ($incomesMonths as $key => $incomeMonth) {   
             $incomesMonths[$key]['month'] = $months[intval($incomeMonth['month']) - 1];

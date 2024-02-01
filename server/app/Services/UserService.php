@@ -4,7 +4,6 @@ namespace App\Services;
 
 use DateTime;
 use ErrorException;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 

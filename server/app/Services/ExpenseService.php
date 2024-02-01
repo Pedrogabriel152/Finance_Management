@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helpers;
 use DateTime;
 use ErrorException;
 use App\Repositories\ExpenseRepository;
@@ -255,7 +256,7 @@ class ExpenseService
         }
 
         $spentMonth = $this->expenseRepository_->getExpensesMonth($user_id, $minDate, $maxDate);
-        $expensesMonth = $this->organizeExpense($spentMonth, $expensesMonth);
+        $expensesMonth = Helpers::organizeFinance($spentMonth, $expensesMonth);
 
         foreach ($expensesMonth as $key => $expenseMonth) {   
             $expensesMonth[$key]['month'] = $this->months[intval($expenseMonth['month']) - 1];
