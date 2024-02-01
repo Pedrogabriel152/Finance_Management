@@ -271,58 +271,58 @@ class IncomeService
         return $incomesMonths;
     }
 
-    private function organizeIncome($incomes, $jobs, array $incomesMonths){ 
-        foreach ($incomes as $key => $income) {
-            $monthsPaids = unserialize($income->months_paid);
-            $dateExpires = new DateTime($income->expires);
+    // private function organizeIncome($incomes, $jobs, array $incomesMonths){ 
+    //     foreach ($incomes as $key => $income) {
+    //         $monthsPaids = unserialize($income->months_paid);
+    //         $dateExpires = new DateTime($income->expires);
         
-            foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
-                foreach ($incomesMonths as $keyIncomes => $incomeMonth) {
-                    $yearIncomeMonth = date('Y', strtotime($incomeMonth['year']));
-                    $dateExpires = DateTime::createFromFormat('d/m/Y', $monthPaid['expires']);
-                    $maxDate = DateTime::createFromFormat('d/m/Y', '28/'.$incomeMonth['month'].'/'.$yearIncomeMonth);
-                    $minDate = DateTime::createFromFormat('d/m/Y', '01/'.$incomeMonth['month'].'/'.$yearIncomeMonth);
+    //         foreach ($monthsPaids as $keyMonthPaid => $monthPaid) {
+    //             foreach ($incomesMonths as $keyIncomes => $incomeMonth) {
+    //                 $yearIncomeMonth = date('Y', strtotime($incomeMonth['year']));
+    //                 $dateExpires = DateTime::createFromFormat('d/m/Y', $monthPaid['expires']);
+    //                 $maxDate = DateTime::createFromFormat('d/m/Y', '28/'.$incomeMonth['month'].'/'.$yearIncomeMonth);
+    //                 $minDate = DateTime::createFromFormat('d/m/Y', '01/'.$incomeMonth['month'].'/'.$yearIncomeMonth);
 
-                    if($dateExpires >= $minDate && $dateExpires <= $maxDate){
-                        $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
-                    }
+    //                 if($dateExpires >= $minDate && $dateExpires <= $maxDate){
+    //                     $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);
+    //                 }
 
-                    if(!key_exists($keyMonthPaid + 1, $monthsPaids)){
-                        $dateExpires = new DateTime($income->expires);
+    //                 if(!key_exists($keyMonthPaid + 1, $monthsPaids)){
+    //                     $dateExpires = new DateTime($income->expires);
 
-                        if($dateExpires >= $minDate && $dateExpires <= $maxDate){
-                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);  
-                        }
+    //                     if($dateExpires >= $minDate && $dateExpires <= $maxDate){
+    //                         $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($income->value_installment);  
+    //                     }
                     
-                    }                     
-                }
-            }
-        }
+    //                 }                     
+    //             }
+    //         }
+    //     }
 
-        foreach ($jobs as $key => $job) {
-            foreach ($incomesMonths as $keyIncomes => $incomeMonth) {   
-                $date = $incomeMonth['year']."-".$incomeMonth['month'].'-01';
-                $dateStartedMonth = date('m-Y', strtotime($date));
-                $dateStartedJob = date('m-Y',  strtotime($job->started));
+    //     foreach ($jobs as $key => $job) {
+    //         foreach ($incomesMonths as $keyIncomes => $incomeMonth) {   
+    //             $date = $incomeMonth['year']."-".$incomeMonth['month'].'-01';
+    //             $dateStartedMonth = date('m-Y', strtotime($date));
+    //             $dateStartedJob = date('m-Y',  strtotime($job->started));
 
-                if($dateStartedMonth >= $dateStartedJob){
-                    if($job->leave) {
-                        $monthLeaved = date('m-Y', strtotime($job->leave));
-                        $dateLeaveddMonth = date('m-Y', strtotime($incomeMonth['year']."-".$incomeMonth['month']."-30"));
+    //             if($dateStartedMonth >= $dateStartedJob){
+    //                 if($job->leave) {
+    //                     $monthLeaved = date('m-Y', strtotime($job->leave));
+    //                     $dateLeaveddMonth = date('m-Y', strtotime($incomeMonth['year']."-".$incomeMonth['month']."-30"));
             
-                        if($monthLeaved >= $dateLeaveddMonth) {
-                            $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($job->wage);
-                        }
-                    } 
+    //                     if($monthLeaved >= $dateLeaveddMonth) {
+    //                         $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($job->wage);
+    //                     }
+    //                 } 
 
-                    if(!$job->leave) {
-                        $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($job->wage);
-                    }
-                }                 
-            }
-        }
-        return $incomesMonths;
-    }
+    //                 if(!$job->leave) {
+    //                     $incomesMonths[$keyIncomes]['total'] = floatval($incomeMonth['total']) + floatval($job->wage);
+    //                 }
+    //             }                 
+    //         }
+    //     }
+    //     return $incomesMonths;
+    // }
 
     public function getActiveIncomes(int $user_id){
         $activeIncome = $this->incomeRepository_->getActiveIncomes($user_id);
