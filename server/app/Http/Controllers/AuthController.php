@@ -19,6 +19,7 @@ class AuthController extends Controller
 
 
     public function login(Request $request){
+        dd($request);
         try {
             $userExist = $this->userRepository_->getUser($request->email);
         
@@ -61,7 +62,7 @@ class AuthController extends Controller
             ], 200);
 
         } catch (\Throwable $th) {
-            return response()->json(["message" => $th->getMessage()], $th->getCode()? $th->getCode() : 500);
+            return response()->json(["message" => $th->getMessage()], $th->getCode());
         }
     }
 }
